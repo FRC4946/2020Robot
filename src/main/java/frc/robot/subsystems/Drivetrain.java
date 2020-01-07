@@ -7,23 +7,17 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 /**
  * Add your docs here.
  */
-public class Drivetrain extends Subsystem {
+public class DriveTrain extends SubsystemBase {
   private SpeedControllerGroup m_leftSide, m_rightSide;
 
-public Drivetrain(){
-  m_leftSide = new SpeedControllerGroup ();
-  m_rightSide = new SpeedControllerGroup ();
-}
-
-  @Override
-  public void initDefaultCommand() {
-    // Set the default command for a subsystem here.
-    // setDefaultCommand(new MySpecialCommand());
+  public DriveTrain(){
+    m_leftSide = new SpeedControllerGroup(null);
+    m_rightSide = new SpeedControllerGroup(null);
   }
 }
