@@ -14,7 +14,10 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
- * Add your docs here.
+ * DriveTrain Subsystem
+ * <p>
+ * Subsystem for moving and tracking the movement of the robot
+ * </p>
  */
 public class DriveTrain extends SubsystemBase {
   private SpeedControllerGroup m_leftSide, m_rightSide;
