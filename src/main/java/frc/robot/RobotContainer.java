@@ -8,8 +8,10 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -21,6 +23,9 @@ import frc.robot.subsystems.DriveTrain;
 public class RobotContainer {
   // The robot's subsystems and commands are defined here...
 
+  Joystick m_driveJoystick;
+  Joystick m_operatorJoystick;
+
   DriveTrain m_driveTrain;
 
   /**
@@ -31,6 +36,12 @@ public class RobotContainer {
     m_driveTrain = new DriveTrain();
 
     configureButtonBindings();
+
+    m_driveTrain.setDefaultCommand(new RunCommand(() -> {
+      m_driveTrain.arcadeDrive(
+        m_driveJoystick.getRawAxis(RobotMap.DRIVE_AXIS),
+        m_driveJoystick.getRawAxis(RobotMap.TURN_AXIS));
+    }, m_driveTrain));
   }
 
   /**
@@ -40,6 +51,8 @@ public class RobotContainer {
    * {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
+    m_driveJoystick = new Joystick(RobotMap.DRIVE_JOYSTICK);
+    m_operatorJoystick = new Joystick(RobotMap.OPERATOR_JOYSTICK);
   }
 
 

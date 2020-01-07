@@ -16,4 +16,8 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+
+    //TODO : Fill In Inches Per Tick
+    public static final double ENCODER_INCHES_PER_TICK = 1;
+
 }
