@@ -48,12 +48,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    //m_drive.
-    m_rightSide.set(rightSpeed);
+    m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
   public void arcadeDrive(double drive, double turn) {
-    tankDrive(drive + turn, drive - turn);
+    m_drive.arcadeDrive(drive, turn); 
   }
 
   public double getLeftDistance() {
