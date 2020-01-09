@@ -27,6 +27,8 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
   private Encoder m_leftEncoder, m_rightEncoder;
 
+  private DifferentialDrive m_drive;
+
   public DriveTrain() {
     m_leftFront = new CANSparkMax(RobotMap.DRIVE_LEFT_FRONT_CANSPARKMAX, MotorType.kBrushless);
     m_leftBack = new CANSparkMax(RobotMap.DRIVE_LEFT_BACK_CANSPARKMAX, MotorType.kBrushless);
@@ -34,6 +36,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightBack = new CANSparkMax(RobotMap.DRIVE_RIGHT_BACK_CANSPARKMAX, MotorType.kBrushless);
     m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
+    m_drive = new DifferentialDrive (m_rightSide, m_leftSide);
     m_rightSide.setInverted(true);
 
     m_leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A,
@@ -45,7 +48,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_leftSide.set(leftSpeed);
+    //m_drive.
     m_rightSide.set(rightSpeed);
   }
 
