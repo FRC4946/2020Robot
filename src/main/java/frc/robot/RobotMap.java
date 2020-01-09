@@ -29,6 +29,11 @@ public final class RobotMap {
 
     //MOTORS AND SENSORS
 
+    public static final int DRIVE_RIGHT_FRONT_CANSPARKMAX = 0;
+    public static final int DRIVE_RIGHT_BACK_CANSPARKMAX = 1;
+    public static final int DRIVE_LEFT_FRONT_CANSPARKMAX = 2;
+    public static final int DRIVE_LEFT_BACK_CANSPARKMAX = 3;
+
     public static final int DRIVE_LEFT_ENCODER_A = 0;
     public static final int DRIVE_LEFT_ENCODER_B = 1;
 

@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,12 +23,17 @@ import frc.robot.RobotMap;
  * </p>
  */
 public class DriveTrain extends SubsystemBase {
-  private SpeedControllerGroup m_leftSide, m_rightSide;
+  private SpeedControllerGroup m_leftSide, m_rightSide; 
+  private CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
   private Encoder m_leftEncoder, m_rightEncoder;
 
-  public DriveTrain(){
-    m_leftSide = new SpeedControllerGroup(null);
-    m_rightSide = new SpeedControllerGroup(null);
+  public DriveTrain() {
+    m_leftFront = new CANSparkMax(RobotMap.DRIVE_LEFT_FRONT_CANSPARKMAX, MotorType.kBrushless);
+    m_leftBack = new CANSparkMax(RobotMap.DRIVE_LEFT_BACK_CANSPARKMAX, MotorType.kBrushless);
+    m_rightFront = new CANSparkMax(RobotMap.DRIVE_RIGHT_FRONT_CANSPARKMAX, MotorType.kBrushless);
+    m_rightBack = new CANSparkMax(RobotMap.DRIVE_RIGHT_BACK_CANSPARKMAX, MotorType.kBrushless);
+    m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
+    m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_rightSide.setInverted(true);
 
     m_leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A,
