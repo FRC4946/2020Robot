@@ -96,6 +96,8 @@ public final class RobotMap {
 
     public static final int INTAKE_VICTORSPX = 0;
 
+    public static final int CONTROL_PANEL_TALONSRX = 11;
+
     public static final int PDP = 0;
   }
 
