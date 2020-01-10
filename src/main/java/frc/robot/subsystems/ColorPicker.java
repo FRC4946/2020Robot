@@ -9,11 +9,14 @@ package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
@@ -21,10 +24,17 @@ import frc.robot.RobotMap;
  */
 public class ColorPicker extends SubsystemBase {
 
-  public ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-  public TalonSRX m_wheel = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
+  ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+  TalonSRX m_wheel = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
 
-  public Color detectedcolour = m_colorSensor.getColor();
+  ColorMatch m_colorMatcher = new ColorMatch();
+
+  public ColorPicker() {
+    m_colorMatcher.addColorMatch(Constants.BLUE_COLOR);
+    m_colorMatcher.addColorMatch(Constants.GREEN_COLOR);
+    m_colorMatcher.addColorMatch(Constants.RED_COLOR);
+    m_colorMatcher.addColorMatch(Constants.YELLOW_COLOR);
+  }
 
   public void set(double speed) {
     m_wheel.set(ControlMode.PercentOutput, speed);
@@ -33,4 +43,13 @@ public class ColorPicker extends SubsystemBase {
   public void stop() {
     set(0.0);
   }
+
+  public Color getColor(){
+    return m_colorSensor.getColor();
+  }
+
+  public Color getMatchingColor() {
+    return m_colorMatcher.matchClosestColor(getMatchingColor()).color;
+  }
+
 }

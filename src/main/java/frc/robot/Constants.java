@@ -171,5 +171,5 @@ public final class Constants {
   public static final Color RED_COLOR = ColorMatch.makeColor(0, 0, 0);
   public static final Color YELLOW_COLOR = ColorMatch.makeColor(0, 0, 0);
 
-  public static final double WHEEL_PIECE_DIAMETER = 0.4572;
+  public static final double WHEEL_PIECE_DIAMETER = 0.4572; // The circumference of each wheel piece
 }
