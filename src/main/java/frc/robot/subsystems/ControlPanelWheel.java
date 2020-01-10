@@ -18,37 +18,26 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
-/**
- * Add your docs here.
- */
-public class ColorPicker extends SubsystemBase {
+public class ControlPanelWheel extends SubsystemBase {
+  // Put methods for controlling this subsystem
+  // here. Call these from Commands.
 
-  ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
-  TalonSRX m_wheel = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
+  public ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
+  public TalonSRX m_wheelMotor = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
+  public ColorMatch m_colorMatcher = new ColorMatch();
 
-  ColorMatch m_colorMatcher = new ColorMatch();
-
-  public ColorPicker() {
+  public ControlPanelWheel() {
     m_colorMatcher.addColorMatch(Constants.COLOR_BLUE);
     m_colorMatcher.addColorMatch(Constants.COLOR_GREEN);
     m_colorMatcher.addColorMatch(Constants.COLOR_RED);
     m_colorMatcher.addColorMatch(Constants.COLOR_YELLOW);
   }
 
-  public void set(double speed) {
-    m_wheel.set(ControlMode.PercentOutput, speed);
+  public void set(double speed){
+    m_wheelMotor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void stop() {
-    set(0.0);
+  public Color getMatchedColor(){
+    return m_colorMatcher.matchClosestColor(m_colorSensor.getColor()).color;
   }
-
-  public Color getColor(){
-    return m_colorSensor.getColor();
-  }
-
-  public Color getMatchingColor() {
-    return m_colorMatcher.matchClosestColor(getMatchingColor()).color;
-  }
-
 }
