@@ -34,4 +34,7 @@ public final class RobotMap {
 
     public static final int DRIVE_RIGHT_ENCODER_A = 2;
     public static final int DRIVE_RIGHT_ENCODER_B = 3;
+
+    public static final int CLIMBER_LEFT_MOTOR = 0;
+    public static final int CLIMBER_RIGHT_MOTOR = 1;
 }
