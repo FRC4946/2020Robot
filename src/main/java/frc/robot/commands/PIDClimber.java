@@ -22,7 +22,6 @@ public class PIDClimber extends PIDCommand {
    * Creates a new PIDClimber.
    */
 
-  PIDController m_potController;
   double m_height;
 
   public PIDClimber(final double height) {

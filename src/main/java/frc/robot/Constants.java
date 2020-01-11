@@ -37,10 +37,4 @@ public final class Constants {
     public static final double PID_CLIMBER_I = 0;
     public static final double PID_CLIMBER_D = 0;
 
-    public static final double PID_POT_P = 0;
-    public static final double PID_POT_I = 0;
-    public static final double PID_POT_D = 0;
-
-
-
 }
