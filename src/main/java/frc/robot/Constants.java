@@ -20,9 +20,27 @@ public final class Constants {
     //TODO : Fill In Inches Per Tick
     public static final double ENCODER_INCHES_PER_TICK = 1;
 
-    //TODO : Fill In Climber Pot Max Distance
+
+    //TODO : Fill In Climber Pot Max Distance and other variables
     public static final double CLIMBER_POT_MAX_DISTANCE = 1;
 
+    public static final double CLIMBER_UP_HEIGHT = 0;
+    public static final double CLIMBER_DOWN_HEIGHT = 0;
+
+    public static final double MIN_CLIMBER_SPEED = 0.1;
+    public static final double MAX_CLIMBER_SPEED = 0.1;
+
+
     public static final double DIO_MAX_VOLTAGE = 5.0;
+
+    public static final double PID_CLIMBER_P = 0;
+    public static final double PID_CLIMBER_I = 0;
+    public static final double PID_CLIMBER_D = 0;
+
+    public static final double PID_POT_P = 0;
+    public static final double PID_POT_I = 0;
+    public static final double PID_POT_D = 0;
+
+
 
 }

@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 
 /**
@@ -28,6 +29,8 @@ public class RobotContainer {
 
   DriveTrain m_driveTrain;
 
+  Climber m_climber;
+
   /**
    * The container for the robot.  Contains subsystems, OI devices, and commands.
    */
@@ -42,6 +45,8 @@ public class RobotContainer {
         m_driveJoystick.getRawAxis(RobotMap.DRIVE_AXIS),
         m_driveJoystick.getRawAxis(RobotMap.TURN_AXIS));
     }, m_driveTrain));
+
+    m_climber = new Climber();
   }
 
   /**
