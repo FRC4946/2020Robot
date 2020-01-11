@@ -20,4 +20,7 @@ public final class Constants {
     //TODO : Fill In Inches Per Tick
     public static final double ENCODER_INCHES_PER_TICK = 1;
 
+    public static final double DEFAULT_DEADZONE = 0.1;
+
+
 }

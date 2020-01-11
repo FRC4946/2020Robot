@@ -7,14 +7,18 @@
 
 package frc.robot.subsystems;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
+import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.Utilities;
 
 /**
  * DriveTrain Subsystem
@@ -27,6 +31,8 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
   private Encoder m_leftEncoder, m_rightEncoder;
 
+  private AHRS m_gyro;
+
   private DifferentialDrive m_drive;
 
   public DriveTrain() {
@@ -37,6 +43,7 @@ public class DriveTrain extends SubsystemBase {
     m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive (m_rightSide, m_leftSide);
+
     m_rightSide.setInverted(true);
 
     m_leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A,
@@ -45,6 +52,12 @@ public class DriveTrain extends SubsystemBase {
       RobotMap.DRIVE_RIGHT_ENCODER_B);
     m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
+
+    try {
+      m_gyro = new AHRS(SPI.Port.kMXP);
+    } catch (Exception e) {
+      e.printStackTrace();
+    }
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -70,6 +83,14 @@ public class DriveTrain extends SubsystemBase {
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
+  }
+
+  public double getGyroAngle(){
+    try {
+      return Utilities.conformAngle(m_gyro.getAngle());
+    } catch (Exception e) {
+      return 0;
+    }
   }
 
 }

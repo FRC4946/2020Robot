@@ -9,29 +9,38 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.Utilities;
 
-public class AutoDriveForward extends CommandBase {
+public class AutoRotate extends CommandBase {
   /**
-   * Creates a new Auto.
+   * Creates a new AutoRotate.
    */
-  double distance;
 
-  public AutoDriveForward() {
+  double m_angle;
+  boolean m_turnLeft;
+
+  public AutoRotate(double angle) {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(Robot.m_driveTrain);
-    this.distance = distance;
+    this.m_angle = Utilities.conformAngle(m_angle);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    Robot.m_driveTrain.arcadeDrive(0.3, 0.3);
+    m_turnLeft = ((m_angle - Robot.m_driveTrain.getGyroAngle()) > 0 == 
+      Math.abs(m_angle - Robot.m_driveTrain.getGyroAngle()) <= 180);
     
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    if (m_turnLeft) {
+      Robot.m_driveTrain.tankDrive(-0.3, 0.3);
+    } else {
+      Robot.m_driveTrain.tankDrive(0.3, -0.3);    
+    }
     
   }
 
@@ -43,6 +52,6 @@ public class AutoDriveForward extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Robot.m_driveTrain.getAverageDistance() > distance;
+    return (Math.abs(Robot.m_driveTrain.getGyroAngle() - m_angle) < 2);  
   }
 }
