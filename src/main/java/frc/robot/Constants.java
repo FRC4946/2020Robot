@@ -20,4 +20,9 @@ public final class Constants {
     //TODO : Fill In Inches Per Tick
     public static final double ENCODER_INCHES_PER_TICK = 1;
 
+    //TODO : Fill In Climber Pot Max Distance
+    public static final double CLIMBER_POT_MAX_DISTANCE = 1;
+
+    public static final double DIO_MAX_VOLTAGE = 5.0;
+
 }
