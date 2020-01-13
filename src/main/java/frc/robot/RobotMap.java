@@ -35,6 +35,11 @@ public final class RobotMap {
     public static final int DRIVE_RIGHT_ENCODER_A = 2;
     public static final int DRIVE_RIGHT_ENCODER_B = 3;
 
+<<<<<<< HEAD
     public static final int CLIMBER_LEFT_MOTOR = 0;
     public static final int CLIMBER_RIGHT_MOTOR = 1;  
+=======
+    public static final int SHOOTER_LEFT_MOTOR = 1;
+    public static final int SHOOTER_RIGHT_MOTOR = 1;
+>>>>>>> a80f9ede4581830481164e11f5a801fe00370677
 }
