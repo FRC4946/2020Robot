@@ -34,4 +34,10 @@ public final class RobotMap {
 
     public static final int DRIVE_RIGHT_ENCODER_A = 2;
     public static final int DRIVE_RIGHT_ENCODER_B = 3;
+
+    //Conveyor belt motors
+
+    public static final int LEFT_CONVEYOR_BELT = 1;
+    public static final int RIGHT_CONVEYOR_BELT = 1;
+    public static final int VERTICAL_CONVEYOR_BELT = 1;
 }
