@@ -11,20 +11,14 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-<<<<<<< HEAD
-=======
 import frc.robot.Constants;
->>>>>>> a80f9ede4581830481164e11f5a801fe00370677
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
   CANSparkMax m_leftShooterMotor, m_rightShooterMotor;
 
-<<<<<<< HEAD
-=======
   double m_setpoint = 0;
 
->>>>>>> a80f9ede4581830481164e11f5a801fe00370677
   /**
    * Creates a new Shooter.
    */
@@ -32,14 +26,11 @@ public class Shooter extends SubsystemBase {
     m_leftShooterMotor = new CANSparkMax(RobotMap.SHOOTER_LEFT_MOTOR, MotorType.kBrushless);
     m_rightShooterMotor = new CANSparkMax(RobotMap.SHOOTER_RIGHT_MOTOR, MotorType.kBrushless);
     m_rightShooterMotor.setInverted(true);
-<<<<<<< HEAD
-=======
     m_leftShooterMotor.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
     m_rightShooterMotor.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
 
     m_leftShooterMotor.burnFlash();
     m_rightShooterMotor.burnFlash();
->>>>>>> a80f9ede4581830481164e11f5a801fe00370677
   }
 
   public void set(double speed) {
@@ -52,8 +43,6 @@ public class Shooter extends SubsystemBase {
     m_rightShooterMotor.set(0);
   }
 
-<<<<<<< HEAD
-=======
   public double getAverageSpeed() {
     return (getLeftSpeed() + getRightSpeed()) / 2.0;
   }
@@ -72,11 +61,5 @@ public class Shooter extends SubsystemBase {
 
   public void setSetpoint(double setpoint) {
     m_setpoint = setpoint;
-  }
-
->>>>>>> a80f9ede4581830481164e11f5a801fe00370677
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }
