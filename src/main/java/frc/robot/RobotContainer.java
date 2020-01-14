@@ -19,7 +19,7 @@ import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ColorPicker;
+import frc.robot.subsystems.ControlPanelWheel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -47,7 +47,7 @@ public class RobotContainer {
   private final Revolver m_revolver;
   private final Intake m_intake;
   private final Turret m_turret;
-  private final ColorPicker m_colorPicker;
+  private final ControlPanelWheel m_controlPanelWheel;
 
   private Command m_autonomousCommand = null;
 
@@ -66,7 +66,7 @@ public class RobotContainer {
     m_hood = new Hood();
     m_intake = new Intake();
     m_turret = new Turret();
-    m_colorPicker = new ColorPicker();
+    m_controlPanelWheel = new ControlPanelWheel();
 
     configureButtonBindings();
   }
