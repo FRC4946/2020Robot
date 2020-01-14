@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import com.revrobotics.ColorMatch;
+import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C;
@@ -40,4 +41,8 @@ public class ControlPanelWheel extends SubsystemBase {
   public Color getMatchedColor(){
     return m_colorMatcher.matchClosestColor(m_colorSensor.getColor()).color;
   }
+
+  public static ColorMatchResult matchresult = getMatchedColor();
+
+
 }
