@@ -19,9 +19,6 @@ public class Climber extends SubsystemBase {
 
   private TalonSRX m_leftClimberMotor, m_rightClimberMotor;
   private AnalogInput m_pot;
-  /**
-   * Creates a new Climber.
-   */
 
   public Climber() {
     m_leftClimberMotor = new TalonSRX(RobotMap.CLIMBER_LEFT_MOTOR);
@@ -41,10 +38,5 @@ public class Climber extends SubsystemBase {
 
   public double getDistance() {
     return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_MAX_DISTANCE;
-  }
-
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
   }
 }
