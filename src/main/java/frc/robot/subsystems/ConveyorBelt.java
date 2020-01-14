@@ -25,48 +25,42 @@ public class ConveyorBelt extends SubsystemBase {
     m_leftConveyor = new TalonSRX(RobotMap.LEFT_CONVEYOR_BELT);
     m_rightConveyor = new TalonSRX(RobotMap.RIGHT_CONVEYOR_BELT);
     m_verticalConveyor = new TalonSRX(RobotMap.VERTICAL_CONVEYOR_BELT);
-
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
-  }
-
-  public void leftConveyorBelt(double speed){
+  public void setLeftConveyorBelt(double speed){
     m_leftConveyor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void rightConveyorBelt(double speed){
+  public void setRightConveyorBelt(double speed){
     m_rightConveyor.set(ControlMode.PercentOutput, speed);
   }
 
-  public void verticalConveyorBelt(double speed){
+  public void setVerticalConveyorBelt(double speed){
     m_verticalConveyor.set(ControlMode.PercentOutput, speed);
   }
 
   public void runAll(double speed){
-    leftConveyorBelt(speed);
-    rightConveyorBelt(speed);
-    verticalConveyorBelt(speed);
+    setLeftConveyorBelt(speed);
+    setRightConveyorBelt(speed);
+    setVerticalConveyorBelt(speed);
   }
 
   public void stopLeft(){
-    leftConveyorBelt(0.0);
+    setLeftConveyorBelt(0.0);
   }
 
   public void stopRight(){
-    rightConveyorBelt(0.0);
+    setRightConveyorBelt(0.0);
   }
 
   public void stopVertical(){
-    verticalConveyorBelt(0.0);
+    setVerticalConveyorBelt(0.0);
   }
 
   public void stopAll(){
-    leftConveyorBelt(0.0);
-    rightConveyorBelt(0.0);
-    verticalConveyorBelt(0.0);
+    setLeftConveyorBelt(0.0);
+    setRightConveyorBelt(0.0);
+    setVerticalConveyorBelt(0.0);
   }
 
 
