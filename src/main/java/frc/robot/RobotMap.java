@@ -81,6 +81,17 @@ public final class RobotMap {
     }
 
     /**
+     * PCM Port Numbers
+     */
+    public static final class PCM {
+        public static final int FRONT_INTAKE_SOLENOID_A = 1;
+        public static final int FRONT_INTAKE_SOLENOID_B = 2;
+    
+        public static final int BACK_INTAKE_SOLENOID_A = 3;
+        public static final int BACK_INTAKE_SOLENOID_B = 4;
+    }
+
+    /**
      * PDP Port Numbers
      */
     public static final class PDP {
