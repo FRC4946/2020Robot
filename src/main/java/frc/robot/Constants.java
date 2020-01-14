@@ -8,25 +8,27 @@
 package frc.robot;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants.  This class should not be used for any other purpose.  All constants should be
- * declared globally (i.e. public static).  Do not put anything functional in this class.
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean constants. This class should not be used for any other
+ * purpose. All constants should be declared globally (i.e. public static). Do
+ * not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
- * constants are needed, to reduce verbosity.
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the constants are needed, to reduce verbosity.
  */
 public final class Constants {
 
-    //TODO : Fill In Inches Per Tick
+    // TODO : Fill In Inches Per Tick
     public static final double ENCODER_INCHES_PER_TICK = 1;
 
     public static final double SHOOTER_VOLTAGE_RAMP_RATE = 0.2;
 
-    public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;    
+    public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;
     public static final double SHOOTER_VELOCITY_CONTROL_I = 0.0;
-    public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;    
+    public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;
 
-    //TODO : Fill In Climber Pot Max Distance and other variables
+    // TODO : Fill In Climber Pot Max Distance and other variables
     public static final double CLIMBER_POT_MAX_DISTANCE = 1;
 
     public static final double CLIMBER_UP_HEIGHT = 0;
@@ -34,7 +36,6 @@ public final class Constants {
 
     public static final double MIN_CLIMBER_SPEED = 0.1;
     public static final double MAX_CLIMBER_SPEED = 0.1;
-
 
     public static final double DIO_MAX_VOLTAGE = 5.0;
 

@@ -10,16 +10,17 @@ package frc.robot;
 /**
  * Contains all port numbers for motors, sensors, joysticks & OI stuff, etc...
  * <p>
- * Only reason these values aren't in constants is because I like having the port numbers and OI stuff
- * separate from the PID Tunings, etc...
+ * Only reason these values aren't in constants is because I like having the
+ * port numbers and OI stuff separate from the PID Tunings, etc...
  * </p>
- * @author Jacob 
+ * 
+ * @author Jacob
  */
 public final class RobotMap {
 
-    //TODO : Finalize Values
+    // TODO : Finalize Values
 
-    //#region OI
+    // #region OI
 
     /**
      * OI Port Numbers For Joystick Axes
@@ -33,7 +34,7 @@ public final class RobotMap {
      * OI Port Numbers For Joystick Buttons
      */
     public static final class JOYSTICK_BUTTON {
-        public static final int CLIMB_BUTTON = 1; //A on X Box Controller
+        public static final int CLIMB_BUTTON = 1; // A on X Box Controller
     }
 
     /**
@@ -44,17 +45,17 @@ public final class RobotMap {
         public static final int OPERATOR_JOYSTICK = 1;
     }
 
-    //#endregion
+    // #endregion
 
-    //MOTORS AND SENSORS
+    // MOTORS AND SENSORS
 
     /**
      * CAN IDs
      */
     public static final class CAN {
         public static final int CLIMBER_LEFT_MOTOR = 0;
-        public static final int CLIMBER_RIGHT_MOTOR = 1;  
-    
+        public static final int CLIMBER_RIGHT_MOTOR = 1;
+
         public static final int SHOOTER_LEFT_MOTOR = 2;
         public static final int SHOOTER_RIGHT_MOTOR = 3;
 
@@ -63,7 +64,7 @@ public final class RobotMap {
         public static final int VERTICAL_CONVEYOR_BELT_MOTOR = 1;
     }
 
-    //#region IO
+    // #region IO
 
     /**
      * DIO Port Numbers
@@ -71,7 +72,7 @@ public final class RobotMap {
     public static final class DIO {
         public static final int DRIVE_LEFT_ENCODER_A = 0;
         public static final int DRIVE_LEFT_ENCODER_B = 1;
-    
+
         public static final int DRIVE_RIGHT_ENCODER_A = 2;
         public static final int DRIVE_RIGHT_ENCODER_B = 3;
     }
@@ -83,5 +84,5 @@ public final class RobotMap {
         public static final int CLIMBER_POT = 0;
     }
 
-    //#endregion
+    // #endregion
 }

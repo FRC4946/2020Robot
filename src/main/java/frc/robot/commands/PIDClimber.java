@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
@@ -19,7 +18,7 @@ public class PIDClimber extends PIDCommand {
   double m_height;
 
   public PIDClimber(final double height, final Climber climber) {
-    super(new PIDController(Constants.PID_CLIMBER_P, Constants.PID_CLIMBER_I, Constants.PID_CLIMBER_D), 
+    super(new PIDController(Constants.PID_CLIMBER_P, Constants.PID_CLIMBER_I, Constants.PID_CLIMBER_D),
         // This should return the measurement
         () -> climber.getDistance(),
         // This should return the setpoint (can also be a constant)
