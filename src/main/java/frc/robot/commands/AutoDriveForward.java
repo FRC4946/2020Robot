@@ -8,41 +8,38 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
+import frc.robot.subsystems.DriveTrain;
 
 public class AutoDriveForward extends CommandBase {
-  /**
-   * Creates a new Auto.
-   */
-  double distance;
 
-  public AutoDriveForward() {
-    // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(Robot.m_driveTrain);
-    this.distance = distance;
-  }
+  double m_distance;
 
-  // Called when the command is initially scheduled.
-  @Override
-  public void initialize() {
-    Robot.m_driveTrain.arcadeDrive(0.3, 0.3);
-    
+  double m_speed;
+
+  DriveTrain m_driveTrain;
+
+  public AutoDriveForward(double distance, double speed, DriveTrain driveTrain) {
+    m_driveTrain = driveTrain;
+    m_distance = distance;
+    m_speed = speed;
+    addRequirements(m_driveTrain);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    m_driveTrain.arcadeDrive(m_speed, 0.0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_driveTrain.tankDrive(0.0, 0.0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return Robot.m_driveTrain.getAverageDistance() > distance;
+    return m_driveTrain.getAverageDistance() > m_distance;
   }
 }

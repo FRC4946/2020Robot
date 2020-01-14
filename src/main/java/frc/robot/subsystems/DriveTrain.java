@@ -27,7 +27,7 @@ import frc.robot.Utilities;
  * </p>
  */
 public class DriveTrain extends SubsystemBase {
-  private SpeedControllerGroup m_leftSide, m_rightSide; 
+  private SpeedControllerGroup m_leftSide, m_rightSide;
   private CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
   private Encoder m_leftEncoder, m_rightEncoder;
 
@@ -42,16 +42,16 @@ public class DriveTrain extends SubsystemBase {
     m_rightBack = new CANSparkMax(RobotMap.DRIVE_RIGHT_BACK_CANSPARKMAX, MotorType.kBrushless);
     m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
-    m_drive = new DifferentialDrive (m_rightSide, m_leftSide);
+    m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
 
     m_rightSide.setInverted(true);
 
-    m_leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A,
-      RobotMap.DRIVE_LEFT_ENCODER_B);
-    m_rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A,
-      RobotMap.DRIVE_RIGHT_ENCODER_B);
+    m_leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A, RobotMap.DRIVE_LEFT_ENCODER_B);
+    m_rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A, RobotMap.DRIVE_RIGHT_ENCODER_B);
     m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
+
+    //TODO : Add error handling to gyro, or else remove try catch entirely
 
     try {
       m_gyro = new AHRS(SPI.Port.kMXP);
@@ -65,7 +65,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void arcadeDrive(double drive, double turn) {
-    m_drive.arcadeDrive(drive, turn); 
+    m_drive.arcadeDrive(drive, turn);
   }
 
   public double getLeftDistance() {
@@ -85,7 +85,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.reset();
   }
 
-  public double getGyroAngle(){
+  public double getGyroAngle() {
     try {
       return Utilities.conformAngle(m_gyro.getAngle());
     } catch (Exception e) {

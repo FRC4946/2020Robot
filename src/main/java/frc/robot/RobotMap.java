@@ -10,16 +10,17 @@ package frc.robot;
 /**
  * Contains all port numbers for motors, sensors, joysticks & OI stuff, etc...
  * <p>
- * Only reason these values aren't in constants is because I like having the port numbers and OI stuff
- * separate from the PID Tunings, etc...
+ * Only reason these values aren't in constants is because I like having the
+ * port numbers and OI stuff separate from the PID Tunings, etc...
  * </p>
- * @author Jacob 
+ * 
+ * @author Jacob
  */
 public final class RobotMap {
 
-    //TODO : Finalize Values
+    // TODO : Finalize Values
 
-    //JOYSTICKS
+    // JOYSTICKS
 
     public static final int DRIVE_JOYSTICK = 0;
     public static final int OPERATOR_JOYSTICK = 1;
@@ -27,7 +28,7 @@ public final class RobotMap {
     public static final int DRIVE_AXIS = 0;
     public static final int TURN_AXIS = 1;
 
-    //MOTORS AND SENSORS
+    // MOTORS AND SENSORS
 
     public static final int DRIVE_RIGHT_FRONT_CANSPARKMAX = 0;
     public static final int DRIVE_RIGHT_BACK_CANSPARKMAX = 1;
