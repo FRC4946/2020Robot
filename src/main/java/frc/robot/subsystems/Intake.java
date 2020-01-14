@@ -14,7 +14,7 @@ import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
   /**
-   * Creates a new Intake.
+   * TODO: Import TalonSRX
    */
 
   private DoubleSolenoid m_leftElbow, m_rightElbow;
@@ -30,8 +30,11 @@ public class Intake extends SubsystemBase {
     m_rightElbow = new DoubleSolenoid(RobotMap.RIGHT_ELBOW_A, RobotMap.RIGHT_ELBOW_B);
     m_isRightElbowUp = false;
 
-    m_spinLeft = new TalonSRX(RobotMap.SPIN_LEFT_TALONSRX);
-    m_spinRight = new TalonSRX(RobotMap.SPIN_RIGHT_TALONSRX);
+    m_spinLeft = new TalonSRX(RobotMap.CAN.SPIN_LEFT_TALONSRX);
+    m_spinRight = new TalonSRX(RobotMap.CAN.SPIN_RIGHT_TALONSRX);
+
+    m_spinLeft.burnFlash();
+    m_spinRight.burnFlash();
 
   }
 
@@ -115,6 +118,15 @@ public class Intake extends SubsystemBase {
     m_leftElbow.set(Value.kOff);
   }
 
+  public void set(double speed){
+    m_spinLeft.set(speed);
+    m_spinRight.set(speed);
+  }
+
+  public void stopAll(){
+    m_spinLeft.set(0);
+    m_spinRight.set(0);
+  }
 
   @Override
   public void periodic() {
