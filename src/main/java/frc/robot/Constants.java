@@ -20,4 +20,9 @@ public final class Constants {
     //TODO : Fill In Inches Per Tick
     public static final double ENCODER_INCHES_PER_TICK = 1;
 
+    public static final double SHOOTER_VOLTAGE_RAMP_RATE = 0.2;
+
+    public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;    
+    public static final double SHOOTER_VELOCITY_CONTROL_I = 0.0;
+    public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;    
 }
