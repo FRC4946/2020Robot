@@ -12,15 +12,9 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.Robot;
+import frc.robot.subsystems.Climber;
 
-
-// NOTE:  Consider using this command inline, rather than writing a subclass.  For more
-// information, see:
-// https://docs.wpilib.org/en/latest/docs/software/commandbased/convenience-features.html
 public class PIDClimber extends PIDCommand {
-  /**
-   * Creates a new PIDClimber.
-   */
 
   double m_height;
 
@@ -34,7 +28,7 @@ public class PIDClimber extends PIDCommand {
         output -> {
           climber.set(output);
         });
-    addRequirements(Robot.m_climber);
+    addRequirements(climber);
     getController().setOutputRange(Constants.MIN_CLIMBER_SPEED, Constants.MAX_CLIMBER_SPEED);
 
   }

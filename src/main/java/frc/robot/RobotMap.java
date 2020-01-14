@@ -19,33 +19,69 @@ public final class RobotMap {
 
     //TODO : Finalize Values
 
-    //JOYSTICKS
+    //#region OI
 
-    public static final int DRIVE_JOYSTICK = 0;
-    public static final int OPERATOR_JOYSTICK = 1;
+    /**
+     * OI Port Numbers For Joystick Axes
+     */
+    public static final class JOYSTICK_AXIS {
+        public static final int DRIVE_AXIS = 0;
+        public static final int TURN_AXIS = 1;
+    }
 
-    public static final int DRIVE_AXIS = 0;
-    public static final int TURN_AXIS = 1;
+    /**
+     * OI Port Numbers For Joystick Buttons
+     */
+    public static final class JOYSTICK_BUTTON {
+        public static final int CLIMB_BUTTON = 1; //A on X Box Controller
+    }
+
+    /**
+     * OI Port Numbers For Joysticks
+     */
+    public static final class JOYSTICK {
+        public static final int DRIVE_JOYSTICK = 0;
+        public static final int OPERATOR_JOYSTICK = 1;
+    }
+
+    //#endregion
 
     //MOTORS AND SENSORS
 
-    public static final int DRIVE_LEFT_ENCODER_A = 0;
-    public static final int DRIVE_LEFT_ENCODER_B = 1;
+    /**
+     * CAN IDs
+     */
+    public static final class CAN {
+        public static final int CLIMBER_LEFT_MOTOR = 0;
+        public static final int CLIMBER_RIGHT_MOTOR = 1;  
+    
+        public static final int SHOOTER_LEFT_MOTOR = 2;
+        public static final int SHOOTER_RIGHT_MOTOR = 3;
 
-    public static final int DRIVE_RIGHT_ENCODER_A = 2;
-    public static final int DRIVE_RIGHT_ENCODER_B = 3;
+        public static final int LEFT_CONVEYOR_BELT_MOTOR = 1;
+        public static final int RIGHT_CONVEYOR_BELT_MOTOR = 1;
+        public static final int VERTICAL_CONVEYOR_BELT_MOTOR = 1;
+    }
 
-    public static final int LEFT_CONVEYOR_BELT = 1;
-    public static final int RIGHT_CONVEYOR_BELT = 1;
-    public static final int VERTICAL_CONVEYOR_BELT = 1;
+    //#region IO
 
-    public static final int CLIMBER_LEFT_MOTOR = 0;
-    public static final int CLIMBER_RIGHT_MOTOR = 1;  
+    /**
+     * DIO Port Numbers
+     */
+    public static final class DIO {
+        public static final int DRIVE_LEFT_ENCODER_A = 0;
+        public static final int DRIVE_LEFT_ENCODER_B = 1;
+    
+        public static final int DRIVE_RIGHT_ENCODER_A = 2;
+        public static final int DRIVE_RIGHT_ENCODER_B = 3;
+    }
 
-    public static final int SHOOTER_LEFT_MOTOR = 1;
-    public static final int SHOOTER_RIGHT_MOTOR = 1;
-    public static final int CLIMBER_LEFT_MOTOR = 0;
-    public static final int CLIMBER_RIGHT_MOTOR = 1;
+    /**
+     * Analog Port Numbers
+     */
+    public static final class AIO {
+        public static final int CLIMBER_POT = 0;
+    }
 
-    public static final int CLIMBER_POT_AIO_PORT = 0;
+    //#endregion
 }

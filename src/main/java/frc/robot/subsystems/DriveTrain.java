@@ -25,10 +25,10 @@ public class DriveTrain extends SubsystemBase {
     m_rightSide = new SpeedControllerGroup(null);
     m_rightSide.setInverted(true);
 
-    m_leftEncoder = new Encoder(RobotMap.DRIVE_LEFT_ENCODER_A,
-      RobotMap.DRIVE_LEFT_ENCODER_B);
-    m_rightEncoder = new Encoder(RobotMap.DRIVE_RIGHT_ENCODER_A,
-      RobotMap.DRIVE_RIGHT_ENCODER_B);
+    m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A,
+      RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
+    m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A,
+      RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
     m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
   }

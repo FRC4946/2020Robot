@@ -21,9 +21,9 @@ public class Climber extends SubsystemBase {
   private AnalogInput m_pot;
 
   public Climber() {
-    m_leftClimberMotor = new TalonSRX(RobotMap.CLIMBER_LEFT_MOTOR);
-    m_rightClimberMotor = new TalonSRX(RobotMap.CLIMBER_RIGHT_MOTOR);
-    m_pot = new AnalogInput(RobotMap.CLIMBER_POT_DIO_PORT);
+    m_leftClimberMotor = new TalonSRX(RobotMap.CAN.CLIMBER_LEFT_MOTOR);
+    m_rightClimberMotor = new TalonSRX(RobotMap.CAN.CLIMBER_RIGHT_MOTOR);
+    m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
   }
 
   public void set(double speed) {

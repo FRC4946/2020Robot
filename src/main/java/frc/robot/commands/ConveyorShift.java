@@ -9,22 +9,24 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
+import frc.robot.subsystems.ConveyorBelt;
 
 public class ConveyorShift extends CommandBase {
-  /**
-   * Creates a new ConveyorShift.
-   */
+
   double m_speed;
-  public ConveyorShift(double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    requires(Robot.m_conveyor);
+  ConveyorBelt m_conveyorBelt;
+
+  public ConveyorShift(double speed, ConveyorBelt conveyorBelt) {
+    m_conveyorBelt = conveyorBelt;
+
+    addRequirements(m_conveyorBelt);
     m_speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+
   }
 
   // Called every time the scheduler runs while the command is scheduled.

@@ -23,8 +23,8 @@ public class Shooter extends SubsystemBase {
    * Creates a new Shooter.
    */
   public Shooter() {
-    m_leftShooterMotor = new CANSparkMax(RobotMap.SHOOTER_LEFT_MOTOR, MotorType.kBrushless);
-    m_rightShooterMotor = new CANSparkMax(RobotMap.SHOOTER_RIGHT_MOTOR, MotorType.kBrushless);
+    m_leftShooterMotor = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_MOTOR, MotorType.kBrushless);
+    m_rightShooterMotor = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_MOTOR, MotorType.kBrushless);
     m_rightShooterMotor.setInverted(true);
     m_leftShooterMotor.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
     m_rightShooterMotor.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
