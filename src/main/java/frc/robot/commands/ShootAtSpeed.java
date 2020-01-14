@@ -7,7 +7,6 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
@@ -19,7 +18,7 @@ import frc.robot.subsystems.Shooter;
 public class ShootAtSpeed extends PIDCommand {
 
   /**
-   * Creates a new ShootAtSpeedForTime.
+   * Creates a new ShootAtSpeed
    */
   public ShootAtSpeed(Shooter shooter) {
     super(

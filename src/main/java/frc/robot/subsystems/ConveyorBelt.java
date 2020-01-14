@@ -22,9 +22,9 @@ public class ConveyorBelt extends SubsystemBase {
 
   public ConveyorBelt() {
     
-    m_leftConveyor = new TalonSRX(RobotMap.CAN.LEFT_CONVEYOR_BELT_MOTOR);
-    m_rightConveyor = new TalonSRX(RobotMap.CAN.RIGHT_CONVEYOR_BELT_MOTOR);
-    m_verticalConveyor = new TalonSRX(RobotMap.CAN.VERTICAL_CONVEYOR_BELT_MOTOR);
+    m_leftConveyor = new TalonSRX(RobotMap.CAN.LEFT_CONVEYOR_BELT_TALONSRX);
+    m_rightConveyor = new TalonSRX(RobotMap.CAN.RIGHT_CONVEYOR_BELT_TALONSRX);
+    m_verticalConveyor = new TalonSRX(RobotMap.CAN.VERTICAL_CONVEYOR_BELT_TALONSRX);
   }
 
   public void setLeftConveyorBelt(double speed){

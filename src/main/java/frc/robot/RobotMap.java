@@ -20,7 +20,7 @@ public final class RobotMap {
 
     // TODO : Finalize Values
 
-    // #region OI
+    // JOYSTICKS
 
     /**
      * OI Port Numbers For Joystick Axes
@@ -53,15 +53,20 @@ public final class RobotMap {
      * CAN IDs
      */
     public static final class CAN {
-        public static final int CLIMBER_LEFT_MOTOR = 0;
-        public static final int CLIMBER_RIGHT_MOTOR = 1;
+        public static final int CLIMBER_LEFT_TALONSRX = 0;
+        public static final int CLIMBER_RIGHT_TALONSRX = 1;
 
-        public static final int SHOOTER_LEFT_MOTOR = 2;
-        public static final int SHOOTER_RIGHT_MOTOR = 3;
+        public static final int SHOOTER_LEFT_SPARKMAX = 2;
+        public static final int SHOOTER_RIGHT_SPARKMAX = 3;
 
-        public static final int LEFT_CONVEYOR_BELT_MOTOR = 1;
-        public static final int RIGHT_CONVEYOR_BELT_MOTOR = 1;
-        public static final int VERTICAL_CONVEYOR_BELT_MOTOR = 1;
+        public static final int LEFT_CONVEYOR_BELT_TALONSRX = 4;
+        public static final int RIGHT_CONVEYOR_BELT_TALONSRX = 5;
+        public static final int VERTICAL_CONVEYOR_BELT_TALONSRX = 6;
+
+        public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 7;
+        public static final int DRIVE_RIGHT_BACK_SPARKMAX = 8;
+        public static final int DRIVE_LEFT_FRONT_SPARKMAX = 9;
+        public static final int DRIVE_LEFT_BACK_SPARKMAX = 10;
     }
 
     // #region IO
