@@ -44,4 +44,8 @@ public final class RobotMap {
 
     public static final int SHOOTER_LEFT_MOTOR = 1;
     public static final int SHOOTER_RIGHT_MOTOR = 1;
+    public static final int CLIMBER_LEFT_MOTOR = 0;
+    public static final int CLIMBER_RIGHT_MOTOR = 1;
+
+    public static final int CLIMBER_POT_AIO_PORT = 0;
 }

@@ -10,20 +10,20 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
 
   private TalonSRX m_leftClimberMotor, m_rightClimberMotor;
-  /**
-   * Creates a new Climber.
-   */
+  private AnalogInput m_pot;
 
   public Climber() {
     m_leftClimberMotor = new TalonSRX(RobotMap.CLIMBER_LEFT_MOTOR);
     m_rightClimberMotor = new TalonSRX(RobotMap.CLIMBER_RIGHT_MOTOR);
+    m_pot = new AnalogInput(RobotMap.CLIMBER_POT_DIO_PORT);
   }
 
   public void set(double speed) {
@@ -36,8 +36,7 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
-  @Override
-  public void periodic() {
-    // This method will be called once per scheduler run
+  public double getDistance() {
+    return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_MAX_DISTANCE;
   }
 }
