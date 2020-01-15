@@ -18,13 +18,16 @@ public class ConveyorShift extends CommandBase {
 
   double m_speed;
   double m_pulseLength;
-  boolean m_isLeftRunning;
-  ConveyorBelt m_conveyorBelt;
-  Timer m_conveyorPulse;
 
-  public ConveyorShift(double speed, ConveyorBelt conveyorBelt, double pulseLength) {
+  boolean isRightReady;
+  boolean ifLeftReady;
+
+  ConveyorBelt m_conveyorBelt;
+  Timer m_timer;
+
+  public ConveyorShift(final double speed, final ConveyorBelt conveyorBelt, final double pulseLength) {
     m_conveyorBelt = conveyorBelt;
-    m_conveyorPulse = new Timer();
+    m_timer = new Timer();
 
     addRequirements(m_conveyorBelt);
     m_speed = speed;
@@ -34,38 +37,30 @@ public class ConveyorShift extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
+    isRightReady=false;
+    isLeftReady=true;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     // For horizontal conveyors
-    m_conveyorPulse.start();
-    if (m_conveyorPulse.hasPeriodPassed(m_pulseLength)) {
-      if (m_isLeftRunning) {
-        m_isLeftRunning = false;
-        m_conveyorBelt.stopLeft();
-        m_conveyorBelt.setRightConveyorBelt(m_speed);
 
-        m_conveyorPulse.stop();
-        m_conveyorPulse.reset();
-      } else if (!m_isLeftRunning) {
-        m_isLeftRunning = true;
-        m_conveyorBelt.stopRight();
-        m_conveyorBelt.setLeftConveyorBelt(m_speed);
-
-        m_conveyorPulse.stop();
-        m_conveyorPulse.reset();
-      }
+    if(isLeftReady){
+      m_conveyorBelt.setLeftConveyorBelt(m_speed);
     }
+    if(isRightReady){
+      m_conveyorBelt.setRightConveyorBelt(m_speed);
+    }
+    
+
     // For vertical conveyors
     m_conveyorBelt.setVerticalConveyorBelt(m_speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
+  public void end(final boolean interrupted) {
     m_conveyorBelt.stopAll();
   }
 
@@ -74,4 +69,5 @@ public class ConveyorShift extends CommandBase {
   public boolean isFinished() {
     return false;
   }
+
 }
