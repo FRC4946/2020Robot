@@ -46,7 +46,5 @@ public class ControlPanelWheel extends SubsystemBase {
     return m_colorMatcher.matchClosestColor(m_colorSensor.getColor()).color;
   }
 
-  //public static Color matchresult = getMatchedColor();
-
 
 }

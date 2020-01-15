@@ -16,7 +16,7 @@ public class ColorPanelWheelComand extends CommandBase {
   /**
    * Creates a new ColorPanelWheelComand.
    */
-
+  
   ControlPanelWheel m_controlPanelWheel;
   Color m_currentColor;
   Color m_targetColor;

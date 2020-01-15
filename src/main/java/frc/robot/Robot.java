@@ -52,8 +52,19 @@ public class Robot extends TimedRobot {
     // the robot's periodic block in order for anything in the Command-based
     // framework to work.
     CommandScheduler.getInstance().run();
-
-    //System.out.println(RobotContainer.m_controlPanelWheel.matchresult);
+    if (m_robotContainer.m_controlPanelWheel.getMatchedColor()==Constants.COLOR_RED){
+      System.out.println("red");
+    }
+    else if(m_robotContainer.m_controlPanelWheel.getMatchedColor()==Constants.COLOR_BLUE){
+      System.out.println("blue");
+    }
+    else if(m_robotContainer.m_controlPanelWheel.getMatchedColor()==Constants.COLOR_GREEN){
+      System.out.println("green");
+    }
+    else if(m_robotContainer.m_controlPanelWheel.getMatchedColor()==Constants.COLOR_YELLOW){
+      System.out.println("yellow");
+    }
+    System.out.println("test");
 
   }
 

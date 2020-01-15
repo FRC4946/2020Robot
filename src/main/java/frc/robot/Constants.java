@@ -166,10 +166,10 @@ public final class Constants {
 
   // #endregion
 
-  public static final Color COLOR_BLUE = ColorMatch.makeColor(0, 0, 0);
-  public static final Color COLOR_GREEN = ColorMatch.makeColor(0, 0, 0);
-  public static final Color COLOR_RED = ColorMatch.makeColor(0, 0, 0);
-  public static final Color COLOR_YELLOW = ColorMatch.makeColor(0, 0, 0);
+  public static final Color COLOR_BLUE = ColorMatch.makeColor(0, 1, 1);
+  public static final Color COLOR_GREEN = ColorMatch.makeColor(0, 1, 0);
+  public static final Color COLOR_RED = ColorMatch.makeColor(1, 0, 0);
+  public static final Color COLOR_YELLOW = ColorMatch.makeColor(1, 1, 0);
 
   public static final double WHEEL_PIECE_DIAMETER = 0.4572; // The circumference of each wheel piece
 }
