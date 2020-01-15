@@ -20,7 +20,7 @@ public class ConveyorShift extends CommandBase {
   double m_pulseLength;
 
   boolean isRightReady;
-  boolean ifLeftReady;
+  boolean isLeftReady;
 
   ConveyorBelt m_conveyorBelt;
   Timer m_timer;
@@ -38,7 +38,7 @@ public class ConveyorShift extends CommandBase {
   @Override
   public void initialize() {
     isRightReady=false;
-    isLeftReady=true;
+    m_timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -46,11 +46,21 @@ public class ConveyorShift extends CommandBase {
   public void execute() {
     // For horizontal conveyors
 
-    if(isLeftReady){
+    if(!isRightReady){
       m_conveyorBelt.setLeftConveyorBelt(m_speed);
+      m_conveyorBelt.stopRight();
     }
     if(isRightReady){
       m_conveyorBelt.setRightConveyorBelt(m_speed);
+      m_conveyorBelt.stopLeft();
+    }
+
+    if (m_timer.hasPeriodPassed(m_pulseLength)){
+      isRightReady = !isRightReady;
+
+      m_timer.stop();
+      m_timer.reset();
+      m_timer.start();
     }
     
 
