@@ -9,69 +9,78 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.ConveyorBelt;
 
-
-public class ConveyorShift extends CommandBase {
+public class TimedConveyor extends CommandBase {
+  /**
+   * Creates a new TimedConveyor.
+   */
 
   double m_speed;
   double m_pulseLength;
 
+  double m_period;
+
   boolean isRightEnabled;
 
   ConveyorBelt m_conveyorBelt;
-  Timer m_timer;
+  Timer m_mastertimer;
+  Timer m_shifter; 
 
-  public ConveyorShift(final double speed, final ConveyorBelt conveyorBelt, final double pulseLength) {
+  public TimedConveyor(final double speed, final ConveyorBelt conveyorBelt, final double pulseLength, final double time) {
+    // Use addRequirements() here to declare subsystem dependencies.
+
     m_conveyorBelt = conveyorBelt;
-    m_timer = new Timer();
+    m_mastertimer = new Timer();
+    m_period= time;
 
     addRequirements(m_conveyorBelt);
     m_speed = speed;
     m_pulseLength = pulseLength;
-    
+
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isRightEnabled=false;
-    m_timer.start();
+    isRightEnabled=!isRightEnabled;
+    m_shifter.start();
+    m_mastertimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // For horizontal conveyors
+    if(!m_mastertimer.hasPeriodPassed(m_period)){
+        if(!isRightEnabled){
+          m_conveyorBelt.setLeftConveyorBelt(m_speed);
+          m_conveyorBelt.stopRight();
+        }
+        if(isRightEnabled){
+          m_conveyorBelt.setRightConveyorBelt(m_speed);
+          m_conveyorBelt.stopLeft();
+        }
 
-    if(!isRightEnabled){
-      m_conveyorBelt.setLeftConveyorBelt(m_speed);
-      m_conveyorBelt.stopRight();
+        if (m_shifter.hasPeriodPassed(m_pulseLength)){
+          isRightEnabled = !isRightEnabled;
+
+          m_shifter.stop();
+          m_shifter.reset();
+          m_shifter.start();
+        }
     }
-    if(isRightEnabled){
-      m_conveyorBelt.setRightConveyorBelt(m_speed);
-      m_conveyorBelt.stopLeft();
-    }
 
-    if (m_timer.hasPeriodPassed(m_pulseLength)){
-      isRightEnabled = !isRightEnabled;
-
-      m_timer.stop();
-      m_timer.reset();
-      m_timer.start();
+    if(m_mastertimer.hasPeriodPassed(m_period)){
+      m_shifter.stop();
+      m_mastertimer.stop();
+      m_conveyorBelt.stopAll();
     }
     
-
-    // For vertical conveyors
-    m_conveyorBelt.setVerticalConveyorBelt(m_speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(final boolean interrupted) {  
-    m_conveyorBelt.stopAll();
+  public void end(boolean interrupted) {
   }
 
   // Returns true when the command should end.
@@ -79,5 +88,4 @@ public class ConveyorShift extends CommandBase {
   public boolean isFinished() {
     return false;
   }
-
 }
