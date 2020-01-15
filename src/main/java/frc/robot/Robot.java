@@ -53,7 +53,7 @@ public class Robot extends TimedRobot {
     // framework to work.
     CommandScheduler.getInstance().run();
 
-    System.out.println(RobotContainer.m_controlPanelWheel.matchresult);
+    //System.out.println(RobotContainer.m_controlPanelWheel.matchresult);
 
   }
 

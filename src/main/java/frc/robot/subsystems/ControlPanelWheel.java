@@ -38,11 +38,15 @@ public class ControlPanelWheel extends SubsystemBase {
     m_wheelMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  public void stopWheel(){
+    m_wheelMotor.set(ControlMode.PercentOutput, 0.0);
+  }
+
   public Color getMatchedColor(){
     return m_colorMatcher.matchClosestColor(m_colorSensor.getColor()).color;
   }
 
-  public static ColorMatchResult matchresult = getMatchedColor();
+  //public static Color matchresult = getMatchedColor();
 
 
 }

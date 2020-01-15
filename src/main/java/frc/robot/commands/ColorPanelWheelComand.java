@@ -44,13 +44,14 @@ public class ColorPanelWheelComand extends CommandBase {
     if (m_currentColor != m_targetColor) {
       m_controlPanelWheel.set(m_speed);
     } else {
-      m_controlPanelWheel.set(0.0);
+      m_controlPanelWheel.stopWheel();
     }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_controlPanelWheel.stopWheel();
   }
 
   // Returns true when the command should end.
