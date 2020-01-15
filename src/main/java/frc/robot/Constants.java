@@ -45,5 +45,7 @@ public final class Constants {
     
     public static final double DEFAULT_DEADZONE = 0.1;
 
-
+    public static final double ROBOT_START_X = 0.0;
+    public static final double ROBOT_START_Y = 0.0;
+    public static final double ROBOT_START_ANGLE = 0.0;
 }

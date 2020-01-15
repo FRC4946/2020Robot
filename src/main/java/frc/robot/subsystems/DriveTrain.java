@@ -10,11 +10,14 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import edu.wpi.first.wpilibj.SPI;
 
 import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
+import edu.wpi.first.wpilibj.geometry.Pose2d;
+import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -35,16 +38,25 @@ public class DriveTrain extends SubsystemBase {
 
   private DifferentialDrive m_drive;
 
+  DifferentialDriveOdometry m_odometry;
+
   public DriveTrain() {
     m_leftFront = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_FRONT_SPARKMAX, MotorType.kBrushless);
     m_leftBack = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_BACK_SPARKMAX, MotorType.kBrushless);
     m_rightFront = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_FRONT_SPARKMAX, MotorType.kBrushless);
     m_rightBack = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_BACK_SPARKMAX, MotorType.kBrushless);
+
+    m_rightFront.setInverted(true);
+    m_rightBack.setInverted(true);
+
+    m_rightFront.burnFlash();
+    m_rightBack.burnFlash();
+    m_leftFront.burnFlash();
+    m_leftBack.burnFlash();
+
     m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
-
-    m_rightSide.setInverted(true);
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
@@ -56,6 +68,9 @@ public class DriveTrain extends SubsystemBase {
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()), new Pose2d(
+        Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
   }
 
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -83,6 +98,31 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.reset();
   }
 
+  /**
+   * Resets the odometry and sets the robot to the inputted position
+   * 
+   * @param xPos  the x position of the robot in inches
+   * @param yPos  the y position of the robot in inches
+   * @param angle the angle of the robot in degrees (WPILIB Format, degrees
+   *              counterclockwise with 0 being straight ahead)
+   */
+  public void resetOdometry(double xPos, double yPos, double angle) {
+    resetEncoders();
+    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
+  }
+
+  /**
+   * Resets the odometry and sets the robot to the inputted position
+   */
+  public void resetOdometry() {
+    resetOdometry(0, 0, 0);
+  }
+
+  public void resetGyro() {
+    m_gyro.reset();
+    resetOdometry();
+  }
+
   public double getGyroAngle() {
     try {
       return Utilities.conformAngle(m_gyro.getAngle());
@@ -90,6 +130,11 @@ public class DriveTrain extends SubsystemBase {
       System.out.println("Gyro Not Found");
       return 0;
     }
+  }
+
+  @Override
+  public void periodic() {
+    m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
   }
 
 }
