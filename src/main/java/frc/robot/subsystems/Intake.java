@@ -119,13 +119,13 @@ public class Intake extends SubsystemBase {
   }
 
   public void set(double speed){
-    m_spinLeft.set(speed);
-    m_spinRight.set(speed);
+    m_spinLeft.set(ControlMode.PercentOutput, speed);
+    m_spinRight.set(ControlMode.PercentOutput, speed);
   }
 
   public void stopAll(){
-    m_spinLeft.set(0);
-    m_spinRight.set(0);
+    m_spinLeft.set(ControlMode.PercentOutput, 0.0);
+    m_spinRight.set(ControlMode.PercentOutput, 0.0);
   }
 
   @Override
