@@ -46,5 +46,8 @@ public class ControlPanelWheel extends SubsystemBase {
     return m_colorMatcher.matchClosestColor(m_colorSensor.getColor()).color;
   }
 
-
+  public double getRevolutions(int moves){
+    double distance = moves*Constants.WHEEL_PIECE_CIRCUMFERENCE;
+    return distance/Constants.COLOR_WHEEL_CIRCUMFERENCE;
+  }
 }
