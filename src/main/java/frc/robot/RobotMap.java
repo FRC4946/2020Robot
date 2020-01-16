@@ -67,6 +67,8 @@ public final class RobotMap {
         public static final int DRIVE_RIGHT_BACK_SPARKMAX = 8;
         public static final int DRIVE_LEFT_FRONT_SPARKMAX = 9;
         public static final int DRIVE_LEFT_BACK_SPARKMAX = 10;
+
+        public static final int TURRET_TALONSRX = 0;
     }
 
     // #region IO
