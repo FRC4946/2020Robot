@@ -16,6 +16,7 @@ import frc.robot.commands.ShootAtSpeed;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ConveyorBelt;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -35,12 +36,13 @@ public class RobotContainer {
   Shooter m_shooter;
   Climber m_climber;
   ConveyorBelt m_conveyor;
+  Limelight m_limelight;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-
+    m_limelight= new Limelight();
     m_driveTrain = new DriveTrain();
     m_shooter = new Shooter();
     m_climber = new Climber();
