@@ -81,6 +81,14 @@ public class DriveTrain extends SubsystemBase {
     m_drive.arcadeDrive(drive, turn);
   }
 
+  public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn){
+    m_drive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
+  }
+
+  public void stop(){
+    m_drive.tankDrive(0.0, 0.0);
+  }
+
   public double getLeftDistance() {
     return m_leftEncoder.getDistance();
   }
