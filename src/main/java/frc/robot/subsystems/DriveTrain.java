@@ -37,8 +37,12 @@ public class DriveTrain extends SubsystemBase {
   private AHRS m_gyro;
 
   private DifferentialDrive m_drive;
+  
+  private DifferentialDriveKinematic m_kinematic;
+  private var m_chassisSpeeds;
+  private DifferentialDriveWheelSpeeds m_wheelSpeeds;
 
-  DifferentialDriveOdometry m_odometry;
+  private DifferentialDriveOdometry m_odometry;
 
   public DriveTrain() {
     m_leftFront = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_FRONT_SPARKMAX, MotorType.kBrushless);
@@ -57,6 +61,10 @@ public class DriveTrain extends SubsystemBase {
     m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
+    
+    m_kinematic = new DifferentialDriveKinematic = new (Units.inchesToMeters(Constants.TRACK_WIDTH));
+    m_chassisSpeeds = new ChassisSpeeds(Constants.LINEAR_VELOCITY, 0, Constants.ANGULAR_VELOCITY);
+    m_wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
@@ -105,6 +113,16 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
   }
+
+  public double getLeftVelocity(double leftVelocity){
+    leftVelocity = wheelSpeeds.leftMetersPerSecond;
+  }
+
+  public double getRightVelocity(double rightVelocity){
+    leftVelocity = wheelSpeeds.rightMetersPerSecond;
+  }
+
+
 
   /**
    * Resets the odometry and sets the robot to the inputted position
