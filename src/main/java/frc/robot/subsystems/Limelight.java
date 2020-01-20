@@ -70,6 +70,10 @@ public class Limelight extends SubsystemBase {
     return new double[] { m_tx.getDouble(0), m_ty.getDouble(0) };
   }
 
+  public double getOffsetX(){
+    return m_tx.getDouble(0);
+  }
+
   /**
    * Returns the area of the target as a percentage of the whole image (0% to
    * 100%)
