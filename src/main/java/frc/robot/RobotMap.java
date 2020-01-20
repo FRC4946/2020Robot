@@ -37,6 +37,7 @@ public final class RobotMap {
      */
     public static final class JOYSTICK_BUTTON {
         public static final int CLIMB_BUTTON = 1; // A on X Box Controller
+        public static final int INTAKE_BUTTON = 2; 
     }
 
     /**

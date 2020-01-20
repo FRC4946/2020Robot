@@ -13,8 +13,10 @@ import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
@@ -30,12 +32,15 @@ public class RobotContainer {
   Joystick m_driveJoystick;
   Joystick m_operatorJoystick;
 
+  JoystickButton m_intakeButton;
+
   DriveTrain m_driveTrain;
   Shooter m_shooter;
   Climber m_climber;
   Limelight m_limelight;
   PowerDistributionPanel m_pdp;
   Revolver m_revolver;
+  Intake m_intake;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -47,6 +52,7 @@ public class RobotContainer {
     m_shooter = new Shooter();
     m_climber = new Climber();
     m_revolver = new Revolver(m_pdp);
+    m_intake = new Intake();
 
     configureButtonBindings();
 
