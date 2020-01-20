@@ -13,6 +13,7 @@ import com.revrobotics.ColorMatch;
 import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -26,6 +27,8 @@ public class ControlPanelWheel extends SubsystemBase {
   public ColorSensorV3 m_colorSensor = new ColorSensorV3(I2C.Port.kOnboard);
   public TalonSRX m_wheelMotor = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
   public ColorMatch m_colorMatcher = new ColorMatch();
+  public Encoder m_wheelEncoder = new Encoder(RobotMap.DIO.WHEEL_ENCODER_A, RobotMap.DIO.WHEEL_ENCODER_B);
+
 
   public ControlPanelWheel() {
     m_colorMatcher.addColorMatch(Constants.COLOR_BLUE);
@@ -49,5 +52,10 @@ public class ControlPanelWheel extends SubsystemBase {
   public double getRevolutions(int moves){
     double distance = moves*Constants.WHEEL_PIECE_CIRCUMFERENCE;
     return distance/Constants.COLOR_WHEEL_CIRCUMFERENCE;
+
+  }
+  public double getDistance(){
+    return m_wheelEncoder.getDistance();
+
   }
 }
