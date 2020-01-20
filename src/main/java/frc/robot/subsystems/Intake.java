@@ -7,6 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -32,10 +35,6 @@ public class Intake extends SubsystemBase {
 
     m_spinLeft = new TalonSRX(RobotMap.CAN.SPIN_LEFT_TALONSRX);
     m_spinRight = new TalonSRX(RobotMap.CAN.SPIN_RIGHT_TALONSRX);
-
-    m_spinLeft.burnFlash();
-    m_spinRight.burnFlash();
-
   }
 
   public void setLeftElbow (boolean isUp){
