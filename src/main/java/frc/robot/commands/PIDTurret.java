@@ -11,6 +11,8 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
+import frc.robot.Constants;
+
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -22,23 +24,21 @@ public class PIDTurret extends PIDCommand {
 
   double m_xOffset;
 
-  public PIDTurret(final double degrees, final Turret turret, final Limelight limelight) {
-
-    double[] offset = limelight.getOffset();
-    m_xOffset = offset[0];
-
+  public PIDTurret(final Turret turret, final Limelight limelight) {
     super(
         // The controller that the command will use
         new PIDController(Constants.PID_CLIMBER_P, Constants.PID_CLIMBER_I, Constants.PID_CLIMBER_D),
         // This should return the measurement
         () -> limelight.getOffsetX(),
         // This should return the setpoint (can also be a constant)
-        () -> degrees,
+        () -> 0,
         // This uses the output
         output -> {
           turret.move(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
+    double[] offset = limelight.getOffset();
+    m_xOffset = offset[0];
     addRequirements(turret);
     // Configure additional PID options by calling `getController` here.
   }
@@ -46,6 +46,6 @@ public class PIDTurret extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (limelight.getOffsetX()==0.0 || getController().atSetpoint());
+    return getController().atSetpoint();
   }
 }
