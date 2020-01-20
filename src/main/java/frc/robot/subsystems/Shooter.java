@@ -33,32 +33,55 @@ public class Shooter extends SubsystemBase {
     m_rightShooterMotor.burnFlash();
   }
 
+  /**
+   * Sets the motors to the desired speed
+   * @param speed The speed that the motor runs at
+   */
   public void set(double speed) {
     m_leftShooterMotor.set(speed);
     m_rightShooterMotor.set(speed);
   }
 
+  /**
+   * Stops the motors
+   */
   public void stop() {
     m_leftShooterMotor.set(0);
     m_rightShooterMotor.set(0);
   }
 
+  /**
+   * Gets the average speed of the motors
+   */
   public double getAverageSpeed() {
     return (getLeftSpeed() + getRightSpeed()) / 2.0;
   }
 
+  /**
+   * Gets the speed that the right motor is running at
+   */
   public double getRightSpeed() {
     return m_rightShooterMotor.getEncoder().getVelocity();
   }
 
+  /**
+   * Gets the speed that the left motor is running at
+   */
   public double getLeftSpeed() {
     return m_leftShooterMotor.getEncoder().getVelocity();
   }
 
+  /**
+   * Get PID set point
+   */
   public double getSetpoint() {
     return m_setpoint;
   }
 
+  /**
+   * Sets the PID setpoint 
+   * @param setpoint desired set point
+   */
   public void setSetpoint(double setpoint) {
     m_setpoint = setpoint;
   }
