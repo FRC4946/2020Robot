@@ -17,6 +17,7 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
+import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -39,8 +40,11 @@ public class DriveTrain extends SubsystemBase {
   private DifferentialDrive m_drive;
   
   private DifferentialDriveKinematic m_kinematic;
+  private DifferentialDriveWheelSpeeds m_getChassisSpeeds;
+  private DifferentialDriveWheelSpeeds m_getWheelSpeeds;
   private var m_chassisSpeeds;
-  private DifferentialDriveWheelSpeeds m_wheelSpeeds;
+  private var m_wheelSpeeds;
+  
 
   private DifferentialDriveOdometry m_odometry;
 
@@ -62,9 +66,13 @@ public class DriveTrain extends SubsystemBase {
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
     
-    m_kinematic = new DifferentialDriveKinematic = new (Units.inchesToMeters(Constants.TRACK_WIDTH));
+    m_kinematic = new DifferentialDriveKinematic(Units.inchesToMeters(Constants.TRACK_WIDTH));
+    
     m_chassisSpeeds = new ChassisSpeeds(Constants.LINEAR_VELOCITY, 0, Constants.ANGULAR_VELOCITY);
-    m_wheelSpeeds = m_kinematics.toWheelSpeeds(chassisSpeeds);
+    m_wheelSpeeds = new DifferentialDriveWheelSpeeds(Constants.LEFT_METER_PER_SECOND, Constants.RIGHT_METER_PER_SECOND);
+
+    m_getWheelSpeeds = m_kinematics.toWheelSpeeds(m_chassisSpeeds);
+    m_getChassisSpeeds = m_kinematics.toChassisSpeeds(m_wheelSpeeds);
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
@@ -114,13 +122,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.reset();
   }
 
-  public double getLeftVelocity(double leftVelocity){
-    leftVelocity = wheelSpeeds.leftMetersPerSecond;
-  }
 
-  public double getRightVelocity(double rightVelocity){
-    leftVelocity = wheelSpeeds.rightMetersPerSecond;
-  }
 
 
 
@@ -163,4 +165,19 @@ public class DriveTrain extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
   }
 
+  public double getLeftVelocity(){
+    return m_getWheelSpeeds.Constants.LEFT_METER_PER_SECOND;
+  }
+
+  public double getRightVelocity(){
+    return m_getWheelSpeeds.Constants.RIGHT_METER_PER_SECOND;
+  }
+
+  public double getLinerVelocity(){
+    return m_getchassisSpeeds.Constants.LINEAR_VELOCITY;
+  }
+  
+  public double getAngularVelocit(){
+    return m_getchassisSpeeds.Constants.ANGULAR_VELOCITY;
+  }
 }
