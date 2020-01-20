@@ -42,6 +42,7 @@ public class Intake extends SubsystemBase {
    * @param isUp moves the elbow up if true and down if false
    */
   public void setLeftElbow (boolean isUp){
+    m_isLeftElbowUp = isUp;
     if (isUp) {
 			m_leftElbow.set(Value.kForward);
     } 
@@ -57,6 +58,7 @@ public class Intake extends SubsystemBase {
    * @param isUp moves the elbow up if true and down if false
    */
   public void setRightElbow (boolean isUp){
+    m_isRightElbowUp = isUp;
     if (isUp) {
 			m_rightElbow.set(Value.kForward);
     } 
