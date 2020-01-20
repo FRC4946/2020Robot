@@ -18,13 +18,23 @@ public class MoveTurret extends CommandBase {
   Turret m_turret;
   double m_speed;
   boolean isClockwise;
+  double m_degrees;
 
-  public MoveTurret(double speed, Turret turret, boolean clockwise) {
+  /**
+   * 
+   * @param speed the speed to set the turret motor to
+   * @param turret the turret object
+   * @param clockwise indicates the direction the turret moves
+   * @param degrees the degrees the turret should move
+   */
+
+  public MoveTurret(double speed, double degrees, Turret turret, boolean clockwise) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_turret = turret;
     m_speed = speed;
     addRequirements(m_turret);
     isClockwise = clockwise;
+    m_degrees=degrees;
   }
 
   // Called when the command is initially scheduled.

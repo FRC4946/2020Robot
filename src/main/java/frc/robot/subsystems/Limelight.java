@@ -70,6 +70,11 @@ public class Limelight extends SubsystemBase {
     return new double[] { m_tx.getDouble(0), m_ty.getDouble(0) };
   }
 
+  /**
+   * Returns the x-offset from the target
+   * @return A double containing the x-offset
+   */
+
   public double getOffsetX(){
     return m_tx.getDouble(0);
   }
