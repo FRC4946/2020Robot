@@ -58,31 +58,38 @@ public class DriveTrain extends SubsystemBase {
     }
   }
 
+  //self explanitory, tank drive with 2 seperate inputs for left and right side
   public void tankDrive(double leftSpeed, double rightSpeed) {
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
+  //self explanitory, arcade drive with double for speed and double for turning 1 to -1
   public void arcadeDrive(double drive, double turn) {
     m_drive.arcadeDrive(drive, turn);
   }
 
+  //returns distance covered as a double in inches
   public double getLeftDistance() {
     return m_leftEncoder.getDistance();
   }
 
+  //returns distance covered as a double in inches
   public double getRightDistance() {
     return m_rightEncoder.getDistance();
   }
 
+  //returns the average distance covered from both sides as a double in inches
   public double getAverageDistance() {
     return (getLeftDistance() + getRightDistance()) / 2;
   }
 
+  //resets measured covered distances to zero inches
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
   }
 
+  //Gets the current measured angle
   public double getGyroAngle() {
     try {
       return Utilities.conformAngle(m_gyro.getAngle());

@@ -13,6 +13,7 @@ import frc.robot.subsystems.Intake;
 public class RunIntake extends CommandBase {
   double m_IntakeSpeed;
 
+  //Self explanitory, runs the intake
   public RunIntake(double speed, Intake intake) {
     m_IntakeSpeed = speed;
 
