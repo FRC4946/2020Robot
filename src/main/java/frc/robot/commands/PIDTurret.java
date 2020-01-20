@@ -24,6 +24,12 @@ public class PIDTurret extends PIDCommand {
 
   double m_xOffset;
 
+  /**
+   * 
+   * @param turret  the turret subsystem
+   * @param limelight   the limelight subsystem
+   */
+
   public PIDTurret(final Turret turret, final Limelight limelight) {
     super(
         // The controller that the command will use
@@ -40,6 +46,7 @@ public class PIDTurret extends PIDCommand {
     double[] offset = limelight.getOffset();
     m_xOffset = offset[0];
     addRequirements(turret);
+    addRequirements(limelight);
     // Configure additional PID options by calling `getController` here.
   }
 
