@@ -42,6 +42,10 @@ public final class Constants {
     public static final double PID_CLIMBER_P = 0;
     public static final double PID_CLIMBER_I = 0;
     public static final double PID_CLIMBER_D = 0;
+
+    public static final double PID_TURRET_P = 0;
+    public static final double PID_TURRET_I = 0;
+    public static final double PID_TURRET_D = 0;
     
     public static final double DEFAULT_DEADZONE = 0.1;
 

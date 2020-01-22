@@ -34,7 +34,7 @@ public class PIDTurret extends PIDCommand {
 
     super(
         // The controller that the command will use
-        new PIDController(Constants.PID_CLIMBER_P, Constants.PID_CLIMBER_I, Constants.PID_CLIMBER_D),
+        new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
         // This should return the measurement
         () -> limelight.getOffsetX(),
         // This should return the setpoint (can also be a constant)
