@@ -89,10 +89,20 @@ public class DriveTrain extends SubsystemBase {
         Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
   }
 
+  /**
+   * Runs motors on each side at the desired speed
+   * @param leftSpeed the speed that the motors on the left side will run at 
+   * @param rightSpeed the speed that the motors on the right side will run at
+   */
   public void tankDrive(double leftSpeed, double rightSpeed) {
     m_drive.tankDrive(leftSpeed, rightSpeed);
   }
 
+  /**
+   * 
+   * @param drive the forward movement of the robot
+   * @param turn the angle that the robot would turn to 
+   */
   public void arcadeDrive(double drive, double turn) {
     m_drive.arcadeDrive(drive, turn);
   }
@@ -101,22 +111,37 @@ public class DriveTrain extends SubsystemBase {
     m_drive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
   }
 
+  /**
+   * stops the robot
+   */
   public void stop(){
     m_drive.tankDrive(0.0, 0.0);
   }
 
+  /** 
+   * @return the left encoder's output
+   */
   public double getLeftDistance() {
     return m_leftEncoder.getDistance();
   }
 
+  /** 
+   * @return the right encoder's output
+   */
   public double getRightDistance() {
     return m_rightEncoder.getDistance();
   }
 
+  /**
+   * @return the avrage of the left and right encoder output
+   */
   public double getAverageDistance() {
     return (getLeftDistance() + getRightDistance()) / 2;
   }
 
+  /**
+   * resets the encoder
+   */
   public void resetEncoders() {
     m_leftEncoder.reset();
     m_rightEncoder.reset();
@@ -146,11 +171,17 @@ public class DriveTrain extends SubsystemBase {
     resetOdometry(0, 0, 0);
   }
 
+  /**
+   * resets the gyro and the odometry
+   */
   public void resetGyro() {
     m_gyro.reset();
     resetOdometry();
   }
 
+  /**
+   * @return the gyro's angle
+   */
   public double getGyroAngle() {
     try {
       return Utilities.conformAngle(m_gyro.getAngle());
@@ -165,18 +196,30 @@ public class DriveTrain extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
   }
 
+  /**
+   * @return gets the velocity of the left side
+   */
   public double getLeftVelocity(){
     return m_getWheelSpeeds.Constants.LEFT_METER_PER_SECOND;
   }
 
+  /**
+   * @return gets the velocity of the right side
+   */
   public double getRightVelocity(){
     return m_getWheelSpeeds.Constants.RIGHT_METER_PER_SECOND;
   }
 
+  /**
+   * @return gets the linear velocity
+   */
   public double getLinerVelocity(){
     return m_getchassisSpeeds.Constants.LINEAR_VELOCITY;
   }
   
+  /**
+   * @return gets the angular velocity
+   */
   public double getAngularVelocit(){
     return m_getchassisSpeeds.Constants.ANGULAR_VELOCITY;
   }
