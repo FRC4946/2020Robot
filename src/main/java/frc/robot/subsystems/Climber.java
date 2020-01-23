@@ -26,16 +26,26 @@ public class Climber extends SubsystemBase {
     m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
   }
 
+  /**
+   * Makes the motors run at the desired speed
+   * @param speed the speed that the motors will run at
+   */
   public void set(double speed) {
     m_leftClimberMotor.set(ControlMode.PercentOutput, speed);
     m_rightClimberMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  /**
+   * Stops both motors
+   */
   public void stop() {
     m_leftClimberMotor.set(ControlMode.PercentOutput, 0.0);
     m_rightClimberMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
+  /**
+   * @return the distance that the motors went
+   */
   public double getDistance() {
     return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_MAX_DISTANCE;
   }
