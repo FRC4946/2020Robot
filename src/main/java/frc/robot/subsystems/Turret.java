@@ -38,6 +38,10 @@ public class Turret extends SubsystemBase {
     m_turretMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  public void stop(){
+    m_turretMotor.set(ControlMode.PercentOutput, 0);
+  }
+
   
   @Override
   public void initDefaultCommand() {
