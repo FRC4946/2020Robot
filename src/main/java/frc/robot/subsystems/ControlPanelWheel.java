@@ -37,24 +37,47 @@ public class ControlPanelWheel extends SubsystemBase {
     m_colorMatcher.addColorMatch(Constants.COLOR_YELLOW);
   }
 
+  /** Moves the color wheel
+   * 
+   * @param speed the speed of the wheel motor
+   */
+
   public void set(double speed){
     m_wheelMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  /** Stops the wheel motor
+   * 
+   */
   public void stopWheel(){
     m_wheelMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
+  /** Finds the closest colormatch to the detected color
+   * 
+   * @return Returns a Color object
+   */
   public Color getMatchedColor(){
     return m_colorMatcher.matchClosestColor(m_colorSensor.getColor()).color;
   }
-
+  
+  /** 
+   * 
+   * @param moves
+   * @return
+   */
   public double getRevolutions(int moves){
     double distance = moves*Constants.WHEEL_PIECE_CIRCUMFERENCE;
     return distance/Constants.COLOR_WHEEL_CIRCUMFERENCE;
 
   }
+
+  /** Gets the distance the wheel has spun
+   * 
+   * @return returns a double for the distance the wheel has spun
+   */
   public double getDistance(){
+    m_wheelEncoder.setDistancePerPulse(Constants.WHEEL_PIECE_CIRCUMFERENCE);
     return m_wheelEncoder.getDistance();
 
   }
