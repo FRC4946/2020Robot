@@ -27,36 +27,64 @@ public class ConveyorBelt extends SubsystemBase {
     m_verticalConveyor = new TalonSRX(RobotMap.CAN.VERTICAL_CONVEYOR_BELT_TALONSRX);
   }
 
+  /**
+   * Sets the left conveyor to the desired speed
+   * @param speed the speed that the left conveyor will run at
+   */
   public void setLeftConveyorBelt(double speed){
     m_leftConveyor.set(ControlMode.PercentOutput, speed);
   }
 
+  /**
+   * Sets the right conveyor to the desired speed
+   * @param speed the speed that the right conveyor will run at
+   */
   public void setRightConveyorBelt(double speed){
     m_rightConveyor.set(ControlMode.PercentOutput, speed);
   }
 
+  /**
+   * Sets the vertical conveyor to the desired speed
+   * @param speed the speed that the vertical conveyor will run at
+   */
   public void setVerticalConveyorBelt(double speed){
     m_verticalConveyor.set(ControlMode.PercentOutput, speed);
   }
 
+  /**
+   * Sets the all conveyors to the desired speed
+   * @param speed the speed that the all conveyors will run at
+   */
   public void runAll(double speed){
     setLeftConveyorBelt(speed);
     setRightConveyorBelt(speed);
     setVerticalConveyorBelt(speed);
   }
 
+  /**
+   * Stops the left conveyor motor
+   */
   public void stopLeft(){
     setLeftConveyorBelt(0.0);
   }
 
+  /**
+   * Stops the right conveyor motor
+   */
   public void stopRight(){
     setRightConveyorBelt(0.0);
   }
 
+  /**
+   * Stops the vertical conveyor motor
+   */
   public void stopVertical(){
     setVerticalConveyorBelt(0.0);
   }
 
+  /**
+   * Stops the all conveyor motors
+   */
   public void stopAll(){
     setLeftConveyorBelt(0.0);
     setRightConveyorBelt(0.0);
