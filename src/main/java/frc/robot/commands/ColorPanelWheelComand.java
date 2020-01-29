@@ -22,10 +22,11 @@ public class ColorPanelWheelComand extends CommandBase {
   Color m_targetColor;
   double m_speed;
 
-  public ColorPanelWheelComand(ControlPanelWheel controlPanelWheel, Color targetColor, double speed) {
+  public ColorPanelWheelComand(ControlPanelWheel controlPanelWheel, Color targetColor, Color currentColor, double speed) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_controlPanelWheel = controlPanelWheel;
     m_targetColor = targetColor;
+    m_currentColor = currentColor;
     m_speed = speed;
 
     addRequirements(m_controlPanelWheel);
@@ -34,16 +35,20 @@ public class ColorPanelWheelComand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_currentColor = m_controlPanelWheel.getMatchedColor();
+    m_currentColor = m_controlPanelWheel.getCurrentColor;
 
     if (m_currentColor != m_targetColor) {
-      m_controlPanelWheel.set(m_speed);
-    } else {
+      m_controlPanelWheel.setWheelSpeed(m_speed);  
+      m_currentColor = m_controlPanelWheel.getCurrentColor;
+    } 
+    
+    else {
       m_controlPanelWheel.stopWheel();
     }
   }
@@ -52,6 +57,7 @@ public class ColorPanelWheelComand extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_controlPanelWheel.stopWheel();
+    m_controlPanelWheel.resetEncoder();
   }
 
   // Returns true when the command should end.

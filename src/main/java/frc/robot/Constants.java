@@ -174,4 +174,6 @@ public final class Constants {
   public static final double WHEEL_PIECE_DIAMETER = 0.4572; // The circumference of each wheel piece
 
   public static final double COLOR_WHEEL_CIRCUMFERENCE = 0;
+
+  public static final double COLOR_SLICE_CIRCUMFERENCE = 18; // Inches
 }
