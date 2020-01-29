@@ -18,77 +18,60 @@ public class ConveyorBelt extends SubsystemBase {
    * Creates a new ConveyorBelt.
    */
 
-  private TalonSRX m_leftConveyor, m_rightConveyor, m_verticalConveyor;
+  private TalonSRX m_ballResevoir, m_feedIntake;
 
   public ConveyorBelt() {
     
-    m_leftConveyor = new TalonSRX(RobotMap.CAN.LEFT_CONVEYOR_BELT_TALONSRX);
-    m_rightConveyor = new TalonSRX(RobotMap.CAN.RIGHT_CONVEYOR_BELT_TALONSRX);
-    m_verticalConveyor = new TalonSRX(RobotMap.CAN.VERTICAL_CONVEYOR_BELT_TALONSRX);
+    m_ballResevoir = new TalonSRX(RobotMap.CAN.BALL_RESEVOIR_TALONSRX);
+    m_feedIntake = new TalonSRX(RobotMap.CAN.FEED_INTAKE_TALONSRX);
   }
 
   /**
-   * Sets the left conveyor to the desired speed
-   * @param speed the speed that the left conveyor will run at
+   * Sets the ball resevoir to the desired speed
+   * @param speed the speed that the ball resevoir will run at
    */
-  public void setLeftConveyorBelt(double speed){
-    m_leftConveyor.set(ControlMode.PercentOutput, speed);
+  public void setBallResevoir(double speed){
+    m_ballResevoirr.set(ControlMode.PercentOutput, speed);
   }
 
   /**
-   * Sets the right conveyor to the desired speed
-   * @param speed the speed that the right conveyor will run at
+   * Sets the wheel that feeds the balls to the shooter to the desired speed
+   * @param speed the speed that the wheel that feeds the balls to the shooter wil run at
    */
-  public void setRightConveyorBelt(double speed){
-    m_rightConveyor.set(ControlMode.PercentOutput, speed);
+  public void setFeedIntake(double speed){
+    m_feedIntake.set(ControlMode.PercentOutput, speed);
   }
 
-  /**
-   * Sets the vertical conveyor to the desired speed
-   * @param speed the speed that the vertical conveyor will run at
-   */
-  public void setVerticalConveyorBelt(double speed){
-    m_verticalConveyor.set(ControlMode.PercentOutput, speed);
-  }
 
   /**
-   * Sets the all conveyors to the desired speed
-   * @param speed the speed that the all conveyors will run at
+   * Sets the all components to the desired speed
+   * @param speed the speed that the all components will run at
    */
   public void runAll(double speed){
-    setLeftConveyorBelt(speed);
-    setRightConveyorBelt(speed);
-    setVerticalConveyorBelt(speed);
+    setBallResevoir(speed);
+    setFeedIntake(speed);
   }
 
   /**
-   * Stops the left conveyor motor
+   * Stops the ball resevoir motor
    */
-  public void stopLeft(){
-    setLeftConveyorBelt(0.0);
+  public void stopBallResevoir(){
+    setBallResevoir(0.0);
   }
 
   /**
-   * Stops the right conveyor motor
+   * Stops the wheel that feeds the balls to the shooter
    */
-  public void stopRight(){
-    setRightConveyorBelt(0.0);
+  public void stopFeedIntake(){
+    setFeedIntake(0.0);
   }
 
   /**
-   * Stops the vertical conveyor motor
-   */
-  public void stopVertical(){
-    setVerticalConveyorBelt(0.0);
-  }
-
-  /**
-   * Stops the all conveyor motors
+   * Stops the all components motors
    */
   public void stopAll(){
-    setLeftConveyorBelt(0.0);
-    setRightConveyorBelt(0.0);
-    setVerticalConveyorBelt(0.0);
+    setBallResevoir(0.0);
+    setFeedIntake(0.0);
   }
 
 

@@ -59,8 +59,8 @@ public final class RobotMap {
         public static final int SHOOTER_LEFT_SPARKMAX = 2;
         public static final int SHOOTER_RIGHT_SPARKMAX = 3;
 
-        public static final int LEFT_CONVEYOR_BELT_TALONSRX = 4;
-        public static final int RIGHT_CONVEYOR_BELT_TALONSRX = 5;
+        public static final int BALL_RESEVOIR_TALONSRX = 4;
+        public static final int FEED_INTAKE_TALONSRX = 5;
         public static final int VERTICAL_CONVEYOR_BELT_TALONSRX = 6;
 
         public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 7;
