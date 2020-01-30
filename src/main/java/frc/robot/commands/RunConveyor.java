@@ -14,12 +14,15 @@ import frc.robot.subsystems.ConveyorBelt;
 public class RunConveyor extends CommandBase {
 
   double m_resevoirSpeed, m_feederSpeed;
+  ConveyorBelt m_conveyorBelt;
 
-  public RunConveyor(double resevoirSpeed, double feederSpeed) {
+  public RunConveyor(double resevoirSpeed, double feederSpeed, ConveyorBelt conveyorBelt) {
+    m_conveyorBelt = conveyorBelt;
     m_resevoirSpeed = resevoirSpeed;
     m_feederSpeed = feederSpeed;
 
     addRequirements(m_conveyorBelt);
+    m_speed = speed;
   }
 
   // Called when the command is initially scheduled.
