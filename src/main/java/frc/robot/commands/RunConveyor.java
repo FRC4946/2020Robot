@@ -11,13 +11,15 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Robot;
 import frc.robot.subsystems.ConveyorBelt;
 
-public class ConveyorShift extends CommandBase {
+public class RunConveyor extends CommandBase {
 
-  double m_speed;
+  double m_resevoirSpeed, m_feederSpeed;
   ConveyorBelt m_conveyorBelt;
 
-  public ConveyorShift(double speed, ConveyorBelt conveyorBelt) {
+  public RunConveyor(double resevoirSpeed, double feederSpeed, ConveyorBelt conveyorBelt) {
     m_conveyorBelt = conveyorBelt;
+    m_resevoirSpeed = resevoirSpeed;
+    m_feederSpeed = feederSpeed;
 
     addRequirements(m_conveyorBelt);
     m_speed = speed;
@@ -26,18 +28,19 @@ public class ConveyorShift extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
+   
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
+    m_conveyorBelt.runAll(m_speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_conveyorBelt.stopAll();
   }
 
   // Returns true when the command should end.
