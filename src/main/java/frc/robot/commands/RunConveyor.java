@@ -13,20 +13,16 @@ import frc.robot.Robot;
 import frc.robot.RobotContainer;
 import frc.robot.subsystems.ConveyorBelt;
 
+public class RunConveyor extends CommandBase {
 
-public class ConveyorShift extends CommandBase {
-
-  double m_speed;
-  double m_pulseLength;
-
-  boolean isRightEnabled;
-
+  double m_resevoirSpeed, m_feederSpeed;
   ConveyorBelt m_conveyorBelt;
   Timer m_timer;
 
-  public ConveyorShift(final double speed, final ConveyorBelt conveyorBelt, final double pulseLength) {
+  public RunConveyor(double resevoirSpeed, double feederSpeed, ConveyorBelt conveyorBelt) {
     m_conveyorBelt = conveyorBelt;
-    m_timer = new Timer();
+    m_resevoirSpeed = resevoirSpeed;
+    m_feederSpeed = feederSpeed;
 
     addRequirements(m_conveyorBelt);
     m_speed = speed;
@@ -37,40 +33,18 @@ public class ConveyorShift extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    isRightEnabled=false;
-    m_timer.start();
+   
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    // For horizontal conveyors
-
-    if(!isRightEnabled){
-      m_conveyorBelt.setLeftConveyorBelt(m_speed);
-      m_conveyorBelt.stopRight();
-    }
-    if(isRightEnabled){
-      m_conveyorBelt.setRightConveyorBelt(m_speed);
-      m_conveyorBelt.stopLeft();
-    }
-
-    if (m_timer.hasPeriodPassed(m_pulseLength)){
-      isRightEnabled = !isRightEnabled;
-
-      m_timer.stop();
-      m_timer.reset();
-      m_timer.start();
-    }
-    
-
-    // For vertical conveyors
-    m_conveyorBelt.setVerticalConveyorBelt(m_speed);
+    m_conveyorBelt.runAll(m_speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(final boolean interrupted) {  
+  public void end(boolean interrupted) {
     m_conveyorBelt.stopAll();
   }
 
