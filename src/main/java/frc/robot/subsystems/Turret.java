@@ -38,6 +38,9 @@ public class Turret extends SubsystemBase {
     m_turretMotor.set(ControlMode.PercentOutput, speed);
   }
 
+  /**
+   * Stops the turret
+   */
   public void stop(){
     m_turretMotor.set(ControlMode.PercentOutput, 0);
   }
