@@ -14,9 +14,19 @@ public class ClimberCommand extends CommandBase {
   /**
    * Creates a new ClimberCommand.
    */
-  public ClimberCommand(Climber climber) {
+
+  private Climber m_climber;
+  private double m_speed;
+  private double m_height;
+  private double m_distanceTravelled = 0;
+
+  public ClimberCommand(Climber climber, double speed, double height) {
+    m_climber = climber;
+    m_speed = speed;
+    m_height = height;
+
     // Use addRequirements() here to declare subsystem dependencies.
-    addRequirements(climber);
+    addRequirements(m_climber);
   }
 
   // Called when the command is initially scheduled.
@@ -27,11 +37,19 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_distanceTravelled = m_climber.getDistance();
+
+    if (m_distanceTravelled < m_height) {
+      m_climber.set(m_speed);
+    } else {
+      m_climber.stop();
+    }
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_climber.stop();
   }
 
   // Returns true when the command should end.
