@@ -50,11 +50,11 @@ public final class Constants {
     public static final double ROBOT_START_ANGLE = 0.0;
 
     // TODO : Fill in the variables for kinematics
-    public static double TRACK_WIDTH = 0.0
+    public static double TRACK_WIDTH = 0.0;
     
-    public static double LINEAR_VELOCITY = 0.0
-    public static double ANGULAR_VELOCITY = 0.0
+    public static double LINEAR_VELOCITY = 0.0;
+    public static double ANGULAR_VELOCITY = 0.0;
 
-    public static double LEFT_METER_PER_SECOND = 0.0
-    public static double RIGHT_METER_PER_SECOND = 0.0
+    public static double LEFT_METER_PER_SECOND = 0.0;
+    public static double RIGHT_METER_PER_SECOND = 0.0;
 }
