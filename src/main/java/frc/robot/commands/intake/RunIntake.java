@@ -11,13 +11,13 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Intake;
 
 public class RunIntake extends CommandBase {
-  double m_IntakeSpeed;
+  Intake m_intake;
+  double m_intakeSpeed;
 
   //Self explanitory, runs the intake
   public RunIntake(double speed, Intake intake) {
-    m_IntakeSpeed = speed;
-
-    intake.set(speed);
+    m_intake = intake;
+    m_intakeSpeed = speed;
   }
 
   // Called when the command is initially scheduled.
@@ -28,11 +28,13 @@ public class RunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_intake.set(m_intakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_intake.stopAll();
   }
 
   // Returns true when the command should end.

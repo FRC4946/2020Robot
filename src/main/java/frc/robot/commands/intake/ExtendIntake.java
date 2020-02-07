@@ -15,10 +15,11 @@ public class ExtendIntake extends CommandBase {
    * Creates a new ExtendIntake.
    */
 
-  Intake m_intake; 
+  Intake m_intake;
 
+  public ExtendIntake(Intake intake) {
+    m_intake = intake;
 
-  public ExtendIntake() {
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_intake);
   }
@@ -31,6 +32,7 @@ public class ExtendIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
+    m_intake.setBothDown();
   }
 
   // Called once the command ends or is interrupted.
