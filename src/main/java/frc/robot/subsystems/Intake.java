@@ -45,7 +45,7 @@ public class Intake extends SubsystemBase {
     m_speed = speed;
   }
 
-  /** Controls the left elbow with solonoids based on a boolean
+  /** Controls the left elbow with solenoids based on a boolean
    * 
    * @param isUp moves the elbow up if true and down if false
    */
@@ -63,7 +63,7 @@ public class Intake extends SubsystemBase {
 		m_isLeftElbowUp = isUp;
   }
   
-  /** Controls the right elbow with solonoids based on a boolean
+  /** Controls the right elbow with solenoids based on a boolean
    * 
    * @param isUp moves the elbow up if true and down if false
    */
@@ -102,7 +102,7 @@ public class Intake extends SubsystemBase {
     setLeftElbow(!m_isLeftElbowUp);
   }
 
-  /** Retacts the left solonoid
+  /** Retacts the left solenoid
    * 
    */
   public void offLeft(){
@@ -133,7 +133,7 @@ public class Intake extends SubsystemBase {
     setRightElbow(!m_isRightElbowUp);
   }
 
-  /** Retracts the right solonoid 
+  /** Retracts the right solenoid 
    * 
    */
   public void offRight(){
