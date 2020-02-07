@@ -23,10 +23,17 @@ public class Hopper extends SubsystemBase {
     m_hopperMotor = new CANSparkMax(RobotMap.CAN.HOPPER_MOTOR_SPARKMAX, MotorType.kBrushless);
   }
 
+  /** Sets the speed of the hopper rotation
+   * 
+   * @param speed controls how fast the hopper spins
+   */
   public void set(double speed) {
     m_hopperMotor.set(speed);
   }
 
+  /** Stops the hopper from spinning
+   * 
+   */
   public void stop() {
     m_hopperMotor.set(0);
   }
