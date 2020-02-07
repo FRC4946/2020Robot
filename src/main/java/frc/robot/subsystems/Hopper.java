@@ -17,10 +17,24 @@ public class Hopper extends SubsystemBase {
   /**
    * Creates a new Hopper.
    */
-  private CANSparkMax m_hopperMotor;
+  private CANSparkMax m_DrumMotor;
+  private CANSparkMax m_FeedwheelMotor;
+  private int m_repsAboveDrum = 0;
+  private int m_repsAboveFeed = 0;
 
   public Hopper() {
-    m_hopperMotor = new CANSparkMax(RobotMap.CAN.HOPPER_MOTOR_SPARKMAX, MotorType.kBrushless);
+    m_DrumMotor = new CANSparkMax(RobotMap.CAN.HOPPER_MOTOR_SPARKMAX, MotorType.kBrushless);
+    setDefaultCommand(new RunCommand(() -> {
+      set(0.3);
+      if (Robot.m_pdp.getCurrent(0) > Constants.SHOOTER_DRUM_BURNOUT_THRESHOLD)
+        incReps();
+      else
+        resetReps();
+      if (m_repsAbove > 4) {
+        resetReps();
+        new TimedRunMotor(-0.3, 1.0, this).schedule();
+      }
+    }, this));
   }
 
   /** Sets the speed of the hopper rotation
@@ -28,14 +42,22 @@ public class Hopper extends SubsystemBase {
    * @param speed controls how fast the hopper spins
    */
   public void set(double speed) {
-    m_hopperMotor.set(speed);
+    m_DrumMotor.set(speed);
+  }
+
+  public void incReps() {
+    m_repsAboveDrum++;
+  }
+
+  public void resetReps() {
+    m_repsAboveDrum = 0;
   }
 
   /** Stops the hopper from spinning
    * 
    */
   public void stop() {
-    m_hopperMotor.set(0);
+    m_DrumMotor.set(0);
   }
 
   @Override

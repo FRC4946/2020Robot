@@ -45,5 +45,7 @@ public final class Constants {
     
     public static final double DEFAULT_DEADZONE = 0.1;
 
+    public static final double SHOOTER_DRUM_BURNOUT_THRESHOLD = 2.0;
+    public static final double SHOOTER_FEEDMOTOR_BURNOUT_THRESHOLD = 2.0;
 
 }
