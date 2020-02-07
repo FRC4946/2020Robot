@@ -67,6 +67,9 @@ public final class RobotMap {
         public static final int DRIVE_RIGHT_BACK_SPARKMAX = 8;
         public static final int DRIVE_LEFT_FRONT_SPARKMAX = 9;
         public static final int DRIVE_LEFT_BACK_SPARKMAX = 10;
+
+        public static final int LEFT_HOOD_MOTOR = 11;
+        public static final int RIGHT_HOOD_MOTOR = 12;
     }
 
     // #region IO
@@ -87,6 +90,8 @@ public final class RobotMap {
      */
     public static final class AIO {
         public static final int CLIMBER_POT = 0;
+        public static final int LEFT_HOOD_POT = 1;
+        public static final int RIGHT_HOOD_POT = 2;
     }
 
     // #endregion
