@@ -45,6 +45,7 @@ public class RobotContainer {
     m_shooter = new Shooter();
     m_climber = new Climber();
     m_conveyor = new ConveyorBelt();
+    m_hopper = new Hopper();
 
     configureButtonBindings();
 

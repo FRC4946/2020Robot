@@ -17,32 +17,38 @@ public class Hopper extends SubsystemBase {
   /**
    * Creates a new Hopper.
    */
-  private CANSparkMax m_DrumMotor;
-  private CANSparkMax m_FeedwheelMotor;
+  private CANSparkMax m_drumMotor;
+  private CANSparkMax m_feedWheelMotor;
   private int m_repsAboveDrum = 0;
   private int m_repsAboveFeed = 0;
 
   public Hopper() {
-    m_DrumMotor = new CANSparkMax(RobotMap.CAN.HOPPER_MOTOR_SPARKMAX, MotorType.kBrushless);
-    setDefaultCommand(new RunCommand(() -> {
-      set(0.3);
-      if (Robot.m_pdp.getCurrent(0) > Constants.SHOOTER_DRUM_BURNOUT_THRESHOLD)
-        incReps();
-      else
-        resetReps();
-      if (m_repsAbove > 4) {
-        resetReps();
-        new TimedRunMotor(-0.3, 1.0, this).schedule();
-      }
-    }, this));
+    m_drumMotor = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
+    m_feedWheelMotor = new CANSparkMax(RobotMap.CAN.FEED_WHEEL_MOTOR_SPARKMAX, MotorType.kBrushless);
+    setDefaultCommand(new RunCommand(() -> {}, this));
   }
 
   /** Sets the speed of the hopper rotation
    * 
-   * @param speed controls how fast the hopper spins
+   * @param drumSpeed controls how fast the hopper spins
+   * @param feedWheelSpeed controls how fast the feed wheel spins
    */
-  public void set(double speed) {
-    m_DrumMotor.set(speed);
+  public void setAll(double drumSpeed, feedWheelSpeed) {
+    m_drumMotor.set(drumSpeed);
+    m_feedWheelMotor.set(feedWheelSpeed);
+
+    if (Robot.m_pdp.getCurrent(0) > Constants.SHOOTER_DRUM_BURNOUT_THRESHOLD){
+      incReps();
+    }
+    
+    else {
+      resetReps();
+    }
+
+    if (m_repsAbove > 4) {
+      resetReps();
+      new TimedHopper(-drumSpeed, -feedWheelSpeed, RobotContainer.m_hopper, timeSpentBackwards)
+    }
   }
 
   public void incReps() {
@@ -53,11 +59,11 @@ public class Hopper extends SubsystemBase {
     m_repsAboveDrum = 0;
   }
 
-  /** Stops the hopper from spinning
+  /** Stops the hopper and the feed wheel 
    * 
    */
   public void stop() {
-    m_DrumMotor.set(0);
+    setAll(0);
   }
 
   @Override
