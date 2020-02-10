@@ -32,7 +32,7 @@ public class Climber extends SubsystemBase {
    */
   public void set(double speed) {
     m_leftClimberMotor.set(ControlMode.PercentOutput, speed);
-    m_rightClimberMotor.set(ControlMode.PercentOutput, speed);
+    m_rightClimberMotor.set(ControlMode.PercentOutput, -speed);
   }
 
   /**

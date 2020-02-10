@@ -18,7 +18,7 @@ public class ClimberCommand extends CommandBase {
   private Climber m_climber;
   private double m_speed;
   private double m_height;
-  private double m_distanceTravelled = 0;
+  private double m_distanceTravelled = 0.0;
 
   public ClimberCommand(Climber climber, double speed, double height) {
     m_climber = climber;
@@ -41,9 +41,15 @@ public class ClimberCommand extends CommandBase {
 
     if (m_distanceTravelled < m_height) {
       m_climber.set(m_speed);
-    } else {
-      m_climber.stop();
     }
+    
+    if (m_distanceTravelled == m_height) {
+      m_climber.set(-m_speed);
+    }
+
+    /* else {
+      m_climber.stop();
+    } */
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +61,6 @@ public class ClimberCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (m_climber.getDistance() == m_height);
   }
 }
