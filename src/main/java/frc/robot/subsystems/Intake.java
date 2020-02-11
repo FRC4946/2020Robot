@@ -25,7 +25,7 @@ public class Intake extends SubsystemBase {
   //private Victor m_leftElbow, m_rightElbow;
   private boolean m_isLeftElbowUp, m_isRightElbowUp;
 
-  //public double m_speed;
+  //double m_speed;
 
   private TalonSRX m_spinLeft, m_spinRight;
 
