@@ -36,6 +36,7 @@ public class TimedClimber extends CommandBase {
   public void initialize() {
     m_climberTimer = new Timer();
     m_climberTimer.start();
+    m_climberTimer.reset();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -43,22 +44,18 @@ public class TimedClimber extends CommandBase {
   public void execute() {
     m_hasTimePassed = m_climberTimer.hasPeriodPassed(m_time);
 
-    if (!m_hasTimePassed) {
-      m_climber.set(m_speed);
-    } else {
-      m_climber.stop();
-      m_climberTimer.stop();
-    }
+    m_climber.set(m_speed);
   } 
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_climber.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_hasTimePassed;
   }
 }
