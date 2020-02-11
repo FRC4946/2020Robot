@@ -16,10 +16,12 @@ public class ShooterHoodAngleCommand extends CommandBase {
    */
   private Shooter m_shooter;
   private double m_speed;
+  private double m_volts;
 
-  public ShooterHoodAngleCommand(Shooter shooter, double speed) {
+  public ShooterHoodAngleCommand(Shooter shooter, double speed, double volts) {
     m_shooter = shooter;
     m_speed = speed;
+    m_volts = volts;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
@@ -33,7 +35,7 @@ public class ShooterHoodAngleCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setBothHoodMotorsVolts(volts, m_speed);
+    m_shooter.setBothHoodMotorsVolts(m_volts, m_speed);
   }
 
   // Called once the command ends or is interrupted.

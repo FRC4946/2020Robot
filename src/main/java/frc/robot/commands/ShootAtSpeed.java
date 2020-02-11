@@ -31,7 +31,7 @@ public class ShootAtSpeed extends PIDCommand {
         () -> shooter.getSetpoint(),
         // This uses the output
         output -> {
-          shooter.set(output);
+          shooter.setShooter(output);
         });
     // Use addRequirements() here to declare subsystem dependencies.
     // Configure additional PID options by calling `getController` here.
