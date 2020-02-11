@@ -10,7 +10,10 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Robot;
 import frc.robot.RobotMap;
 
 public class Hopper extends SubsystemBase {
@@ -33,7 +36,7 @@ public class Hopper extends SubsystemBase {
    * @param drumSpeed controls how fast the hopper spins
    * @param feedWheelSpeed controls how fast the feed wheel spins
    */
-  public void setAll(double drumSpeed, feedWheelSpeed) {
+  public void setAll(double drumSpeed, double feedWheelSpeed) {
     m_drumMotor.set(drumSpeed);
     m_feedWheelMotor.set(feedWheelSpeed);
 
@@ -63,7 +66,7 @@ public class Hopper extends SubsystemBase {
    * 
    */
   public void stop() {
-    setAll(0);
+    setAll(0, 0);
   }
 
   @Override

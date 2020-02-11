@@ -14,8 +14,9 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.commands.ShootAtSpeed;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ConveyorBelt;
+//import frc.robot.subsystems.ConveyorBelt;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Hopper;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -34,7 +35,8 @@ public class RobotContainer {
   DriveTrain m_driveTrain;
   Shooter m_shooter;
   Climber m_climber;
-  ConveyorBelt m_conveyor;
+  //ConveyorBelt m_conveyor;
+  Hopper m_hopper;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -44,7 +46,7 @@ public class RobotContainer {
     m_driveTrain = new DriveTrain();
     m_shooter = new Shooter();
     m_climber = new Climber();
-    m_conveyor = new ConveyorBelt();
+    //m_conveyor = new ConveyorBelt();
     m_hopper = new Hopper();
 
     configureButtonBindings();
