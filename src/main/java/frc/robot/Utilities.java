@@ -22,7 +22,24 @@ public class Utilities {
     return deadzone(input, Constants.DEFAULT_DEADZONE);
   }
 
-  public static double deadzone(double input, double deadzone) {
+  publica static double deadzone(double input, double deadzone) {`
     return Math.abs(input) < Math.abs(deadzone) ? 0 : input;
+  }
+
+  //TODO: give this a proper name
+  public static double what(double currentAngle, double desiredAngle){
+    double error = desiredAngle - currentAngle;
+
+    if (error > -5 && error < 5){
+      return a(1 * error) * speed;
+    }
+
+    else if (error = 5){
+      return 500;
+    }
+
+    else if (error = -5){
+      return -500;
+    }
   }
 }
