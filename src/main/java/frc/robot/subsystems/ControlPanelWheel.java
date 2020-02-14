@@ -54,7 +54,7 @@ public class ControlPanelWheel extends SubsystemBase {
   /**
    * Stops the wheel motor
    */
-  public void stopWheel() {
+  public void stop() {
     set(0.0);
   }
 

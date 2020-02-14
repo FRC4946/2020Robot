@@ -22,7 +22,6 @@ public class TurnForDistance extends CommandBase {
   public TurnForDistance(double inchesTurned, double speed, ControlPanelWheel controlPanelWheel) {
     m_inchesTurned = inchesTurned;
     m_speed = speed;
-    m_controlPanelWheel = controlPanelWheel;
     addRequirements(m_controlPanelWheel);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -42,7 +41,7 @@ public class TurnForDistance extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_controlPanelWheel.set(0);
+    m_controlPanelWheel.stop();
   }
 
   // Returns true when the command should end.
