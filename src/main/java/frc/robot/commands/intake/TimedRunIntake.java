@@ -39,14 +39,7 @@ public class TimedRunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(!m_timer.hasPeriodPassed(m_period)){
-      m_intake.set(m_intakeSpeed);
-    }
-    else if(m_timer.hasPeriodPassed(m_period)){
-      m_intake.stopAll();
-    }
-
-    
+    m_intake.set(m_intakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
