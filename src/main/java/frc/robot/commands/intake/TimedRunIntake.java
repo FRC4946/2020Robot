@@ -22,17 +22,18 @@ public class TimedRunIntake extends CommandBase {
 
   Timer m_timer;
 
-  public TimedRunIntake(double speed, double time, Intake intake) {
+  public TimedRunIntake(double intakeSpeed, double intakeRunTime, Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = intake;
-    m_period = time;
+    m_period = intakeRunTime;
     m_intakeSpeed = speed;
-    addRequirements(m_intake);
+    addRequirements(intakeSpeed);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_timer.reset();
     m_timer.start();
   }
 
