@@ -18,7 +18,6 @@ public class ClimberCommand extends CommandBase {
   private Climber m_climber;
   private double m_speed;
   private double m_height;
-  private double m_distanceTravelled = 0.0;
 
   public ClimberCommand(Climber climber, double speed, double height) {
     m_climber = climber;
@@ -37,13 +36,7 @@ public class ClimberCommand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_distanceTravelled = m_climber.getDistance();
-
-    if (m_distanceTravelled < m_height) {
-      m_climber.set(m_speed);
-    } else {
-      m_climber.stop();
-    } 
+    m_climber.set(m_speed);
   }
 
   // Called once the command ends or is interrupted.
@@ -55,6 +48,6 @@ public class ClimberCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_climber.getDistance() == m_height);
+    return m_climber.getDistance() == m_height;
   }
 }

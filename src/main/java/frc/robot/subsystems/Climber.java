@@ -47,6 +47,6 @@ public class Climber extends SubsystemBase {
    * @return the distance that the motors went
    */
   public double getDistance() {
-    return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_MAX_DISTANCE;
+    return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE * Constants.CLIMBER_POT_MAX_DISTANCE);
   }
 }

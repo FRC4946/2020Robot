@@ -35,8 +35,8 @@ public class TimedClimber extends CommandBase {
   @Override
   public void initialize() {
     m_climberTimer = new Timer();
-    m_climberTimer.start();
     m_climberTimer.reset();
+    m_climberTimer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

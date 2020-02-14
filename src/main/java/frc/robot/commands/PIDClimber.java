@@ -10,11 +10,9 @@ package frc.robot.commands;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.Robot;
 import frc.robot.subsystems.Climber;
 
 public class PIDClimber extends PIDCommand {
-
   double m_height;
 
   public PIDClimber(final double height, final Climber climber) {
@@ -27,14 +25,13 @@ public class PIDClimber extends PIDCommand {
         output -> {
           climber.set(output);
         });
-    addRequirements(climber);
-    getController().setOutputRange(Constants.MIN_CLIMBER_SPEED, Constants.MAX_CLIMBER_SPEED);
 
+    addRequirements(climber);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().onTarget();
+    return getController().atSetpoint();
   }
 }
