@@ -5,28 +5,27 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.colorwheel;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ControlPanelWheel;
 
-public class ControlWheelSpin extends CommandBase {
-  /**
-   * Creates a new ControlWheelSpin.
-   */
-
-  Climber m_climber;
-  double m_targetInches;
-  double currentInches;
+public class TurnForDistance extends CommandBase {
+  double m_inchesTurned;
   double m_speed;
 
-  public ControlWheelSpin(Climber climber, double inches, double speed) {
-    // Use addRequirements() here to declare subsystem dependencies.
-    m_climber = climber;
-    m_targetInches = inches;
-    m_speed = speed;
+  ControlPanelWheel m_controlPanelWheel;
 
-    addRequirements(m_climber);
+  /**
+   * Creates a new TurnForDistance.
+   */
+  public TurnForDistance(double inchesTurned, double speed, ControlPanelWheel controlPanelWheel) {
+    m_inchesTurned = inchesTurned;
+    m_speed = speed;
+    m_controlPanelWheel = controlPanelWheel;
+    addRequirements(m_controlPanelWheel);
+
+    // Use addRequirements() here to declare subsystem dependencies.
   }
 
   // Called when the command is initially scheduled.
@@ -37,17 +36,18 @@ public class ControlWheelSpin extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    
+    m_controlPanelWheel.set(m_speed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_controlPanelWheel.set(0);
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_controlPanelWheel.getDistance() > m_inchesTurned;
   }
 }

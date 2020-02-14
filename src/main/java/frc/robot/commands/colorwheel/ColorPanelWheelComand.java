@@ -5,7 +5,7 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.colorwheel;
 
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -41,11 +41,11 @@ public class ColorPanelWheelComand extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_currentColor = m_controlPanelWheel.getCurrentColor;
+    m_currentColor = m_controlPanelWheel.getClosestMatch().color;
 
     if (m_currentColor != m_targetColor) {
-      m_controlPanelWheel.setWheelSpeed(m_speed);  
-      m_currentColor = m_controlPanelWheel.getCurrentColor;
+      m_controlPanelWheel.set(m_speed);  
+      m_currentColor = m_controlPanelWheel.getClosestMatch().color;
     } 
     
     else {

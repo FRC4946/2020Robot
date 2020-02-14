@@ -131,6 +131,9 @@ public final class RobotMap {
 
     public static final int DRIVE_RIGHT_ENCODER_A = 2;
     public static final int DRIVE_RIGHT_ENCODER_B = 3;
+
+    public static final int WHEEL_ENCODER_A = 4;
+    public static final int WHEEL_ENCODER_B = 5;
   }
 
   /**
