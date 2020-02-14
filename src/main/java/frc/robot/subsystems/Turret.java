@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 /**
@@ -27,6 +28,7 @@ public class Turret extends SubsystemBase {
   public Turret(){
     m_turretMotor = new TalonSRX(RobotMap.CAN.TURRET_TALONSRX);
     m_encoder = new Encoder(RobotMap.DIO.TURRET_ENCODER_A, RobotMap.DIO.TURRET_ENCODER_B);
+    m_encoder.setDistancePerPulse(Constants.TURRET_DEGREES_PER_PULSE);
   }
 
   /**
@@ -44,9 +46,8 @@ public class Turret extends SubsystemBase {
   public void stop(){
     m_turretMotor.set(ControlMode.PercentOutput, 0.0);
   }
-
-  //TODO: Make GetAngle Command
+  
   public double getAngle() {
-    return 0;
+    return m_encoder.getDistance();
   }
 }
