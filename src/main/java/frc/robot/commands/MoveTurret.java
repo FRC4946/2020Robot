@@ -17,7 +17,7 @@ public class MoveTurret extends CommandBase {
 
   Turret m_turret;
   double m_speed;
-  boolean isClockwise;
+  boolean m_isClockwise;
   double m_degrees;
 
   /**
@@ -29,12 +29,13 @@ public class MoveTurret extends CommandBase {
    */
 
   public MoveTurret(double speed, double degrees, Turret turret, boolean clockwise) {
-    // Use addRequirements() here to declare subsystem dependencies.
     m_turret = turret;
     m_speed = speed;
+    m_isClockwise = clockwise;
+    m_degrees = degrees;
+
+    // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_turret);
-    isClockwise = clockwise;
-    m_degrees=degrees;
   }
 
   // Called when the command is initially scheduled.
@@ -45,10 +46,10 @@ public class MoveTurret extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    if(isClockwise){
-      m_turret.move(m_speed );
+    if(m_isClockwise){
+      m_turret.move(m_speed);
     }
-    else if(!isClockwise){
+    else if(!m_isClockwise){
       m_turret.move(-m_speed);
     } 
     
@@ -57,11 +58,12 @@ public class MoveTurret extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
+    m_turret.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return Math.abs(m_turret.getAngle()) > Math.abs(m_degrees);
   }
 }

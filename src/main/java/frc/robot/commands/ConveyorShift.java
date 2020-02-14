@@ -8,7 +8,6 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
 import frc.robot.subsystems.ConveyorBelt;
 
 public class ConveyorShift extends CommandBase {
@@ -18,21 +17,19 @@ public class ConveyorShift extends CommandBase {
 
   public ConveyorShift(double speed, ConveyorBelt conveyorBelt) {
     m_conveyorBelt = conveyorBelt;
+    m_speed = speed;
 
     addRequirements(m_conveyorBelt);
-    m_speed = speed;
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-
   }
 
   // Called once the command ends or is interrupted.

@@ -11,11 +11,8 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Turret;
-<<<<<<< HEAD
 import frc.robot.Constants;
 
-=======
->>>>>>> f7a83507babc1f68a34866b6c6addbe9a621f2b1
 
 // NOTE:  Consider using this command inline, rather than writing a subclass.  For more
 // information, see:
@@ -25,6 +22,7 @@ public class PIDTurret extends PIDCommand {
    * Creates a new PIDTurret.
    */
 
+  Turret m_turret;
   double m_xOffset;
 
   /**
@@ -33,10 +31,6 @@ public class PIDTurret extends PIDCommand {
    * @param limelight   the limelight subsystem
    */
   public PIDTurret(final double degrees, final Turret turret, final Limelight limelight) {
-
-    double[] offset = limelight.getOffset();
-    m_xOffset = offset[0];
-
     super(
         // The controller that the command will use
         new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
@@ -48,15 +42,27 @@ public class PIDTurret extends PIDCommand {
         output -> {
           turret.move(output);
         });
+
+    m_turret = turret;
+    double[] offset = limelight.getOffset();
+    m_xOffset = offset[0];
+
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(turret);
     addRequirements(limelight);
     // Configure additional PID options by calling `getController` here.
+    getController().setTolerance(Constants.TURRET_PID_TOLERANCE);
+  }
+
+  // Called once the command ends or is interupted
+  @Override
+  public void end(boolean inturupted) {
+    m_turret.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (limelight.getOffsetX()==0.0 || getController().atSetpoint());
+    return (m_xOffset == 0.0 || getController().atSetpoint());
   }
 }

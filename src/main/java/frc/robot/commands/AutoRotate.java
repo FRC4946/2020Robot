@@ -8,7 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Utilities;
+import frc.robot.util.Utilities;
 import frc.robot.subsystems.DriveTrain;
 
 public class AutoRotate extends CommandBase {

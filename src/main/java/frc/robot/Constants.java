@@ -49,5 +49,5 @@ public final class Constants {
     
     public static final double DEFAULT_DEADZONE = 0.1;
 
-
+    public static final double TURRET_PID_TOLERANCE = 0;
 }
