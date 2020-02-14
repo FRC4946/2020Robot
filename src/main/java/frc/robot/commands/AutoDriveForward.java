@@ -34,7 +34,7 @@ public class AutoDriveForward extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_driveTrain.tankDrive(0.0, 0.0);
+    m_driveTrain.stop();
   }
 
   // Returns true when the command should end.

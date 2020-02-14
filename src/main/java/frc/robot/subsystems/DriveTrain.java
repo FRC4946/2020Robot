@@ -76,6 +76,7 @@ public class DriveTrain extends SubsystemBase {
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
+    
     m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
 
@@ -99,7 +100,13 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * 
+   * stops the robot
+   */
+  public void stop(){
+    m_drive.tankDrive(0.0, 0.0);
+  }
+
+  /**
    * @param drive the forward movement of the robot
    * @param turn the angle that the robot would turn to 
    */
@@ -107,16 +114,68 @@ public class DriveTrain extends SubsystemBase {
     m_drive.arcadeDrive(drive, turn);
   }
 
+  /**
+   * TODO: Documentation
+   * @param xSpeed
+   * @param zRotation
+   * @param isQuickTurn
+   */
   public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn){
     m_drive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
   }
 
+
+
   /**
-   * stops the robot
+   * Resets the odometry and sets the robot to the inputted position
+   * @param xPos  the x position of the robot in inches
+   * @param yPos  the y position of the robot in inches
+   * @param angle the angle of the robot in degrees (WPILIB Format, degrees
+   *              counterclockwise with 0 being straight ahead)
    */
-  public void stop(){
-    m_drive.tankDrive(0.0, 0.0);
+  public void resetOdometry(double xPos, double yPos, double angle) {
+    resetEncoders();
+    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
+
+  /**
+   * Resets the odometry and sets the robot to the inputted position
+   */
+  public void resetOdometry() {
+    resetOdometry(0, 0, 0);
+  }
+
+
+
+  /**
+   * @return the velocity of the left side
+   */
+  public double getLeftVelocity(){
+    return m_getWheelSpeeds.Constants.LEFT_METER_PER_SECOND;
+  }
+
+  /**
+   * @return the velocity of the right side
+   */
+  public double getRightVelocity(){
+    return m_getWheelSpeeds.Constants.RIGHT_METER_PER_SECOND;
+  }
+
+  /**
+   * @return the linear velocity
+   */
+  public double getLinerVelocity(){
+    return m_getchassisSpeeds.Constants.LINEAR_VELOCITY;
+  }
+  
+  /**
+   * @return the angular velocity
+   */
+  public double getAngularVelocit(){
+    return m_getchassisSpeeds.Constants.ANGULAR_VELOCITY;
+  }
+
+
 
   /** 
    * @return the left encoder's output
@@ -148,29 +207,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
 
-
-
-
-  /**
-   * Resets the odometry and sets the robot to the inputted position
-   * 
-   * @param xPos  the x position of the robot in inches
-   * @param yPos  the y position of the robot in inches
-   * @param angle the angle of the robot in degrees (WPILIB Format, degrees
-   *              counterclockwise with 0 being straight ahead)
-   */
-  public void resetOdometry(double xPos, double yPos, double angle) {
-    resetEncoders();
-    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
-  }
-
-  /**
-   * Resets the odometry and sets the robot to the inputted position
-   */
-  public void resetOdometry() {
-    resetOdometry(0, 0, 0);
-  }
-
+  
   /**
    * resets the gyro and the odometry
    */
@@ -196,31 +233,4 @@ public class DriveTrain extends SubsystemBase {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
   }
 
-  /**
-   * @return gets the velocity of the left side
-   */
-  public double getLeftVelocity(){
-    return m_getWheelSpeeds.Constants.LEFT_METER_PER_SECOND;
-  }
-
-  /**
-   * @return gets the velocity of the right side
-   */
-  public double getRightVelocity(){
-    return m_getWheelSpeeds.Constants.RIGHT_METER_PER_SECOND;
-  }
-
-  /**
-   * @return gets the linear velocity
-   */
-  public double getLinerVelocity(){
-    return m_getchassisSpeeds.Constants.LINEAR_VELOCITY;
-  }
-  
-  /**
-   * @return gets the angular velocity
-   */
-  public double getAngularVelocit(){
-    return m_getchassisSpeeds.Constants.ANGULAR_VELOCITY;
-  }
 }

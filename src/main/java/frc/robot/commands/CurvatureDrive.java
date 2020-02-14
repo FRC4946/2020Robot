@@ -17,7 +17,7 @@ public class CurvatureDrive extends CommandBase {
    * Creates a new CurvatureDrive.
    */
 
-  DriveTrain m_drive;
+  DriveTrain m_driveTrain;
   double m_speed;
   double m_rotation;
 
@@ -25,10 +25,10 @@ public class CurvatureDrive extends CommandBase {
 
   double m_distance;
 
-  public CurvatureDrive(double speed, double distance, double rotation, DriveTrain drive, boolean isquickturn) {
+  public CurvatureDrive(double speed, double distance, double rotation, DriveTrain driveTrain, boolean isquickturn) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_drive = drive;
-    addRequirements(m_drive);
+    m_driveTrain = drive;
+    addRequirements(m_driveTrain);
     m_speed = speed;
     m_rotation = rotation;
     m_distance = distance; 
@@ -50,12 +50,12 @@ public class CurvatureDrive extends CommandBase {
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_drive.stop();
+    m_driveTrain.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_driveTrain.getAverageDistance() > m_distance;;
   }
 }
