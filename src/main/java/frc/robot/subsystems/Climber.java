@@ -11,6 +11,8 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -19,10 +21,13 @@ public class Climber extends SubsystemBase {
 
   private TalonSRX m_leftClimberMotor, m_rightClimberMotor;
   private AnalogInput m_pot;
+  private DoubleSolenoid m_climberSolenoid;
+
 
   public Climber() {
     m_leftClimberMotor = new TalonSRX(RobotMap.CAN.CLIMBER_LEFT_TALONSRX);
     m_rightClimberMotor = new TalonSRX(RobotMap.CAN.CLIMBER_RIGHT_TALONSRX);
+    m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.PCM_CLIMBER_SOLENOID_A, RobotMap.PCM.PCM_CLIMBER_SOLENOID_B);
     m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
   }
 
@@ -44,7 +49,30 @@ public class Climber extends SubsystemBase {
   }
 
   /**
-   * @return the distance that the motors went
+   * Sets the climber pistons to the specified position
+   * @param out true if forwards, false if reverse
+   */
+  public void setPiston(boolean out) {
+    m_climberSolenoid.set(out ? Value.kForward : Value.kReverse);
+  }
+
+  /**
+   * Sets the climber pistons to the specified position
+   * @param value the potition to set them to
+   */
+  public void setPiston(Value value) {
+    m_climberSolenoid.set(value);
+  }
+
+  /**
+   * Toggles piston in or out
+   */
+  public void togglePiston() {
+    setPiston(m_climberSolenoid.get() == Value.kReverse);
+  }
+
+  /**
+   * @return how far extended the climber is
    */
   public double getDistance() {
     return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE * Constants.CLIMBER_POT_MAX_DISTANCE);

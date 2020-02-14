@@ -69,6 +69,14 @@ public final class RobotMap {
         public static final int DRIVE_LEFT_BACK_SPARKMAX = 10;
     }
 
+    /**
+     * PCM Ports
+     */
+    public static final class PCM {
+        public static final int PCM_CLIMBER_SOLENOID_A = 0;
+        public static final int PCM_CLIMBER_SOLENOID_B = 1;
+    }
+
     // #region IO
 
     /**
