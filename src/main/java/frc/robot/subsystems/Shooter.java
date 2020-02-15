@@ -50,9 +50,9 @@ public class Shooter extends SubsystemBase {
     m_left.burnFlash();
     m_right.burnFlash();
 
-    m_leftHood = new Servo(RobotMap.PWM.LEFT_HOOD_MOTOR);
-    m_rightHood = new Servo(RobotMap.PWM.RIGHT_HOOD_MOTOR);
-    m_pot = new AnalogInput(RobotMap.AIO.RIGHT_HOOD_POT);
+    m_leftHood = new Servo(RobotMap.PWM.LEFT_HOOD_SERVO);
+    m_rightHood = new Servo(RobotMap.PWM.RIGHT_HOOD_SERVO);
+    m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
   }
 
   @Override

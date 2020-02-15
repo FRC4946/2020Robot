@@ -37,6 +37,6 @@ public class Climber extends SubsystemBase {
   }
 
   public double getDistance() {
-    return (m_pot.getAverageVoltage() / Constants.DIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_MAX_DISTANCE;
+    return (m_pot.getAverageVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_SCALE_VALUE;
   }
 }

@@ -5,7 +5,9 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot;
+package frc.robot.util;
+
+import frc.robot.Constants;
 
 /**
  * Add your docs here.
