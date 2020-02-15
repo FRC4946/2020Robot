@@ -7,9 +7,7 @@
 
 package frc.robot.commands;
 
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.RobotContainer;
 import frc.robot.subsystems.DriveTrain;
 
 public class CurvatureDrive extends CommandBase {
@@ -27,7 +25,7 @@ public class CurvatureDrive extends CommandBase {
 
   public CurvatureDrive(double speed, double distance, double rotation, DriveTrain driveTrain, boolean isquickturn) {
     // Use addRequirements() here to declare subsystem dependencies.
-    m_driveTrain = drive;
+    m_driveTrain = driveTrain;
     addRequirements(m_driveTrain);
     m_speed = speed;
     m_rotation = rotation;
@@ -44,7 +42,7 @@ public class CurvatureDrive extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_drive.curvatureDrive(m_speed, m_rotation, m_quickturn);
+    m_driveTrain.curvatureDrive(m_speed, m_rotation, m_quickturn);
   }
 
   // Called once the command ends or is interrupted.
@@ -56,6 +54,6 @@ public class CurvatureDrive extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_driveTrain.getAverageDistance() > m_distance;;
+    return m_driveTrain.getAverageDistance() > m_distance;
   }
 }
