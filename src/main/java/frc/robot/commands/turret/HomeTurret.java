@@ -10,40 +10,45 @@ package frc.robot.commands.turret;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
-import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 
-public class AutoAlignTurret extends PIDCommand {
+public class HomeTurret extends PIDCommand {
 
   Turret m_turret;
-  Limelight m_limelight;
+  Shooter m_shooter;
 
   /**
-   * Creates a new AutoAlignTurret.
+   * Creates a new HomeTurret.
    */
-  public AutoAlignTurret(Turret turret, Limelight limelight) {
+  public HomeTurret(Shooter shooter, Turret turret) {
     super(new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
-        () -> turret.getAngle(), 
-        
-        () -> {
-          double angle = (turret.getAngle() + limelight.getAngleOffset());
-          angle = Math.max(Constants.TURRET_ROTATION_MIN, angle);
-          angle = Math.min(Constants.TURRET_ROTATION_MAX, angle);
 
-          return angle;
-        }, 
-        
+        () -> turret.getAngle(),
+
+        () -> Constants.TURRET_HOME_ANGLE,
+
         output -> {
           output += (output > 0 ? Constants.PID_TURRET_FF : -Constants.PID_TURRET_FF);
           output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
           turret.set(Constants.TURRET_MAX_PERCENT * (output));
         });
-
-    m_limelight = limelight;
     m_turret = turret;
-
-    addRequirements(m_turret, m_limelight);
+    m_shooter = shooter;
+    addRequirements(m_shooter, m_turret);
     getController().setTolerance(Constants.TURRET_PID_TOLERANCE);
+  }
+
+  @Override
+  public void initialize() {
+    super.initialize();
+    m_shooter.setSpeedSetpoint(0.0);
+  }
+
+  @Override
+  public void end(boolean interrupted) {
+    super.end(interrupted);
+    m_shooter.setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
   }
 
   @Override

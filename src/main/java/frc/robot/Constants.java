@@ -34,11 +34,24 @@ public final class Constants {
     public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;
     public static final double SHOOTER_VELOCITY_CONTROL_FF = 0.0;
 
-    public static final double SHOOTER_MAX_PERCENT = 0.9;
-
     public static final double SHOOTER_HOOD_P = 0.0;
     public static final double SHOOTER_HOOD_I = 0.0;
     public static final double SHOOTER_HOOD_D = 0.0;
+
+    public static final double PID_CLIMBER_P = 0;
+    public static final double PID_CLIMBER_I = 0;
+    public static final double PID_CLIMBER_D = 0;
+
+    public static final double PID_TURRET_P = 0.014;
+    public static final double PID_TURRET_I = 0.0105;
+    public static final double PID_TURRET_D = 0.0002;
+    public static final double PID_TURRET_FF = 0.06;
+
+    //#endregion
+
+    //#region Shooter Details
+
+    public static final double SHOOTER_MAX_PERCENT = 0.9;
 
     public static final double SHOOTER_MAX_SPEED = 6000;
 
@@ -51,16 +64,7 @@ public final class Constants {
 
     public static final double HOOD_MIN_ANGLE = 27.4;
     public static final double HOOD_MAX_ANGLE = 82.5;
-
-    public static final double PID_CLIMBER_P = 0;
-    public static final double PID_CLIMBER_I = 0;
-    public static final double PID_CLIMBER_D = 0;
-
-    public static final double PID_TURRET_P = 0.014;
-    public static final double PID_TURRET_I = 0.0105;
-    public static final double PID_TURRET_D = 0.0002;
-    public static final double PID_TURRET_FF = 0.06;
-
+    
     //#endregion
 
     //#region Limelight Details
@@ -80,6 +84,8 @@ public final class Constants {
     //#endregion
 
     //#region Turret Details
+
+    public static final double TURRET_MAX_PERCENT = 0.9;
 
     public static final double TURRET_PID_TOLERANCE = 0.3;
 
