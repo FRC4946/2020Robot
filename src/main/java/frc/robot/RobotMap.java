@@ -47,6 +47,8 @@ public final class RobotMap {
 
     // #endregion
 
+    // #region IO
+
     // MOTORS AND SENSORS
 
     /**
@@ -71,8 +73,6 @@ public final class RobotMap {
         public static final int TURRET_TALONSRX = 0;
 
     }
-
-    // #region IO
 
     /**
      * DIO Port Numbers
