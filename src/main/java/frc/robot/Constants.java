@@ -74,6 +74,8 @@ public final class Constants {
 
     public static final double TURRET_POT_SCALE_VALUE = 3600;
 
+    public static final double TURRET_HOME_ANGLE = 90;
+
     //#endregion
 
     //#region Climber Details
