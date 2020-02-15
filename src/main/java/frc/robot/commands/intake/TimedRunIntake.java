@@ -22,12 +22,12 @@ public class TimedRunIntake extends CommandBase {
 
   Timer m_timer;
 
-  public TimedRunIntake(double intakeSpeed, double intakeRunTime, Intake intake) {
+  public TimedRunIntake(double intakeSpeed, double intakeRunTime, double speed ,Intake intake) {
     // Use addRequirements() here to declare subsystem dependencies.
     m_intake = intake;
     m_period = intakeRunTime;
     m_intakeSpeed = speed;
-    addRequirements(intakeSpeed);
+    addRequirements(m_intake);
   }
 
   // Called when the command is initially scheduled.
@@ -40,13 +40,13 @@ public class TimedRunIntake extends CommandBase {
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_intake.set(m_intakeSpeed);
+    m_intake.setBothMotors(m_intakeSpeed);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_intake.stopAll();
+    m_intake.stopAllMotors();
   }
 
   // Returns true when the command should end.

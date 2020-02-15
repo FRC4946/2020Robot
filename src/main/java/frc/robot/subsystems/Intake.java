@@ -21,8 +21,7 @@ public class Intake extends SubsystemBase {
 
   private TalonSRX m_spinLeft, m_spinRight;
 
-  public Intake(double speed) {
-
+  public Intake() {
     m_leftElbow = new DoubleSolenoid(RobotMap.LEFT_ELBOW_A, RobotMap.LEFT_ELBOW_B);
     m_rightElbow = new DoubleSolenoid(RobotMap.RIGHT_ELBOW_A, RobotMap.RIGHT_ELBOW_B);
 
@@ -189,7 +188,7 @@ public class Intake extends SubsystemBase {
   /** 
    * Stops left intake wheels
    */
-  public void stopLEftMotor(){
+  public void stopLeftMotor(){
     setLeftMotor(0);
   }
 
@@ -200,4 +199,7 @@ public class Intake extends SubsystemBase {
     setLeftMotor(0);
     setRightMotor(0);
   }
+
+public void set(double m_intakeSpeed) {
+}
 }
