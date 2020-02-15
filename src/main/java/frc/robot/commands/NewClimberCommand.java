@@ -19,6 +19,7 @@ public class NewClimberCommand extends CommandBase {
   double m_speed;
   double m_distance;
   int m_timesAtBottom;
+  boolean m_hasExtended;
 
   public NewClimberCommand(Climber climber, double speed) {
     m_climber = climber;
@@ -34,6 +35,7 @@ public class NewClimberCommand extends CommandBase {
     m_distance = Constants.CLIMBER_POT_BOTTOM;
     m_timesAtBottom = 0;
     m_climber.setPiston(true);
+    m_hasExtended=false;
   }
 
   // Called every time the scheduler runs while the command is scheduled.
@@ -48,6 +50,7 @@ public class NewClimberCommand extends CommandBase {
 
     if (Constants.CLIMBER_DISTANCE_TO_TOP - m_distance + Constants.CLIMBER_POT_BOTTOM == 0) {
       m_climber.setPiston(false);
+      m_hasExtended = true;
     }
   }
 
@@ -61,6 +64,6 @@ public class NewClimberCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_timesAtBottom == 2;
+    return (m_climber.getDistance() == Constants.CLIMBER_POT_BOTTOM) && m_hasExtended;
   }
 }
