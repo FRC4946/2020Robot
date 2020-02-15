@@ -9,13 +9,14 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import frc.robot.subsystems.Climber;
-import frc.robot.subsystems.ConveyorBelt;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Limelight;
+import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
 
 /**
@@ -26,26 +27,26 @@ import frc.robot.subsystems.Shooter;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
-
   Joystick m_driveJoystick;
   Joystick m_operatorJoystick;
 
   DriveTrain m_driveTrain;
   Shooter m_shooter;
   Climber m_climber;
-  ConveyorBelt m_conveyor;
   Limelight m_limelight;
+  PowerDistributionPanel m_pdp;
+  Revolver m_revolver;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
     m_limelight= new Limelight();
+    m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
     m_driveTrain = new DriveTrain();
     m_shooter = new Shooter();
     m_climber = new Climber();
-    m_conveyor = new ConveyorBelt();
+    m_revolver = new Revolver(m_pdp);
 
     configureButtonBindings();
 

@@ -111,4 +111,21 @@ public final class Constants {
     public static final double CLIMBER_POT_MIN = 0;
 
     //#endregion
+
+    //#region Revolver Details
+
+    public static final double REVOLVER_DRUM_CURRENT_THRESHOLD = 2.0;
+    public static final double REVOLVER_FEEDWHEEL_CURRENT_THRESHOLD = 2.0;
+
+    public static final double REVOLVER_DRUM_FORWARDS_SPEED = 0.3;
+    public static final double REVOLVER_DRUM_BACKWARDS_SPEED = -0.3;
+
+    public static final int REVOLVER_REPS_THRESHOLD = 4;
+
+    /**
+     * Time revolver takes to unjam in seconds
+     */
+    public static final double REVOLVER_UNJAM_TIME = 1;
+
+    //#endregion
 }
