@@ -199,7 +199,4 @@ public class Intake extends SubsystemBase {
     setLeftMotor(0);
     setRightMotor(0);
   }
-
-public void set(double m_intakeSpeed) {
-}
 }
