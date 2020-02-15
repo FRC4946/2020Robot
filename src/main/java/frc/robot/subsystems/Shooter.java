@@ -114,25 +114,25 @@ public class Shooter extends SubsystemBase {
     return m_rightHoodMotor.get();
   }
 
-  /** Sets the speed of the left hood motor
+  /** Sets the position of the left hood motor
    * 
-   * @param position controls the speed of the motor
+   * @param position controls the position of the motor
    */
   public void setLeftHoodMotor(double position) {
     m_leftHoodMotor.set(position);
   }
   
-  /** Sets the speed of the right hood motor
+  /** Sets the position of the right hood motor
    * 
-   * @param position controls the speed of the motor
+   * @param position controls the position of the motor
    */
   public void setRightHoodMotor(double position) {
     m_rightHoodMotor.set(position);
   }
   
-  /** Sets the speed of the both hood motors
+  /** Sets the position of the both hood motors
    * 
-   * @param position controls the speed of both of the motor
+   * @param position controls the position of both of the motor
    */
   public void setBothHoodMotors(double position) {
     m_leftHoodMotor.set(position);
@@ -157,23 +157,9 @@ public class Shooter extends SubsystemBase {
    * 
    */
   public void stopBothHoodMotors() {
-    m_leftHoodMotor.set(0);
-    m_rightHoodMotor.set(0);
+    m_leftHoodMotor.set(0.0);
+    m_rightHoodMotor.set(0.0);
   }
-
-  public void setLeftHoodMotorPos(double targetpos){
-    setLeftHoodMotor(targetpos);
-  }
-
-  public void setRightHoodMotorPos(double targetpos){
-    setRightHoodMotor(targetpos); 
-  }
-
-  public void setBothHoodMotorsPos(double targetpos){
-    setLeftHoodMotorPos(targetpos);
-    setRightHoodMotorPos(targetpos);
-  }
-
 
   /** Runs the left motor until the volts read form the left POT equual the target volts
    * 

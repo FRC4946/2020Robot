@@ -25,4 +25,9 @@ public class Utilities {
   public static double deadzone(double input, double deadzone) {
     return Math.abs(input) < Math.abs(deadzone) ? 0 : input;
   }
+
+  public static double shooterPosition(double angle){
+    return (angle/45);
+  }
+
 }

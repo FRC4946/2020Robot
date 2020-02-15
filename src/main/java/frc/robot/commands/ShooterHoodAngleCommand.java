@@ -8,6 +8,7 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Utilities;
 import frc.robot.subsystems.Shooter;
 
 public class ShooterHoodAngleCommand extends CommandBase {
@@ -16,12 +17,11 @@ public class ShooterHoodAngleCommand extends CommandBase {
    */
   private Shooter m_shooter;
   private double m_position;
-  private double m_volts;
+  private double m_angle;
 
-  public ShooterHoodAngleCommand(Shooter shooter, double position, double volts) {
+  public ShooterHoodAngleCommand(Shooter shooter, double angle) {
     m_shooter = shooter;
-    m_position = position;
-    m_volts = volts;
+    m_angle = angle;
 
     // Use addRequirements() here to declare subsystem dependencies.
     addRequirements(m_shooter);
@@ -30,12 +30,13 @@ public class ShooterHoodAngleCommand extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_position = Utilities.shooterPosition(m_angle);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_shooter.setBothHoodMotorsVolts(m_volts, m_position);
+    m_shooter.setBothHoodMotors(m_position);
   }
 
   // Called once the command ends or is interrupted.
@@ -47,6 +48,6 @@ public class ShooterHoodAngleCommand extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return (m_position==m_shooter.getLeftHoodPosition()) && (m_position==m_shooter.getRightHoodPosition());
   }
 }
