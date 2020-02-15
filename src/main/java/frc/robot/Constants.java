@@ -45,5 +45,6 @@ public final class Constants {
     
     public static final double DEFAULT_DEADZONE = 0.1;
 
-
+    public static final double CLIMBER_POT_BOTTOM = 0.0;
+    public static final double CLIMBER_DISTANCE_TO_TOP = 0.0;
 }
