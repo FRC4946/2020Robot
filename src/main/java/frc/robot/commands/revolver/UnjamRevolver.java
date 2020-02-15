@@ -5,53 +5,50 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands;
+package frc.robot.commands.revolver;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Robot;
-import frc.robot.RobotContainer;
-import frc.robot.subsystems.ConveyorBelt;
+import frc.robot.Constants;
+import frc.robot.subsystems.Revolver;
 
-public class RunConveyor extends CommandBase {
+public class UnjamRevolver extends CommandBase {
+  
+  Revolver m_revolver;
+  
+  Timer m_timer = new Timer();
 
-  double m_resevoirSpeed, m_feederSpeed;
-  ConveyorBelt m_conveyorBelt;
-  Timer m_timer;
-
-  public RunConveyor(double resevoirSpeed, double feederSpeed, ConveyorBelt conveyorBelt) {
-    m_conveyorBelt = conveyorBelt;
-    m_resevoirSpeed = resevoirSpeed;
-    m_feederSpeed = feederSpeed;
-
-    addRequirements(m_conveyorBelt);
-    m_speed = speed;
-    m_pulseLength = pulseLength;
-    
+  /**
+   * Creates a new UnjamRevolver.
+   */
+  public UnjamRevolver(Revolver revolver) {
+    m_revolver = revolver;
+    addRequirements(m_revolver);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-   
+    m_timer.reset();
+    m_timer.start();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_conveyorBelt.runAll(m_speed);
+    m_revolver.setAll(Constants.REVOLVER_DRUM_BACKWARDS_SPEED, 0.0);
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_conveyorBelt.stopAll();
+    m_timer.stop();
+    m_revolver.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return false;
+    return m_timer.get() > Constants.REVOLVER_UNJAM_TIME;
   }
-
 }
