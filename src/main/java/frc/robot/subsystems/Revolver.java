@@ -33,14 +33,6 @@ public class Revolver extends SubsystemBase {
   }
 
   /**
-   * Resets all reps
-   */
-  private void resetReps() {
-    resetDrumReps();
-    resetFeedReps();
-  }
-
-  /**
    * Resets the drum reps
    */
   private void resetDrumReps() {
