@@ -27,6 +27,21 @@ public final class Constants {
     public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;
     public static final double SHOOTER_VELOCITY_CONTROL_I = 0.0;
     public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;
+    public static final double SHOOTER_VELOCITY_CONTROL_FF = 0.0;
+
+    public static final double SHOOTER_MAX_PERCENT = 0.9;
+
+    public static final double SHOOTER_HOOD_P = 0.0;
+    public static final double SHOOTER_HOOD_I = 0.0;
+    public static final double SHOOTER_HOOD_D = 0.0;
+
+    public static final double HOOD_ANGLE_TOLERANCE = 2;
+    
+    public static final double HOOD_POT_SCALE_VALUE = 5;
+    public static final double HOOD_POT_OFFSET_VALUE = 1;
+
+    public static final double HOOD_MIN_ANGLE = 27.4;
+    public static final double HOOD_MAX_ANGLE = 82.5;
 
     // TODO : Fill In Climber Pot Max Distance and other variables
     public static final double CLIMBER_POT_MAX_DISTANCE = 1;
@@ -37,7 +52,7 @@ public final class Constants {
     public static final double MIN_CLIMBER_SPEED = 0.1;
     public static final double MAX_CLIMBER_SPEED = 0.1;
 
-    public static final double DIO_MAX_VOLTAGE = 5.0;
+    public static final double AIO_MAX_VOLTAGE = 5.0;
 
     public static final double PID_CLIMBER_P = 0;
     public static final double PID_CLIMBER_I = 0;

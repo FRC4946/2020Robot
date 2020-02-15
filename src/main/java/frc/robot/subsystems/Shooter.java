@@ -12,55 +12,103 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Servo;
-import edu.wpi.first.wpilibj.Victor;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
-  CANSparkMax m_leftShooterMotor, m_rightShooterMotor;
-  //Victor m_leftHoodMotor, m_rightHoodMotor;
-  Servo m_leftHoodMotor, m_rightHoodMotor;
-  AnalogInput m_leftHoodPOT, m_rightHoodPOT;
-
-  double m_setpoint = 0;
+  CANSparkMax m_left, m_right;
+  Servo m_leftHood, m_rightHood;
+  AnalogInput m_pot;
+  PIDController m_speedController, m_angleController;
+  boolean m_speedEnabled = false;
+  boolean m_angleEnabled = false;
 
   /**
-   * Creates a new Shooter.
+   * Creates a new PIDShooter.
    */
   public Shooter() {
-    m_leftShooterMotor = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
-    m_rightShooterMotor = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
-    m_rightShooterMotor.setInverted(true);
-    m_leftShooterMotor.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
-    m_rightShooterMotor.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
+    m_speedController = new PIDController(Constants.SHOOTER_VELOCITY_CONTROL_P, Constants.SHOOTER_VELOCITY_CONTROL_I,
+        Constants.SHOOTER_VELOCITY_CONTROL_D);
+    m_angleController = new PIDController(Constants.SHOOTER_HOOD_P, Constants.SHOOTER_HOOD_I, Constants.SHOOTER_HOOD_D);
 
-    m_leftShooterMotor.burnFlash();
-    m_rightShooterMotor.burnFlash();
+    m_angleController.setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
 
-    //m_leftHoodMotor = new Victor(RobotMap.CAN.LEFT_HOOD_MOTOR);
-    //m_rightHoodMotor = new Victor(RobotMap.CAN.RIGHT_HOOD_MOTOR);
-    m_leftHoodMotor = new Servo(RobotMap.PWM.LEFT_HOOD_MOTOR);
-    m_rightHoodMotor = new Servo(RobotMap.PWM.RIGHT_HOOD_MOTOR);
-    m_leftHoodPOT = new AnalogInput(RobotMap.AIO.LEFT_HOOD_POT);
-    m_rightHoodPOT = new AnalogInput(RobotMap.AIO.RIGHT_HOOD_POT);
+    setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
+    setSpeedSetpoint(0.0);
+
+    m_speedEnabled = true;
+    m_angleEnabled = true;
+
+    m_left = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
+    m_right = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
+    m_right.setInverted(true);
+    m_left.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
+    m_right.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
+
+    m_left.burnFlash();
+    m_right.burnFlash();
+
+    m_leftHood = new Servo(RobotMap.PWM.LEFT_HOOD_MOTOR);
+    m_rightHood = new Servo(RobotMap.PWM.RIGHT_HOOD_MOTOR);
+    m_pot = new AnalogInput(RobotMap.AIO.RIGHT_HOOD_POT);
+  }
+
+  @Override
+  public void periodic() {
+    if (m_speedEnabled)
+      useSpeedOutput(m_speedController.calculate(getAverageSpeed()));
+    else
+      stopShooter();
+
+    if (m_angleEnabled && !m_angleController.atSetpoint())
+      useAngleSetpoint(m_angleController.calculate(getHoodAngle()));
+    else
+      setHoodSpeed(0.0);
+  }
+
+  public void useSpeedOutput(double output) {
+    output += (output > 0 ? Constants.SHOOTER_VELOCITY_CONTROL_FF : -Constants.SHOOTER_VELOCITY_CONTROL_FF);
+    output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
+    set(Constants.SHOOTER_MAX_PERCENT * (output));
+  }
+
+  public void useAngleSetpoint(double output) {
+    setHoodSpeed(output);
+  }
+
+  public void setSpeedSetpoint(double setpoint) {
+    m_speedController.setSetpoint(setpoint);
+  }
+
+  public double getSpeedSetpoint() {
+    return m_speedController.getSetpoint();
+  }
+
+  public void setAngleSetpoint(double setpoint) {
+    m_angleController.setSetpoint(setpoint);
+  }
+
+  public double getAngleSetpoint() {
+    return m_angleController.getSetpoint();
   }
 
   /**
    * Sets the motors to the desired speed
+   * 
    * @param speed The speed that the motor runs at
    */
-  public void setShooter(double speed) {
-    m_leftShooterMotor.set(speed);
-    m_rightShooterMotor.set(speed);
+  public void set(double speed) {
+    m_left.set(speed);
+    m_right.set(speed);
   }
 
   /**
    * Stops the motors
    */
   public void stopShooter() {
-    m_leftShooterMotor.set(0.0);
-    m_rightShooterMotor.set(0.0);
+    set(0.0);
   }
 
   /**
@@ -74,143 +122,24 @@ public class Shooter extends SubsystemBase {
    * Gets the speed that the right motor is running at
    */
   public double getRightSpeed() {
-    return m_rightShooterMotor.getEncoder().getVelocity();
+    return -m_right.getEncoder().getVelocity();
   }
 
   /**
    * Gets the speed that the left motor is running at
    */
   public double getLeftSpeed() {
-    return m_leftShooterMotor.getEncoder().getVelocity();
+    return m_left.getEncoder().getVelocity();
   }
 
-  /**
-   * Get PID set point
-   */
-  public double getSetpoint() {
-    return m_setpoint;
+  public void setHoodSpeed(double speed) {
+    m_rightHood.setSpeed(-speed);
+    m_leftHood.setSpeed(speed);
   }
 
-  /**
-   * Sets the PID setpoint 
-   * @param setpoint desired set point
-   */
-  public void setSetpoint(double setpoint) {
-    m_setpoint = setpoint;
-  }
-
-  /**
-   * Gets the left hood position
-   * @return the left hood motor position
-   */
-  public double getLeftHoodPosition(){
-    return m_leftHoodMotor.get();
-  }
-  /**
-   * Gets the right hood position
-   * @return the right hood motor position
-   */
-  public double getRightHoodPosition(){
-    return m_rightHoodMotor.get();
-  }
-
-  /** Sets the position of the left hood motor
-   * 
-   * @param position controls the position of the motor
-   */
-  public void setLeftHoodMotor(double position) {
-    m_leftHoodMotor.set(position);
-  }
-  
-  /** Sets the position of the right hood motor
-   * 
-   * @param position controls the position of the motor
-   */
-  public void setRightHoodMotor(double position) {
-    m_rightHoodMotor.set(position);
-  }
-  
-  /** Sets the position of the both hood motors
-   * 
-   * @param position controls the position of both of the motor
-   */
-  public void setBothHoodMotors(double position) {
-    m_leftHoodMotor.set(position);
-    m_rightHoodMotor.set(position);
-  }
-
-  /** Stops the left hood motor
-   * 
-   */
-  public void stopLeftHoodMotor() {
-    m_leftHoodMotor.set(0);
-  }
-  
-  /** Stops the right hood motor
-   * 
-   */
-  public void stopRightHoodMotor() {
-    m_rightHoodMotor.set(0);
-  }
-
-  /** Stops both of the hood motors
-   * 
-   */
-  public void stopBothHoodMotors() {
-    m_leftHoodMotor.set(0.0);
-    m_rightHoodMotor.set(0.0);
-  }
-
-  /** Runs the left motor until the volts read form the left POT equual the target volts
-   * 
-   * @param volts target volts for the POT
-   * @param position controls the speed of the motor
-   */
-  public void setLeftHoodMotorsVolts(double volts, double position) {
-    if (m_leftHoodPOT.getVoltage() < volts) {
-      setLeftHoodMotor(position);
-    } else if (m_leftHoodPOT.getVoltage() > volts) {
-      setLeftHoodMotor(-position);
-    } else {
-      stopLeftHoodMotor();
-    }
-  }
-
-  /** Runs the right motor until the volts read form the right POT equual the target volts
-   * 
-   * @param volts target volts for the POT
-   * @param position controls the speed of the motor
-   */
-  public void setRightHoodMotorsVolts(double volts, double position) {
-    if (m_rightHoodPOT.getVoltage() < volts) {
-      setRightHoodMotor(position);
-    } else if (m_rightHoodPOT.getVoltage() > volts) {
-      setRightHoodMotor(-position);
-    } else {
-      stopRightHoodMotor();
-    }
-  }
-
-  /** Runs the both motor until the volts read form the both POT equual the target volts
-   * 
-   * @param volts target volts for the POT
-   * @param position controls the speed of the motor
-   */
-  public void setBothHoodMotorsVolts(double volts, double position) {
-    if (m_leftHoodPOT.getVoltage() < volts) {
-      setLeftHoodMotor(position);
-    } else if (m_leftHoodPOT.getVoltage() > volts) {
-      setLeftHoodMotor(-position);
-    } else {
-      stopLeftHoodMotor();
-    }
-    
-    if (m_rightHoodPOT.getVoltage() < volts) {
-      setRightHoodMotor(position);
-    } else if (m_rightHoodPOT.getVoltage() > volts) {
-      setRightHoodMotor(-position);
-    } else {
-      stopRightHoodMotor();
-    }
+  public double getHoodAngle() {
+    return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.HOOD_POT_SCALE_VALUE)
+        - Constants.HOOD_POT_OFFSET_VALUE) * (Constants.HOOD_MAX_ANGLE - Constants.HOOD_MIN_ANGLE)
+        + Constants.HOOD_MIN_ANGLE;
   }
 }
