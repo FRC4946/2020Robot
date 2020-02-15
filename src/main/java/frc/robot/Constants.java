@@ -19,37 +19,69 @@ package frc.robot;
  */
 public final class Constants {
 
-    // TODO : Fill In Inches Per Tick
+    public static final double AIO_MAX_VOLTAGE = 5.0;
+
+    public static final double DEFAULT_DEADZONE = 0.1;
+    
     public static final double ENCODER_INCHES_PER_TICK = 1;
 
     public static final double SHOOTER_VOLTAGE_RAMP_RATE = 0.2;
+
+    //#region PID Tunings
 
     public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;
     public static final double SHOOTER_VELOCITY_CONTROL_I = 0.0;
     public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;
 
-    // TODO : Fill In Climber Pot Max Distance and other variables
-    public static final double CLIMBER_POT_MAX_DISTANCE = 1;
-
-    public static final double CLIMBER_UP_HEIGHT = 0;
-    public static final double CLIMBER_DOWN_HEIGHT = 0;
-
-    public static final double MIN_CLIMBER_SPEED = 0.1;
-    public static final double MAX_CLIMBER_SPEED = 0.1;
-
-    public static final double DIO_MAX_VOLTAGE = 5.0;
-
     public static final double PID_CLIMBER_P = 0;
     public static final double PID_CLIMBER_I = 0;
     public static final double PID_CLIMBER_D = 0;
 
-    public static final double PID_TURRET_P = 0;
-    public static final double PID_TURRET_I = 0;
-    public static final double PID_TURRET_D = 0;
-    
-    public static final double DEFAULT_DEADZONE = 0.1;
+    public static final double PID_TURRET_P = 0.014;
+    public static final double PID_TURRET_I = 0.0105;
+    public static final double PID_TURRET_D = 0.0002;
+    public static final double PID_TURRET_FF = 0.06;
 
-    public static final double TURRET_PID_TOLERANCE = 0;
+    //#endregion
 
-    public static final double TURRET_DEGREES_PER_PULSE = 0;
+    //#region Limelight Details
+
+    public static final double TARGET_HEIGHT = 60.0;
+    public static final double LIMELIGHT_HEIGHT = 39.5;
+
+    public static final double[] LIMELIGHT_OFFSET_ZERO_ROTATION = new double[] {0.0, 3.75};
+
+    public static final double[] TURRET_OFFSET = new double[] {0.0, 0.0};
+
+    public static final double LIMELIGHT_ANGLE_OFFSET = 0.0;
+    public static final double LIMELIGHT_PITCH = 0.0;
+
+    public static final double LIMELIGHT_HORIZONTAL_FOV = 53.0;
+
+    //#endregion
+
+    //#region Turret Details
+
+    public static final double TURRET_PID_TOLERANCE = 0.3;
+
+    public static final double TURRET_ROTATION_MIN = 0;
+
+    public static final double TURRET_ROTATION_MAX = 180;
+
+    public static final double TURRET_RATIO = 18d/32d;
+
+    public static final double TURRET_VELOCITY_ERROR_THRESHOLD = 0.0;
+
+    public static final double TURRET_POT_SCALE_VALUE = 3600;
+
+    //#endregion
+
+    //#region Climber Details
+
+    public static final double CLIMBER_POT_SCALE_VALUE = 10.0;
+
+    public static final double CLIMBER_POT_MAX_DELTA = 1;
+    public static final double CLIMBER_POT_MIN = 0;
+
+    //#endregion
 }

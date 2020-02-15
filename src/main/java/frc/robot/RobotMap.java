@@ -83,9 +83,6 @@ public final class RobotMap {
 
         public static final int DRIVE_RIGHT_ENCODER_A = 2;
         public static final int DRIVE_RIGHT_ENCODER_B = 3;
-
-        public static final int TURRET_ENCODER_A = 0;
-        public static final int TURRET_ENCODER_B = 0;
     }
 
     /**
@@ -93,6 +90,8 @@ public final class RobotMap {
      */
     public static final class AIO {
         public static final int CLIMBER_POT = 0;
+
+        public static final int TURRET_POT = 1;
     }
 
     // #endregion

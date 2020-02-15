@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -23,12 +24,11 @@ public class Turret extends SubsystemBase {
   // here. Call these from Commands.
 
   TalonSRX m_turretMotor;
-  Encoder m_encoder;
+  AnalogInput m_pot;
 
   public Turret(){
     m_turretMotor = new TalonSRX(RobotMap.CAN.TURRET_TALONSRX);
-    m_encoder = new Encoder(RobotMap.DIO.TURRET_ENCODER_A, RobotMap.DIO.TURRET_ENCODER_B);
-    m_encoder.setDistancePerPulse(Constants.TURRET_DEGREES_PER_PULSE);
+    m_pot = new AnalogInput(RobotMap.AIO.TURRET_POT);
   }
 
   /**
@@ -36,7 +36,7 @@ public class Turret extends SubsystemBase {
    * @param speed the speed at which to set the turret motor to
    */
 
-  public void move(double speed){
+  public void set(double speed){
     m_turretMotor.set(ControlMode.PercentOutput, speed);
   }
 
@@ -48,6 +48,6 @@ public class Turret extends SubsystemBase {
   }
   
   public double getAngle() {
-    return m_encoder.getDistance();
+    return (m_pot.getAverageVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO;
   }
 }

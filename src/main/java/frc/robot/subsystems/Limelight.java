@@ -11,6 +11,7 @@ import edu.wpi.first.networktables.NetworkTable;
 import edu.wpi.first.networktables.NetworkTableEntry;
 import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 
 /** 
  * Limelight Object
@@ -156,23 +157,28 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Estimates the distance to a detected strip of reflective tape on the field
-   * floor
+   * Estimates the distance to a target
    *
    * @return estimated distance in metres
    */
   public double findDistance() {
+    return (Constants.TARGET_HEIGHT - Constants.LIMELIGHT_HEIGHT)
+        * Math.sin(Math.toRadians(90 - (m_ty.getDouble(0) + Constants.LIMELIGHT_PITCH)))
+        / Math.sin(Math.toRadians((m_ty.getDouble(0) + Constants.LIMELIGHT_PITCH)));
+  }
 
-    // having a findDistance() function or an analogous function may be useful,
-    // though we will likely
-    // not be using these calculations
+  public double[] findTurretRelativePosition() {
+    double distance = findDistance();
+    return new double[] {
+        Constants.LIMELIGHT_OFFSET_ZERO_ROTATION[0]
+            + Math.cos(Math.toRadians(90 - (m_tx.getDouble(0) - Constants.LIMELIGHT_ANGLE_OFFSET))) * findDistance(),
+        Constants.LIMELIGHT_OFFSET_ZERO_ROTATION[1]
+            + Math.sin(Math.toRadians(90 - (m_tx.getDouble(0) - Constants.LIMELIGHT_ANGLE_OFFSET))) * distance };
+  }
 
-    // it may be more useful to just use tx, ty, and ta as raw values?? calculations
-    // may be inaccurate
-
-    double height = 1; // In metres
-    double angle = 45; // angle of mounting respective of roof
-
-    return (height * -1) / Math.tan(angle + m_ty.getDouble(0));
+  public double getAngleOffset() {
+    double angle = 90 - Math.toDegrees(Math.atan(findTurretRelativePosition()[0] == 0 ? 90 : (findTurretRelativePosition()[1] / findTurretRelativePosition()[0])));
+    
+    return ((Math.abs(angle) > Constants.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
   }
 }
