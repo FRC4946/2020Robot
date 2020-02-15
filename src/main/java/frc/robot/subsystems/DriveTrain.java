@@ -153,28 +153,36 @@ public class DriveTrain extends SubsystemBase {
    * @return the velocity of the left side
    */
   public double getLeftVelocity(){
-    return m_getWheelSpeeds.Constants.LEFT_METER_PER_SECOND;
+    return m_getWheelSpeeds.leftMetersPerSecond;
   }
 
   /**
    * @return the velocity of the right side
    */
   public double getRightVelocity(){
-    return m_getWheelSpeeds.Constants.RIGHT_METER_PER_SECOND;
+    return m_getWheelSpeeds.rightMetersPerSecond;
   }
 
   /**
-   * @return the linear velocity
+   * @return the forward linear velocity
    */
-  public double getLinerVelocity(){
-    return m_getChassisSpeeds.Constants.LINEAR_VELOCITY;
+  public double getForwardLinearVelocity(){
+    return m_getChassisSpeeds.vxMetersPerSecond;
+  }
+
+  /**
+   * 
+   * @return the strafe linear velocity
+   */
+  public double getStrafeLinearVelcity(){
+    return m_getChassisSpeeds.vyMetersPerSecond;
   }
 
   /**
    * @return the angular velocity
    */
   public double getAngularVelocit() {
-    return m_getChassisSpeeds.Constants.ANGULAR_VELOCITY;
+    return m_getChassisSpeeds.omegaRadiansPerSecond;
   }
 
 
