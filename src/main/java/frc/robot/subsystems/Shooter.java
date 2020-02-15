@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.AnalogInput;
+import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.Victor;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -18,7 +19,8 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
   CANSparkMax m_leftShooterMotor, m_rightShooterMotor;
-  Victor m_leftHoodMotor, m_rightHoodMotor;
+  //Victor m_leftHoodMotor, m_rightHoodMotor;
+  Servo m_leftHoodMotor, m_rightHoodMotor;
   AnalogInput m_leftHoodPOT, m_rightHoodPOT;
 
   double m_setpoint = 0;
@@ -36,8 +38,10 @@ public class Shooter extends SubsystemBase {
     m_leftShooterMotor.burnFlash();
     m_rightShooterMotor.burnFlash();
 
-    m_leftHoodMotor = new Victor(RobotMap.CAN.LEFT_HOOD_MOTOR);
-    m_rightHoodMotor = new Victor(RobotMap.CAN.RIGHT_HOOD_MOTOR);
+    //m_leftHoodMotor = new Victor(RobotMap.CAN.LEFT_HOOD_MOTOR);
+    //m_rightHoodMotor = new Victor(RobotMap.CAN.RIGHT_HOOD_MOTOR);
+    m_leftHoodMotor = new Servo(RobotMap.PWM.LEFT_HOOD_MOTOR);
+    m_rightHoodMotor = new Servo(RobotMap.PWM.RIGHT_HOOD_MOTOR);
     m_leftHoodPOT = new AnalogInput(RobotMap.AIO.LEFT_HOOD_POT);
     m_rightHoodPOT = new AnalogInput(RobotMap.AIO.RIGHT_HOOD_POT);
   }
@@ -55,8 +59,8 @@ public class Shooter extends SubsystemBase {
    * Stops the motors
    */
   public void stopShooter() {
-    m_leftShooterMotor.set(0);
-    m_rightShooterMotor.set(0);
+    m_leftShooterMotor.set(0.0);
+    m_rightShooterMotor.set(0.0);
   }
 
   /**
@@ -95,29 +99,44 @@ public class Shooter extends SubsystemBase {
     m_setpoint = setpoint;
   }
 
+  /**
+   * Gets the left hood position
+   * @return the left hood motor position
+   */
+  public double getLeftHoodPosition(){
+    return m_leftHoodMotor.get();
+  }
+  /**
+   * Gets the right hood position
+   * @return the right hood motor position
+   */
+  public double getRightHoodPosition(){
+    return m_rightHoodMotor.get();
+  }
+
   /** Sets the speed of the left hood motor
    * 
-   * @param speed controls the speed of the motor
+   * @param position controls the speed of the motor
    */
-  public void setLeftHoodMotor(double speed) {
-    m_leftHoodMotor.set(speed);
+  public void setLeftHoodMotor(double position) {
+    m_leftHoodMotor.set(position);
   }
   
   /** Sets the speed of the right hood motor
    * 
-   * @param speed controls the speed of the motor
+   * @param position controls the speed of the motor
    */
-  public void setRightHoodMotor(double speed) {
-    m_rightHoodMotor.set(speed);
+  public void setRightHoodMotor(double position) {
+    m_rightHoodMotor.set(position);
   }
   
   /** Sets the speed of the both hood motors
    * 
-   * @param speed controls the speed of both of the motor
+   * @param position controls the speed of both of the motor
    */
-  public void setBothHoodMotors(double speed) {
-    m_leftHoodMotor.set(speed);
-    m_rightHoodMotor.set(speed);
+  public void setBothHoodMotors(double position) {
+    m_leftHoodMotor.set(position);
+    m_rightHoodMotor.set(position);
   }
 
   /** Stops the left hood motor
@@ -142,17 +161,30 @@ public class Shooter extends SubsystemBase {
     m_rightHoodMotor.set(0);
   }
 
-  
+  public void setLeftHoodMotorPos(double targetpos){
+    setLeftHoodMotor(targetpos);
+  }
+
+  public void setRightHoodMotorPos(double targetpos){
+    setRightHoodMotor(targetpos); 
+  }
+
+  public void setBothHoodMotorsPos(double targetpos){
+    setLeftHoodMotorPos(targetpos);
+    setRightHoodMotorPos(targetpos);
+  }
+
+
   /** Runs the left motor until the volts read form the left POT equual the target volts
    * 
    * @param volts target volts for the POT
-   * @param speed controls the speed of the motor
+   * @param position controls the speed of the motor
    */
-  public void setLeftHoodMotorsVolts(double volts, double speed) {
+  public void setLeftHoodMotorsVolts(double volts, double position) {
     if (m_leftHoodPOT.getVoltage() < volts) {
-      setLeftHoodMotor(speed);
+      setLeftHoodMotor(position);
     } else if (m_leftHoodPOT.getVoltage() > volts) {
-      setLeftHoodMotor(-speed);
+      setLeftHoodMotor(-position);
     } else {
       stopLeftHoodMotor();
     }
@@ -161,13 +193,13 @@ public class Shooter extends SubsystemBase {
   /** Runs the right motor until the volts read form the right POT equual the target volts
    * 
    * @param volts target volts for the POT
-   * @param speed controls the speed of the motor
+   * @param position controls the speed of the motor
    */
-  public void setRightHoodMotorsVolts(double volts, double speed) {
+  public void setRightHoodMotorsVolts(double volts, double position) {
     if (m_rightHoodPOT.getVoltage() < volts) {
-      setRightHoodMotor(speed);
+      setRightHoodMotor(position);
     } else if (m_rightHoodPOT.getVoltage() > volts) {
-      setRightHoodMotor(-speed);
+      setRightHoodMotor(-position);
     } else {
       stopRightHoodMotor();
     }
@@ -176,21 +208,21 @@ public class Shooter extends SubsystemBase {
   /** Runs the both motor until the volts read form the both POT equual the target volts
    * 
    * @param volts target volts for the POT
-   * @param speed controls the speed of the motor
+   * @param position controls the speed of the motor
    */
-  public void setBothHoodMotorsVolts(double volts, double speed) {
+  public void setBothHoodMotorsVolts(double volts, double position) {
     if (m_leftHoodPOT.getVoltage() < volts) {
-      setLeftHoodMotor(speed);
+      setLeftHoodMotor(position);
     } else if (m_leftHoodPOT.getVoltage() > volts) {
-      setLeftHoodMotor(-speed);
+      setLeftHoodMotor(-position);
     } else {
       stopLeftHoodMotor();
     }
     
     if (m_rightHoodPOT.getVoltage() < volts) {
-      setRightHoodMotor(speed);
+      setRightHoodMotor(position);
     } else if (m_rightHoodPOT.getVoltage() > volts) {
-      setRightHoodMotor(-speed);
+      setRightHoodMotor(-position);
     } else {
       stopRightHoodMotor();
     }

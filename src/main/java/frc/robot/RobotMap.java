@@ -94,5 +94,13 @@ public final class RobotMap {
         public static final int RIGHT_HOOD_POT = 2;
     }
 
+    /**
+     * PWM Port Numbers
+     */
+    public static final class PWM{
+        public static final int LEFT_HOOD_MOTOR = 11;
+        public static final int RIGHT_HOOD_MOTOR = 12;
+    }
+
     // #endregion
 }
