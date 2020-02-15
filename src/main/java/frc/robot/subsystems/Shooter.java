@@ -79,7 +79,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setSpeedSetpoint(double setpoint) {
-    m_speedController.setSetpoint(setpoint);
+    m_speedController.setSetpoint(Math.min(Constants.SHOOTER_MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
   }
 
   public double getSpeedSetpoint() {
@@ -87,7 +87,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngleSetpoint(double setpoint) {
-    m_angleController.setSetpoint(setpoint);
+    m_angleController.setSetpoint(Math.max(Constants.HOOD_MIN_ANGLE, Math.min(setpoint, Constants.HOOD_MAX_ANGLE)));
   }
 
   public double getAngleSetpoint() {
@@ -122,14 +122,14 @@ public class Shooter extends SubsystemBase {
    * Gets the speed that the right motor is running at
    */
   public double getRightSpeed() {
-    return -m_right.getEncoder().getVelocity();
+    return -m_right.getEncoder().getVelocity() * Constants.SHOOTER_RATIO;
   }
 
   /**
    * Gets the speed that the left motor is running at
    */
   public double getLeftSpeed() {
-    return m_left.getEncoder().getVelocity();
+    return m_left.getEncoder().getVelocity() * Constants.SHOOTER_RATIO;
   }
 
   public void setHoodSpeed(double speed) {
@@ -141,5 +141,18 @@ public class Shooter extends SubsystemBase {
     return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.HOOD_POT_SCALE_VALUE)
         - Constants.HOOD_POT_OFFSET_VALUE) * (Constants.HOOD_MAX_ANGLE - Constants.HOOD_MIN_ANGLE)
         + Constants.HOOD_MIN_ANGLE;
+  }
+
+  public void setEnabled(boolean enabled) {
+    setEnabledHood(enabled);
+    setEnabledShooter(enabled);
+  }
+
+  public void setEnabledShooter(boolean enabled) {
+    m_speedEnabled = enabled;
+  }
+
+  public void setEnabledHood(boolean enabled) {
+    m_angleEnabled = enabled;
   }
 }

@@ -35,6 +35,10 @@ public final class Constants {
     public static final double SHOOTER_HOOD_I = 0.0;
     public static final double SHOOTER_HOOD_D = 0.0;
 
+    public static final double SHOOTER_MAX_SPEED = 6000;
+
+    public static final double SHOOTER_RATIO = 2d/1d;
+
     public static final double HOOD_ANGLE_TOLERANCE = 2;
     
     public static final double HOOD_POT_SCALE_VALUE = 5;
@@ -59,6 +63,4 @@ public final class Constants {
     public static final double PID_CLIMBER_D = 0;
     
     public static final double DEFAULT_DEADZONE = 0.1;
-
-
 }
