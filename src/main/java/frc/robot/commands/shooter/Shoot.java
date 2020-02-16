@@ -17,9 +17,9 @@ import frc.robot.subsystems.Shooter;
  */
 public class Shoot extends CommandBase {
 
-  double m_speed, m_angle;
-  Revolver m_revolver;
-  Shooter m_shooter;
+  private double m_speed, m_angle;
+  private Revolver m_revolver;
+  private Shooter m_shooter;
 
   /**
    * Shoots at the specified speed

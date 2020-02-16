@@ -18,12 +18,12 @@ import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
-  CANSparkMax m_left, m_right;
-  Servo m_leftHood, m_rightHood;
-  AnalogInput m_pot;
-  PIDController m_speedController, m_angleController;
-  boolean m_speedEnabled = false;
-  boolean m_angleEnabled = false;
+  private CANSparkMax m_left, m_right;
+  private Servo m_leftHood, m_rightHood;
+  private AnalogInput m_pot;
+  private PIDController m_speedController, m_angleController;
+  private boolean m_speedEnabled = false;
+  private boolean m_angleEnabled = false;
 
   /**
    * Creates a new PIDShooter.

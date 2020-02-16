@@ -15,8 +15,8 @@ import frc.robot.subsystems.Turret;
 
 public class AutoAlignTurret extends PIDCommand {
 
-  Turret m_turret;
-  Limelight m_limelight;
+  private Turret m_turret;
+  private Limelight m_limelight;
 
   /**
    * Creates a new AutoAlignTurret.

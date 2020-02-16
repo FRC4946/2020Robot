@@ -13,10 +13,10 @@ import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Revolver;
 
 public class RunIntake extends CommandBase {
-  Intake m_intake;
-  Revolver m_revolver;
-  double m_speed;
-  IntakeSelector m_selector;
+  private Intake m_intake;
+  private Revolver m_revolver;
+  private double m_speed;
+  private IntakeSelector m_selector;
 
 
   public RunIntake(double speed, IntakeSelector selector, Intake intake, Revolver revolver) {

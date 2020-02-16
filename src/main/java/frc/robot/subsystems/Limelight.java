@@ -15,26 +15,17 @@ import frc.robot.Constants;
 
 /** 
  * Limelight Object
- * 
- * Pipelines:
- * 0 - Driving
- * 1 - Pickup Hatch
- * 2 - Drop Hatch
  *
  * @author Jacob4649
  */
 public class Limelight extends SubsystemBase {
 
-  public NetworkTable m_networkTable;
-  public NetworkTableEntry m_tx;
-  public NetworkTableEntry m_ty;
-  public NetworkTableEntry m_ta;
-  public NetworkTableEntry m_tv;
-  public NetworkTableEntry m_ts;
-  public double m_detected;
-  public double m_xOffset;
-  public double m_yOffset;
-  public double m_area;
+  private NetworkTable m_networkTable;
+  private NetworkTableEntry m_tx;
+  private NetworkTableEntry m_ty;
+  private NetworkTableEntry m_ta;
+  private NetworkTableEntry m_tv;
+  private NetworkTableEntry m_ts;
 
   /**
    * Initializes all network table entries, and creates object Turns on vision and

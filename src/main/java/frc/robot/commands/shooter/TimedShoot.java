@@ -15,10 +15,10 @@ import frc.robot.subsystems.Shooter;
 
 public class TimedShoot extends CommandBase {
   
-  Shooter m_shooter;
-  Revolver m_revolver;
-  double m_speed, m_angle, m_time;
-  Timer m_timer;
+  private Shooter m_shooter;
+  private Revolver m_revolver;
+  private double m_speed, m_angle, m_time;
+  private Timer m_timer;
 
   /**
    * Creates a new TimedShoot.

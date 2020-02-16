@@ -15,8 +15,8 @@ import frc.robot.subsystems.Turret;
 
 public class HomeTurret extends PIDCommand {
 
-  Turret m_turret;
-  Shooter m_shooter;
+  private Turret m_turret;
+  private Shooter m_shooter;
 
   /**
    * Creates a new HomeTurret.
