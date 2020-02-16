@@ -27,6 +27,14 @@ public final class Constants {
 
     public static final double SHOOTER_VOLTAGE_RAMP_RATE = 0.2;
 
+    //#region Robot Start
+
+    public static final double ROBOT_START_X = 0.0;
+    public static final double ROBOT_START_Y = 0.0;
+    public static final double ROBOT_START_ANGLE = 0.0;
+
+    //#endregion
+
     //#region PID Tunings
 
     public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;
@@ -67,6 +75,18 @@ public final class Constants {
     public static final double HOOD_MIN_ANGLE = 27.4;
     public static final double HOOD_MAX_ANGLE = 82.5;
     
+    //#endregion
+
+    //#region DriveTrain Details
+    
+    public static double TRACK_WIDTH = 0.0;
+    
+    public static double LINEAR_VELOCITY = 0.0;
+    public static double ANGULAR_VELOCITY = 0.0;
+
+    public static double LEFT_METER_PER_SECOND = 0.0;
+    public static double RIGHT_METER_PER_SECOND = 0.0;
+
     //#endregion
 
     //#region Limelight Details
