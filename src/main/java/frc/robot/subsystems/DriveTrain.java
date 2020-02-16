@@ -13,6 +13,7 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
@@ -38,6 +39,8 @@ public class DriveTrain extends SubsystemBase {
   private CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
   private Encoder m_leftEncoder, m_rightEncoder;
 
+  private Solenoid m_highGear;
+
   private AHRS m_gyro;
 
   private DifferentialDrive m_drive;
@@ -46,7 +49,6 @@ public class DriveTrain extends SubsystemBase {
   private DifferentialDriveWheelSpeeds m_getWheelSpeeds;
   private ChassisSpeeds m_chassisSpeeds;
   private DifferentialDriveWheelSpeeds m_wheelSpeeds;
-  
 
   private DifferentialDriveOdometry m_odometry;
 
@@ -55,6 +57,8 @@ public class DriveTrain extends SubsystemBase {
     m_leftBack = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_BACK_SPARKMAX, MotorType.kBrushless);
     m_rightFront = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_FRONT_SPARKMAX, MotorType.kBrushless);
     m_rightBack = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_BACK_SPARKMAX, MotorType.kBrushless);
+
+    m_highGear = new Solenoid(1);
 
     m_rightFront.setInverted(true);
     m_rightBack.setInverted(true);
@@ -67,9 +71,9 @@ public class DriveTrain extends SubsystemBase {
     m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
-    
+
     m_kinematic = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.TRACK_WIDTH));
-    
+
     m_chassisSpeeds = new ChassisSpeeds(Constants.LINEAR_VELOCITY, 0, Constants.ANGULAR_VELOCITY);
     m_wheelSpeeds = new DifferentialDriveWheelSpeeds(Constants.LEFT_METER_PER_SECOND, Constants.RIGHT_METER_PER_SECOND);
 
@@ -78,7 +82,7 @@ public class DriveTrain extends SubsystemBase {
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
-    
+
     m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
 
@@ -94,7 +98,8 @@ public class DriveTrain extends SubsystemBase {
 
   /**
    * Runs motors on each side at the desired speed
-   * @param leftSpeed the speed that the motors on the left side will run at 
+   * 
+   * @param leftSpeed  the speed that the motors on the left side will run at
    * @param rightSpeed the speed that the motors on the right side will run at
    */
   public void tankDrive(double leftSpeed, double rightSpeed) {
@@ -104,32 +109,25 @@ public class DriveTrain extends SubsystemBase {
   /**
    * stops the robot
    */
-  public void stop(){
+  public void stop() {
     m_drive.tankDrive(0.0, 0.0);
   }
 
   /**
    * @param drive the forward movement of the robot
-   * @param turn the angle that the robot would turn to 
+   * @param turn  the angle that the robot would turn to
    */
   public void arcadeDrive(double drive, double turn) {
     m_drive.arcadeDrive(drive, turn);
   }
 
-  /**
-   * TODO: Documentation
-   * @param xSpeed
-   * @param zRotation
-   * @param isQuickTurn
-   */
-  public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn){
+  public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
     m_drive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
   }
 
-
-
   /**
    * Resets the odometry and sets the robot to the inputted position
+   * 
    * @param xPos  the x position of the robot in inches
    * @param yPos  the y position of the robot in inches
    * @param angle the angle of the robot in degrees (WPILIB Format, degrees
@@ -147,26 +145,24 @@ public class DriveTrain extends SubsystemBase {
     resetOdometry(0, 0, 0);
   }
 
-
-
   /**
    * @return the velocity of the left side
    */
-  public double getLeftVelocity(){
+  public double getLeftVelocity() {
     return m_getWheelSpeeds.leftMetersPerSecond;
   }
 
   /**
    * @return the velocity of the right side
    */
-  public double getRightVelocity(){
+  public double getRightVelocity() {
     return m_getWheelSpeeds.rightMetersPerSecond;
   }
 
   /**
    * @return the forward linear velocity
    */
-  public double getForwardLinearVelocity(){
+  public double getForwardLinearVelocity() {
     return m_getChassisSpeeds.vxMetersPerSecond;
   }
 
@@ -174,7 +170,7 @@ public class DriveTrain extends SubsystemBase {
    * 
    * @return the strafe linear velocity
    */
-  public double getStrafeLinearVelcity(){
+  public double getStrafeLinearVelcity() {
     return m_getChassisSpeeds.vyMetersPerSecond;
   }
 
@@ -185,16 +181,14 @@ public class DriveTrain extends SubsystemBase {
     return m_getChassisSpeeds.omegaRadiansPerSecond;
   }
 
-
-
-  /** 
+  /**
    * @return the left encoder's output
    */
   public double getLeftDistance() {
     return m_leftEncoder.getDistance();
   }
 
-  /** 
+  /**
    * @return the right encoder's output
    */
   public double getRightDistance() {
@@ -216,8 +210,6 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.reset();
   }
 
-
-  
   /**
    * resets the gyro and the odometry
    */
@@ -236,6 +228,10 @@ public class DriveTrain extends SubsystemBase {
       System.out.println("Gyro Not Found");
       return 0;
     }
+  }
+
+  public void setHighGear(boolean on) {
+    m_highGear.set(on);
   }
 
   @Override
