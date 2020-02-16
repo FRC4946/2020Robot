@@ -112,6 +112,8 @@ public final class Constants {
     public static final double CLIMBER_POT_MAX_DELTA = 1;
     public static final double CLIMBER_POT_MIN = 0;
 
+    public static final double CLIMBER_MAX_PERCENT_OUTPUT = 0.5;
+
     //#endregion
 
     //#region Revolver Details

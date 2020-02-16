@@ -30,6 +30,9 @@ public final class RobotMap {
     public static final class JOYSTICK_AXIS {
         public static final int DRIVE_AXIS = 0;
         public static final int TURN_AXIS = 1;
+
+        public static final int CLIMB_AXIS_1 = 2;
+        public static final int CLIMB_AXIS_2 = 3;
     }
 
     /**
@@ -91,6 +94,9 @@ public final class RobotMap {
         public static final int FRONT_INTAKE = 1;
         
         public static final int BACK_INTAKE = 1;
+
+        public static final int CLIMBER_A = 0;
+        public static final int CLIMBER_B = 1;
     }
 
     /**
@@ -100,6 +106,8 @@ public final class RobotMap {
         public static final int DRUM_PORT = 0;
         public static final int FEEDWHEEL_PORT = 1;
     }
+
+    // #region IO
 
     /**
      * DIO Port Numbers
