@@ -95,7 +95,7 @@ public final class Constants {
 
     public static final double TURRET_ROTATION_MAX = 180;
 
-    public static final double TURRET_RATIO = 18d/32d;
+    public static final double TURRET_RATIO = 18d/265d;
 
     public static final double TURRET_VELOCITY_ERROR_THRESHOLD = 0.0;
 
