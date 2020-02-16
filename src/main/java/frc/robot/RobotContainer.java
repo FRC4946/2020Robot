@@ -29,18 +29,16 @@ import frc.robot.subsystems.Shooter;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  Joystick m_driveJoystick;
-  Joystick m_operatorJoystick;
+  private Joystick m_driveJoystick;
+  private Joystick m_operatorJoystick;
 
-  JoystickButton m_intakeButton;
-
-  DriveTrain m_driveTrain;
-  Shooter m_shooter;
-  Climber m_climber;
-  Limelight m_limelight;
-  PowerDistributionPanel m_pdp;
-  Revolver m_revolver;
-  Intake m_intake;
+  private DriveTrain m_driveTrain;
+  private Shooter m_shooter;
+  private Climber m_climber;
+  private Limelight m_limelight;
+  private PowerDistributionPanel m_pdp;
+  private Revolver m_revolver;
+  private Intake m_intake;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
