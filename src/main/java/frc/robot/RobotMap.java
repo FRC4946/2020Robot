@@ -107,8 +107,6 @@ public final class RobotMap {
         public static final int FEEDWHEEL_PORT = 1;
     }
 
-    // #region IO
-
     /**
      * DIO Port Numbers
      */
