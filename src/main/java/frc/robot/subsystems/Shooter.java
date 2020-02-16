@@ -34,6 +34,7 @@ public class Shooter extends SubsystemBase {
     m_angleController = new PIDController(Constants.SHOOTER_HOOD_P, Constants.SHOOTER_HOOD_I, Constants.SHOOTER_HOOD_D);
 
     m_angleController.setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
+    m_speedController.setTolerance(Constants.SHOOTER_SPEED_TOLERANCE);
 
     setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
     setSpeedSetpoint(0.0);
@@ -76,6 +77,14 @@ public class Shooter extends SubsystemBase {
 
   public void useAngleSetpoint(double output) {
     setHoodSpeed(output);
+  }
+
+  public boolean atSpeedSetpoint() {
+    return m_speedController.atSetpoint();
+  }
+
+  public boolean atAngleSetpoint() {
+    return m_angleController.atSetpoint();
   }
 
   public void setSpeedSetpoint(double setpoint) {

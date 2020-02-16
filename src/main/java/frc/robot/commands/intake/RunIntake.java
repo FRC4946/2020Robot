@@ -61,7 +61,7 @@ public class RunIntake extends CommandBase {
         m_intake.set(m_speed);
         break;
     }
-    m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.3);
+    m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0);
   }
 
   // Called once the command ends or is interrupted.

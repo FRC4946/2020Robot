@@ -28,6 +28,7 @@ public class TimedRunIntake extends CommandBase {
   public TimedRunIntake(double speed, double time, IntakeSelector selector, Intake intake, Revolver revolver) {
     m_intake = intake;
     m_revolver = revolver;
+    m_timer = new Timer();
     m_time = time;
     m_speed = speed;
     m_selector = selector;

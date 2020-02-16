@@ -57,6 +57,8 @@ public final class Constants {
 
     public static final double SHOOTER_RATIO = 2d/1d;
 
+    public static final double SHOOTER_SPEED_TOLERANCE = 50;
+
     public static final double HOOD_ANGLE_TOLERANCE = 2;
     
     public static final double HOOD_POT_SCALE_VALUE = 5;
