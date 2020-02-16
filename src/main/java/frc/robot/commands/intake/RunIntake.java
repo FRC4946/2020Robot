@@ -7,6 +7,8 @@
 
 package frc.robot.commands.intake;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Intake;
@@ -15,11 +17,11 @@ import frc.robot.subsystems.Revolver;
 public class RunIntake extends CommandBase {
   private Intake m_intake;
   private Revolver m_revolver;
-  private double m_speed;
+  private DoubleSupplier m_speed;
   private IntakeSelector m_selector;
 
 
-  public RunIntake(double speed, IntakeSelector selector, Intake intake, Revolver revolver) {
+  public RunIntake(DoubleSupplier speed, IntakeSelector selector, Intake intake, Revolver revolver) {
     m_intake = intake;
     m_revolver = revolver;
     m_speed = speed;
@@ -49,16 +51,16 @@ public class RunIntake extends CommandBase {
   public void execute() {
     switch (m_selector) {
       case FRONT:
-        m_intake.setFront(m_speed);
+        m_intake.setFront(m_speed.getAsDouble());
         m_intake.setBack(0.0);
         break;
       case BACK:
         m_intake.setFront(0.0);
-        m_intake.setBack(m_speed);
+        m_intake.setBack(m_speed.getAsDouble());
         break;
       case BOTH:
       default:
-        m_intake.set(m_speed);
+        m_intake.set(m_speed.getAsDouble());
         break;
     }
     m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0);

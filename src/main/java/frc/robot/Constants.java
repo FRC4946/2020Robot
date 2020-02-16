@@ -59,6 +59,8 @@ public final class Constants {
 
     //#region Shooter Details
 
+    public static final double SHOOT_SPEED = 6000;
+
     public static final double SHOOTER_MAX_PERCENT = 0.9;
 
     public static final double SHOOTER_MAX_SPEED = 6000;

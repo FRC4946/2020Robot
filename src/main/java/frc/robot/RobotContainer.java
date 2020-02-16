@@ -16,12 +16,14 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
+import frc.robot.commands.shooter.Shoot;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -41,6 +43,7 @@ public class RobotContainer {
   private PowerDistributionPanel m_pdp;
   private Revolver m_revolver;
   private Intake m_intake;
+  private Turret m_turret;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -53,13 +56,9 @@ public class RobotContainer {
     m_climber = new Climber();
     m_revolver = new Revolver(m_pdp);
     m_intake = new Intake();
+    m_turret = new Turret();
 
     configureButtonBindings();
-
-    m_driveTrain.setDefaultCommand(new RunCommand(() -> {
-      m_driveTrain.arcadeDrive(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.DRIVE_AXIS),
-          m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN_AXIS));
-    }, m_driveTrain));
   }
 
   /**
@@ -72,17 +71,59 @@ public class RobotContainer {
     m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
     m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
 
-    JoystickButton climbButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.CLIMB_BUTTON);
-    Climb climbCommand = new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_AXIS_1,
-        RobotMap.JOYSTICK_AXIS.CLIMB_AXIS_2, m_climber);
-    climbButton.whenPressed(new InstantCommand(() -> {
-      if (climbCommand.isScheduled()) {
-        climbCommand.cancel();
+    // Buttons
+
+    JoystickButton climbButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.CLIMB);
+
+    JoystickButton frontIntake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.FRONT_INTAKE);
+    JoystickButton backIntake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.BACK_INTAKE);
+
+    JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
+    JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
+        RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
+
+    driverShootButton.and(operatorShootButton)
+        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_shooter.getAngleSetpoint(), m_shooter, m_revolver));
+
+    climbButton.toggleWhenPressed(
+        new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
+
+    // Default Commands
+
+    m_driveTrain.setDefaultCommand(new RunCommand(() -> {
+      m_driveTrain.arcadeDrive(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.DRIVE),
+          m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN));
+    }, m_driveTrain));
+
+    m_intake.setDefaultCommand(new RunCommand(() -> {
+      if (frontIntake.get()) {
+        m_intake.setFrontExtended(true);
+        m_intake.setFront(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+            - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
       } else {
-        climbCommand.schedule();
+        m_intake.setFrontExtended(false);
+        m_intake.setFront(0.0);
       }
-    }));
-    
+      if (backIntake.get()) {
+        m_intake.setBackExtended(true);
+        m_intake.setBack(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+            - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
+      } else {
+        m_intake.setBackExtended(false);
+        m_intake.setBack(0.0);
+      }
+    }, m_intake));
+
+    m_turret.setDefaultCommand(new RunCommand(() -> {
+      double speed = m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET);
+
+      if (m_turret.getAngle() < Constants.TURRET_ROTATION_MIN && speed < 0) {
+        speed = 0;
+      } else if (m_turret.getAngle() > Constants.TURRET_ROTATION_MAX && speed > 0) {
+        speed = 0;
+      }
+      m_turret.set(speed);
+    }, m_turret));
   }
 
   /**

@@ -7,6 +7,8 @@
 
 package frc.robot.commands.intake;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
@@ -18,14 +20,15 @@ public class TimedRunIntake extends CommandBase {
   
   private Intake m_intake;
   private Revolver m_revolver;
-  private double m_speed, m_time;
+  private DoubleSupplier m_speed;
+  private double m_time;
   private IntakeSelector m_selector;
   private Timer m_timer;
 
   /**
    * Creates a new TimedRunIntake.
    */
-  public TimedRunIntake(double speed, double time, IntakeSelector selector, Intake intake, Revolver revolver) {
+  public TimedRunIntake(DoubleSupplier speed, double time, IntakeSelector selector, Intake intake, Revolver revolver) {
     m_intake = intake;
     m_revolver = revolver;
     m_timer = new Timer();
@@ -61,19 +64,19 @@ public class TimedRunIntake extends CommandBase {
   public void execute() {
     switch (m_selector) {
       case FRONT:
-        m_intake.setFront(m_speed);
+        m_intake.setFront(m_speed.getAsDouble());
         m_intake.setBack(0.0);
         break;
       case BACK:
         m_intake.setFront(0.0);
-        m_intake.setBack(m_speed);
+        m_intake.setBack(m_speed.getAsDouble());
         break;
       case BOTH:
       default:
-        m_intake.set(m_speed);
+        m_intake.set(m_speed.getAsDouble());
         break;
     }
-    m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.3);
+    m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0);
   }
 
   // Called once the command ends or is interrupted.

@@ -28,19 +28,41 @@ public final class RobotMap {
      * OI Port Numbers For Joystick Axes
      */
     public static final class JOYSTICK_AXIS {
-        public static final int DRIVE_AXIS = 0;
-        public static final int TURN_AXIS = 1;
 
-        public static final int CLIMB_AXIS_1 = 2;
-        public static final int CLIMB_AXIS_2 = 3;
+        //DRIVER
+
+        public static final int DRIVE = 0;
+        public static final int TURN = 1;
+
+        public static final int CLIMB_1 = 2;
+        public static final int CLIMB_2 = 3;
+
+        public static final int INTAKE = 4;
+        public static final int OUTTAKE = 5;
+
+        //OPERATOR
+
+        public static final int TURRET = 0;
     }
 
     /**
      * OI Port Numbers For Joystick Buttons
      */
     public static final class JOYSTICK_BUTTON {
-        public static final int CLIMB_BUTTON = 1; // A on X Box Controller
-        public static final int INTAKE_BUTTON = 2; 
+        
+        //DRIVER
+
+        public static final int CLIMB = 1; // A on X Box Controller
+        public static final int INTAKE = 2; 
+        public static final int DRIVER_SHOOT = 3;
+        
+        public static final int FRONT_INTAKE = 4;
+        public static final int BACK_INTAKE = 5;
+
+        //OPERATOR
+
+        public static final int OPERATOR_SHOOT = 3;
+
     }
 
     /**
