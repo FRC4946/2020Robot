@@ -53,7 +53,7 @@ public class Climber extends SubsystemBase {
    * @param out true if forwards, false if reverse
    */
   public void setPiston(boolean out) {
-    m_climberSolenoid.set(out ? Value.kForward : Value.kReverse);
+    setPiston(out ? Value.kForward : Value.kReverse);
   }
 
   /**

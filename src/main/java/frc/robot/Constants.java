@@ -31,6 +31,8 @@ public final class Constants {
     // TODO : Fill In Climber Pot Max Distance and other variables
     public static final double CLIMBER_POT_MAX_DISTANCE = 1;
 
+    public static final double CLIMBER_MAX_PERCENT_OUTPUT = 0.5;
+
     public static final double CLIMBER_UP_HEIGHT = 0;
     public static final double CLIMBER_DOWN_HEIGHT = 0;
 
