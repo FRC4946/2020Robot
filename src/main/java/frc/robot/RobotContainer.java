@@ -11,8 +11,11 @@ import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
+import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.ShootAtSpeed;
+import frc.robot.commands.climber.Climb;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ConveyorBelt;
 import frc.robot.subsystems.DriveTrain;
@@ -26,7 +29,6 @@ import frc.robot.subsystems.Shooter;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  // The robot's subsystems and commands are defined here...
 
   Joystick m_driveJoystick;
   Joystick m_operatorJoystick;
@@ -65,6 +67,18 @@ public class RobotContainer {
   private void configureButtonBindings() {
     m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
     m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
+
+    JoystickButton climbButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.CLIMB_BUTTON);
+    Climb climbCommand = new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_AXIS_1,
+        RobotMap.JOYSTICK_AXIS.CLIMB_AXIS_2, m_climber);
+    climbButton.whenPressed(new InstantCommand(() -> {
+      if (climbCommand.isScheduled()) {
+        climbCommand.cancel();
+      } else {
+        climbCommand.schedule();
+      }
+    }));
+    
   }
 
   /**

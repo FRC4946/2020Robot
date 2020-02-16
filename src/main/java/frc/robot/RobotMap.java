@@ -28,6 +28,9 @@ public final class RobotMap {
     public static final class JOYSTICK_AXIS {
         public static final int DRIVE_AXIS = 0;
         public static final int TURN_AXIS = 1;
+
+        public static final int CLIMB_AXIS_1 = 2;
+        public static final int CLIMB_AXIS_2 = 3;
     }
 
     /**
