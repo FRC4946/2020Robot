@@ -95,6 +95,8 @@ public final class RobotMap {
         
         public static final int BACK_INTAKE = 1;
 
+        public static final int DRIVE_SHIFTER = 1; 
+
         public static final int CLIMBER_A = 0;
         public static final int CLIMBER_B = 1;
     }

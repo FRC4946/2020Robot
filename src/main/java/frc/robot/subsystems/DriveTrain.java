@@ -58,7 +58,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightFront = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_FRONT_SPARKMAX, MotorType.kBrushless);
     m_rightBack = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_BACK_SPARKMAX, MotorType.kBrushless);
 
-    m_highGear = new Solenoid(1);
+    m_highGear = new Solenoid(RobotMap.PCM.DRIVE_SHIFTER);
 
     m_rightFront.setInverted(true);
     m_rightBack.setInverted(true);
