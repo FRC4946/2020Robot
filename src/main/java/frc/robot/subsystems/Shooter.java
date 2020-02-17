@@ -70,7 +70,8 @@ public class Shooter extends SubsystemBase {
   }
 
   public void useSpeedOutput(double output) {
-    output += (output > 0 ? Constants.SHOOTER_VELOCITY_CONTROL_FF : -Constants.SHOOTER_VELOCITY_CONTROL_FF);
+    output += (output > 0 ? Constants.SHOOTER_VELOCITY_CONTROL_FF : -Constants.SHOOTER_VELOCITY_CONTROL_FF)
+        * m_speedController.getSetpoint();
     output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
     set(Constants.SHOOTER_MAX_PERCENT * (output));
   }
