@@ -124,6 +124,10 @@ public class RobotContainer {
       }
       m_turret.set(speed);
     }, m_turret));
+
+    m_limelight.setDefaultCommand(new InstantCommand(() -> {
+      m_limelight.setLED(false);
+    }, m_limelight));
   }
 
   /**
