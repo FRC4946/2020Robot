@@ -40,11 +40,12 @@ public class Shooter extends SubsystemBase {
     setSpeedSetpoint(0.0);
 
     m_speedEnabled = true;
-    m_angleEnabled = true;
+    m_angleEnabled = false;
 
     m_left = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_right = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
     m_right.setInverted(true);
+    m_left.setInverted(false);
     m_left.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
     m_right.setOpenLoopRampRate(Constants.SHOOTER_VOLTAGE_RAMP_RATE);
 
@@ -54,12 +55,17 @@ public class Shooter extends SubsystemBase {
     m_leftHood = new Servo(RobotMap.PWM.LEFT_HOOD_SERVO);
     m_rightHood = new Servo(RobotMap.PWM.RIGHT_HOOD_SERVO);
     m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
+
+    m_rightHood.setBounds(2.5, 2.45, 1.5, 0.55, 0.5);
+    m_leftHood.setBounds(2.5, 2.45, 1.5, 0.55, 0.5);
   }
 
   @Override
   public void periodic() {
-    if (m_speedEnabled)
+    System.out.println(getAverageSpeed());
+    if (m_speedEnabled) {
       useSpeedOutput(m_speedController.calculate(getAverageSpeed()));
+    }
     else
       stopShooter();
 
@@ -131,7 +137,7 @@ public class Shooter extends SubsystemBase {
    * Gets the speed that the right motor is running at
    */
   public double getRightSpeed() {
-    return -m_right.getEncoder().getVelocity() * Constants.SHOOTER_RATIO;
+    return m_right.getEncoder().getVelocity() * Constants.SHOOTER_RATIO;
   }
 
   /**

@@ -16,7 +16,9 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
+import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.turret.POVTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -83,10 +85,13 @@ public class RobotContainer {
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
 
     driverShootButton.and(operatorShootButton)
-        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_shooter.getAngleSetpoint(), m_shooter, m_revolver));
+        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_shooter.getAngleSetpoint(), m_shooter, m_revolver), false);
 
     climbButton.toggleWhenPressed(
         new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
+
+    frontIntake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
+    backIntake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
 
     // Default Commands
 
@@ -96,38 +101,29 @@ public class RobotContainer {
     }, m_driveTrain));
 
     m_intake.setDefaultCommand(new RunCommand(() -> {
-      if (frontIntake.get()) {
-        m_intake.setFrontExtended(true);
-        m_intake.setFront(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+      if (frontIntake.get() || backIntake.get()) {
+        m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
             - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
       } else {
+        m_intake.set(0.0);
+      }
+      if (frontIntake.get()) {
+        m_intake.setFrontExtended(true);
+      } else {
         m_intake.setFrontExtended(false);
-        m_intake.setFront(0.0);
       }
       if (backIntake.get()) {
         m_intake.setBackExtended(true);
-        m_intake.setBack(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
-            - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
       } else {
         m_intake.setBackExtended(false);
-        m_intake.setBack(0.0);
       }
     }, m_intake));
 
-    m_turret.setDefaultCommand(new RunCommand(() -> {
-      double speed = m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET);
+    m_turret.setDefaultCommand(new POVTurret(m_operatorJoystick, m_turret, m_shooter));
 
-      if (m_turret.getAngle() < Constants.TURRET_ROTATION_MIN && speed < 0) {
-        speed = 0;
-      } else if (m_turret.getAngle() > Constants.TURRET_ROTATION_MAX && speed > 0) {
-        speed = 0;
-      }
-      m_turret.set(speed);
-    }, m_turret));
-
-    m_limelight.setDefaultCommand(new InstantCommand(() -> {
-      m_limelight.setLED(false);
-    }, m_limelight));
+    m_revolver.setDefaultCommand(new RunCommand(() -> {
+      m_revolver.stop();
+    }, m_revolver));
   }
 
   /**

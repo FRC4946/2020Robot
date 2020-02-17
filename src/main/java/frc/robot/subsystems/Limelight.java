@@ -34,7 +34,8 @@ public class Limelight extends SubsystemBase {
   public Limelight() {
     m_networkTable = NetworkTableInstance.getDefault().getTable("limelight");
 
-    setVision(true);
+    setVision(false);
+    setLED(false);
 
     m_tx = m_networkTable.getEntry("tx");
     m_ty = m_networkTable.getEntry("ty");

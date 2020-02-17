@@ -34,7 +34,7 @@ public class Shoot extends CommandBase {
     m_speed = speed;
     m_angle = angle;
 
-    addRequirements(m_shooter, m_revolver);
+    addRequirements(m_shooter);
   }
 
   @Override
@@ -46,10 +46,12 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     m_revolver.setDrum(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
-    if (m_shooter.atSpeedSetpoint() && m_shooter.atAngleSetpoint())
+    if (m_shooter.atSpeedSetpoint()) {
       m_revolver.setFeedWheel(0.3);
-    else
+    }
+    else {
       m_revolver.setFeedWheel(0.0);
+    }
   }
 
   @Override

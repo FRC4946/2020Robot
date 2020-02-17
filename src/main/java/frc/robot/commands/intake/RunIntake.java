@@ -49,20 +49,7 @@ public class RunIntake extends CommandBase {
 
   @Override
   public void execute() {
-    switch (m_selector) {
-      case FRONT:
-        m_intake.setFront(m_speed.getAsDouble());
-        m_intake.setBack(0.0);
-        break;
-      case BACK:
-        m_intake.setFront(0.0);
-        m_intake.setBack(m_speed.getAsDouble());
-        break;
-      case BOTH:
-      default:
-        m_intake.set(m_speed.getAsDouble());
-        break;
-    }
+    m_intake.set(m_speed.getAsDouble());
     m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0);
   }
 
@@ -71,6 +58,7 @@ public class RunIntake extends CommandBase {
   public void end(boolean interrupted) {
     m_revolver.stop();
     m_intake.setExtended(false);
+    m_intake.stop();
   }
 
   // Returns true when the command should end.

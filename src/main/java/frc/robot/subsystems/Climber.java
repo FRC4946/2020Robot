@@ -29,6 +29,8 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor = new TalonSRX(RobotMap.CAN.CLIMBER_RIGHT_TALONSRX);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
     m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
+
+    setPiston(false);
   }
 
   /**

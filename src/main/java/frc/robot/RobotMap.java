@@ -34,11 +34,11 @@ public final class RobotMap {
         public static final int DRIVE = 0;
         public static final int TURN = 1;
 
-        public static final int CLIMB_1 = 2;
-        public static final int CLIMB_2 = 3;
+        public static final int CLIMB_1 = 4;
+        public static final int CLIMB_2 = 5;
 
-        public static final int INTAKE = 4;
-        public static final int OUTTAKE = 5;
+        public static final int INTAKE = 2;
+        public static final int OUTTAKE = 3;
 
         //OPERATOR
 
@@ -53,11 +53,10 @@ public final class RobotMap {
         //DRIVER
 
         public static final int CLIMB = 1; // A on X Box Controller
-        public static final int INTAKE = 2; 
         public static final int DRIVER_SHOOT = 3;
         
-        public static final int FRONT_INTAKE = 4;
-        public static final int BACK_INTAKE = 5;
+        public static final int FRONT_INTAKE = 5;
+        public static final int BACK_INTAKE = 6;
 
         //OPERATOR
 
@@ -83,30 +82,25 @@ public final class RobotMap {
      * CAN IDs
      */
     public static final class CAN {
-        public static final int CLIMBER_LEFT_TALONSRX = 0;
-        public static final int CLIMBER_RIGHT_TALONSRX = 1;
+        public static final int CLIMBER_LEFT_TALONSRX = 10;
+        public static final int CLIMBER_RIGHT_TALONSRX = 9;
 
-        public static final int SHOOTER_LEFT_SPARKMAX = 2;
-        public static final int SHOOTER_RIGHT_SPARKMAX = 3;
+        public static final int SHOOTER_LEFT_SPARKMAX = 6;
+        public static final int SHOOTER_RIGHT_SPARKMAX = 5;
 
-        public static final int LEFT_CONVEYOR_BELT_TALONSRX = 4;
-        public static final int RIGHT_CONVEYOR_BELT_TALONSRX = 5;
-        public static final int VERTICAL_CONVEYOR_BELT_TALONSRX = 6;
-
-        public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 7;
-        public static final int DRIVE_RIGHT_BACK_SPARKMAX = 8;
-        public static final int DRIVE_LEFT_FRONT_SPARKMAX = 9;
-        public static final int DRIVE_LEFT_BACK_SPARKMAX = 10;
+        public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 1;
+        public static final int DRIVE_RIGHT_BACK_SPARKMAX = 2;
+        public static final int DRIVE_LEFT_FRONT_SPARKMAX = 3;
+        public static final int DRIVE_LEFT_BACK_SPARKMAX = 4;
         
         public static final int TURRET_TALONSRX = 0;
 
-        public static final int DRUM_MOTOR_SPARKMAX = 11;
-        public static final int FEED_WHEEL_MOTOR_SPARKMAX = 12;
+        public static final int DRUM_MOTOR_SPARKMAX = 7;
+        public static final int FEED_WHEEL_MOTOR_SPARKMAX = 8;
 
-        public static final int FRONT_INTAKE_TALONSRX = 13;
-        public static final int BACK_INTAKE_TALONSRX = 14;
+        public static final int INTAKE_VICTORSPX = 0;
 
-        public static final int PDP = 13;
+        public static final int PDP = 0;
     }
 
     /**
@@ -155,8 +149,8 @@ public final class RobotMap {
      * PWM Port Numbers
      */
     public static final class PWM{
-        public static final int LEFT_HOOD_SERVO = 11;
-        public static final int RIGHT_HOOD_SERVO = 12;
+        public static final int LEFT_HOOD_SERVO = 0;
+        public static final int RIGHT_HOOD_SERVO = 1;
     }
 
     // #endregion

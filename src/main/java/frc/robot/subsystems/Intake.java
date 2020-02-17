@@ -8,7 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
-import com.ctre.phoenix.motorcontrol.can.TalonSRX;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -16,27 +16,17 @@ import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
   private Solenoid m_frontSolenoid, m_backSolenoid;
-  private TalonSRX m_back, m_front;
+  private VictorSPX m_intake;
 
   public Intake() {
     m_frontSolenoid = new Solenoid(RobotMap.PCM.FRONT_INTAKE);
     m_backSolenoid = new Solenoid(RobotMap.PCM.BACK_INTAKE);
 
-    m_back = new TalonSRX(RobotMap.CAN.BACK_INTAKE_TALONSRX);
-    m_front = new TalonSRX(RobotMap.CAN.FRONT_INTAKE_TALONSRX);
-  }
-
-  public void setFront(double speed) {
-    m_front.set(ControlMode.PercentOutput, speed);
-  }
-
-  public void setBack(double speed) {
-    m_back.set(ControlMode.PercentOutput, speed);
+    m_intake = new VictorSPX(RobotMap.CAN.INTAKE_VICTORSPX);
   }
 
   public void set(double speed) {
-    setFront(speed);
-    setBack(speed);
+    m_intake.set(ControlMode.PercentOutput, speed);
   }
 
   public void stop() {
