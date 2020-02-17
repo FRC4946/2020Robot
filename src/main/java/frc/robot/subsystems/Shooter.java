@@ -40,7 +40,7 @@ public class Shooter extends SubsystemBase {
     setSpeedSetpoint(0.0);
 
     m_speedEnabled = true;
-    m_angleEnabled = false;
+    m_angleEnabled = true;
 
     m_left = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_right = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
