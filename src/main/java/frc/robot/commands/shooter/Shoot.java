@@ -34,7 +34,7 @@ public class Shoot extends CommandBase {
     m_speed = speed;
     m_angle = angle;
 
-    addRequirements(m_shooter);
+    addRequirements(m_shooter, m_revolver);
   }
 
   @Override
