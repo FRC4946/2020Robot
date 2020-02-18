@@ -83,11 +83,28 @@ public class RobotContainer {
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
 
+    JoystickButton shiftButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
+
     driverShootButton.and(operatorShootButton)
         .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_shooter.getAngleSetpoint(), m_shooter, m_revolver), false);
 
-    climbButton.toggleWhenPressed(
-        new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
+    climbButton.toggleWhenPressed(new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1,
+        RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber, m_intake));
+
+    shiftButton.whenPressed(new InstantCommand(() -> {
+      m_driveTrain.setHighGear(false);
+    }));
+
+    shiftButton.whenReleased(new InstantCommand(() -> {
+      m_driveTrain.setHighGear(true);
+    }));
+
+    frontIntake.toggleWhenPressed(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
+    backIntake.toggleWhenPressed(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
+
+    frontIntake.whenPressed(new InstantCommand(() -> {
+      m_intake.setFrontExtended(!m_intake.getFrontExtended());
+    }));
 
     intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
 
@@ -114,6 +131,12 @@ public class RobotContainer {
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       m_revolver.stop();
     }, m_revolver));
+
+    m_shooter.setDefaultCommand(new RunCommand(() -> {
+      m_shooter.setEnabledShooter(false);
+      m_shooter.setEnabledHood(false);
+      m_shooter.set(Constants.SHOOTER_VELOCITY_CONTROL_FF * Constants.SHOOTER_RESTING_SPEED);
+    }, m_shooter));
   }
 
   /**

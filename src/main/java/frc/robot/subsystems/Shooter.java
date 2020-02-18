@@ -60,7 +60,6 @@ public class Shooter extends SubsystemBase {
 
   @Override
   public void periodic() {
-    System.out.println(getAverageSpeed());
     if (m_speedEnabled) {
       useSpeedOutput(m_speedController.calculate(getAverageSpeed()));
     }
@@ -75,8 +74,8 @@ public class Shooter extends SubsystemBase {
 
   public void useSpeedOutput(double output) {
     output += Constants.SHOOTER_VELOCITY_CONTROL_FF * m_speedController.getSetpoint();
-    output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
-    set(Constants.SHOOTER_MAX_PERCENT * (output));
+    output = Math.signum(output) * Math.min(Math.abs(output), Constants.SHOOTER_MAX_PERCENT);
+    set(output);
   }
 
   public void useAngleSetpoint(double output) {

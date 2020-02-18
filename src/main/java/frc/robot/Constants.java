@@ -37,10 +37,10 @@ public final class Constants {
 
     //#region PID Tunings
 
-    public static final double SHOOTER_VELOCITY_CONTROL_P = 0.0;
-    public static final double SHOOTER_VELOCITY_CONTROL_I = 0.0;
+    public static final double SHOOTER_VELOCITY_CONTROL_P = 0.002;
+    public static final double SHOOTER_VELOCITY_CONTROL_I = 0.00001;
     public static final double SHOOTER_VELOCITY_CONTROL_D = 0.0;
-    public static final double SHOOTER_VELOCITY_CONTROL_FF = 1d/6000d;
+    public static final double SHOOTER_VELOCITY_CONTROL_FF = 0.000216350747274/2d;
 
     public static final double SHOOTER_HOOD_P = 0.0;
     public static final double SHOOTER_HOOD_I = 0.0;
@@ -59,15 +59,17 @@ public final class Constants {
 
     //#region Shooter Details
 
-    public static final double SHOOT_SPEED = -2300;
+    public static final double SHOOT_SPEED = 4000;
 
-    public static final double SHOOTER_MAX_PERCENT = 0.9;
+    public static final double SHOOTER_RESTING_SPEED = 1500;
+
+    public static final double SHOOTER_MAX_PERCENT = 0.87; // 80% ~= 3500RPM
 
     public static final double SHOOTER_MAX_SPEED = 6000;
 
     public static final double SHOOTER_RATIO = 2d/1d;
 
-    public static final double SHOOTER_SPEED_TOLERANCE = 10;
+    public static final double SHOOTER_SPEED_TOLERANCE = 100;
 
     public static final double HOOD_ANGLE_TOLERANCE = 2;
     
@@ -146,8 +148,8 @@ public final class Constants {
 
     //#region Revolver Details
 
-    public static final double REVOLVER_DRUM_CURRENT_THRESHOLD = 2.0;
-    public static final double REVOLVER_FEEDWHEEL_CURRENT_THRESHOLD = 2.0;
+    public static final double REVOLVER_DRUM_CURRENT_THRESHOLD = 10.0;
+    public static final double REVOLVER_FEEDWHEEL_CURRENT_THRESHOLD = 10.0;
 
     public static final double REVOLVER_DRUM_FORWARDS_SPEED = 0.075;
     public static final double REVOLVER_DRUM_BACKWARDS_SPEED = -0.075;

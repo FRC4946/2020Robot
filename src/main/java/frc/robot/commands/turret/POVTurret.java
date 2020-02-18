@@ -33,14 +33,14 @@ public class POVTurret extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_shooter.setEnabledHood(true);
+    m_shooter.setEnabledHood(false);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_joystick.getPOV() == 0 || m_joystick.getPOV() == 45 || m_joystick.getPOV() == 315) {
-      m_shooter.setAngleSetpoint(m_shooter.getAngleSetpoint() + 0.3);
+      m_shooter.setHoodSpeed(0.6);
     } else if (m_joystick.getPOV() == 90 || m_joystick.getPOV() == 45 || m_joystick.getPOV() == 135) {
       if (m_turret.getAngle() > Constants.TURRET_ROTATION_MAX) {
         m_turret.set(0.3);
@@ -48,7 +48,7 @@ public class POVTurret extends CommandBase {
         m_turret.stop();
       }
     } else if (m_joystick.getPOV() == 180 || m_joystick.getPOV() == 135 || m_joystick.getPOV() == 225) {
-      m_shooter.setAngleSetpoint(m_shooter.getAngleSetpoint() - 0.3);
+      m_shooter.setHoodSpeed(-0.6);
     } else if (m_joystick.getPOV() == 270 || m_joystick.getPOV() == 225 || m_joystick.getPOV() == 315) {
       if (m_turret.getAngle() < Constants.TURRET_ROTATION_MIN) {
         m_turret.set(-0.3);
@@ -64,6 +64,7 @@ public class POVTurret extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_turret.stop();
+    m_shooter.setEnabledHood(true);
   }
 
   // Returns true when the command should end.

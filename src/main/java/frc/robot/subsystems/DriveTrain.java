@@ -85,6 +85,8 @@ public class DriveTrain extends SubsystemBase {
     }
     m_gyro = gyro;
 
+    setHighGear(true);
+
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()), new Pose2d(
         Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
   }

@@ -57,6 +57,8 @@ public final class RobotMap {
         
         public static final int INTAKE = 5;
 
+        public static final int SHIFT_GEAR = 9;
+
         //OPERATOR
 
         public static final int OPERATOR_SHOOT = 3;
@@ -111,16 +113,16 @@ public final class RobotMap {
 
         public static final int DRIVE_SHIFTER = 4; 
 
-        public static final int CLIMBER_A = 5;
-        public static final int CLIMBER_B = 6;
+        public static final int CLIMBER_A = 1;
+        public static final int CLIMBER_B = 0;
     }
 
     /**
      * PDP Port Numbers
      */
     public static final class PDP {
-        public static final int DRUM_PORT = 0;
-        public static final int FEEDWHEEL_PORT = 1;
+        public static final int DRUM_PORT = 11;
+        public static final int FEEDWHEEL_PORT = 10;
     }
 
     /**
