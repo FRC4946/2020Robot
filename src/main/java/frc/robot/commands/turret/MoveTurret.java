@@ -29,7 +29,7 @@ public class MoveTurret extends PIDCommand {
         () -> Math.max(Constants.TURRET_ROTATION_MIN, Math.min(Constants.TURRET_ROTATION_MAX, angle)),
 
         output -> {
-          output += (output > 0 ? Constants.PID_TURRET_FF : -Constants.PID_TURRET_FF);
+          output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);
           output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
           turret.set(Constants.TURRET_MAX_PERCENT * (output));
         });
