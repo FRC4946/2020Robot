@@ -29,7 +29,7 @@ public class HomeTurret extends PIDCommand {
         () -> Constants.TURRET_HOME_ANGLE,
 
         output -> {
-          output += (output > 0 ? Constants.PID_TURRET_FF : -Constants.PID_TURRET_FF);
+          output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);
           output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
           turret.set(Constants.TURRET_MAX_PERCENT * (output));
         });

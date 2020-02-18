@@ -53,7 +53,7 @@ public final class Constants {
     public static final double PID_TURRET_P = 0.014;
     public static final double PID_TURRET_I = 0.0105;
     public static final double PID_TURRET_D = 0.0002;
-    public static final double PID_TURRET_FF = 0.06;
+    public static final double PID_TURRET_OFFSET = 0.06;
 
     //#endregion
 
