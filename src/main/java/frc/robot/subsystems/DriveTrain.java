@@ -87,6 +87,9 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()), new Pose2d(
         Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
+
+    resetDriveTrain();
+    //TODO : Call reset drivetrain at the beginning of anyg auto command once they get merged in
   }
 
   /**
@@ -126,18 +129,9 @@ public class DriveTrain extends SubsystemBase {
    * @param angle the angle of the robot in degrees (WPILIB Format, degrees
    *              counterclockwise with 0 being straight ahead)
    */
-  public void resetOdometry(double xPos, double yPos, double angle) {
-    resetEncoders();
+  private void resetOdometry(double xPos, double yPos, double angle) {
     m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
-
-  /**
-   * Resets the odometry and sets the robot to the inputted position
-   */
-  public void resetOdometry() {
-    resetOdometry(0, 0, 0);
-  }
-
 
   /**
    * @return the left encoder's output
@@ -171,9 +165,18 @@ public class DriveTrain extends SubsystemBase {
   /**
    * resets the gyro and the odometry
    */
-  public void resetGyro() {
+  private void resetGyro() {
     m_gyro.reset();
-    resetOdometry();
+  }
+
+  public void resetDriveTrain() {
+    resetDriveTrain(0.0, 0.0, 0.0);
+  }
+
+  public void resetDriveTrain(double xPos, double yPos, double angle) {
+    resetEncoders();
+    resetGyro();
+    resetOdometry(xPos, yPos, angle);
   }
 
   /**
