@@ -62,6 +62,8 @@ public class DriveTrain extends SubsystemBase {
 
     m_rightFront.setInverted(true);
     m_rightBack.setInverted(true);
+    m_leftFront.setInverted(false);
+    m_leftBack.setInverted(false);
 
     m_rightFront.burnFlash();
     m_rightBack.burnFlash();
