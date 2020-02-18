@@ -37,7 +37,6 @@ import frc.robot.subsystems.Turret;
 public class RobotContainer {
   private final Joystick m_driveJoystick;
   private final Joystick m_operatorJoystick;
-  
   private final DriveTrain m_driveTrain;
   private final Shooter m_shooter;
   private final Climber m_climber;
@@ -51,18 +50,17 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_limelight = new Limelight();
-    m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
+    m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
+    m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
     m_driveTrain = new DriveTrain();
     m_shooter = new Shooter();
     m_climber = new Climber();
+    m_limelight = new Limelight();
+    m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
     m_revolver = new Revolver(m_pdp);
     m_intake = new Intake();
     m_turret = new Turret();
-
-    m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
-    m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
-
+    
     configureButtonBindings();
   }
 
@@ -73,7 +71,6 @@ public class RobotContainer {
    * passing it to a {@link edu.wpi.first.wpilibj2.command.button.JoystickButton}.
    */
   private void configureButtonBindings() {
-    
 
     // Buttons
 
