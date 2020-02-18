@@ -19,7 +19,7 @@ import frc.robot.RobotMap;
 
 public class Shooter extends SubsystemBase {
   private CANSparkMax m_left, m_right;
-  private Servo m_leftHood, m_rightHood;
+  private Servo m_hoodServo;
   private AnalogInput m_pot;
   private PIDController m_speedController, m_angleController;
   private boolean m_speedEnabled = false;
@@ -52,8 +52,7 @@ public class Shooter extends SubsystemBase {
     m_left.burnFlash();
     m_right.burnFlash();
 
-    m_leftHood = new Servo(RobotMap.PWM.LEFT_HOOD_SERVO);
-    m_rightHood = new Servo(RobotMap.PWM.RIGHT_HOOD_SERVO);
+    m_hoodServo = new Servo(RobotMap.PWM.HOOD_SERVO);
     m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
 
     m_rightHood.setBounds(2.5, 2.45, 1.5, 0.55, 0.5);
@@ -148,8 +147,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setHoodSpeed(double speed) {
-    m_rightHood.setSpeed(-speed);
-    m_leftHood.setSpeed(speed);
+    m_hoodServo.setSpeed(speed);
   }
 
   public double getHoodAngle() {
