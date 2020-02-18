@@ -18,10 +18,8 @@ import edu.wpi.first.wpilibj.SpeedControllerGroup;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
-import edu.wpi.first.wpilibj.kinematics.ChassisSpeeds;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
-import edu.wpi.first.wpilibj.kinematics.DifferentialDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -45,10 +43,6 @@ public class DriveTrain extends SubsystemBase {
 
   private DifferentialDrive m_drive;
   private DifferentialDriveKinematics m_kinematics;
-  private ChassisSpeeds m_getChassisSpeeds;
-  private DifferentialDriveWheelSpeeds m_getWheelSpeeds;
-  private ChassisSpeeds m_chassisSpeeds;
-  private DifferentialDriveWheelSpeeds m_wheelSpeeds;
 
   private DifferentialDriveOdometry m_odometry;
 
@@ -73,12 +67,6 @@ public class DriveTrain extends SubsystemBase {
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
 
     m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.TRACK_WIDTH));
-
-    m_chassisSpeeds = new ChassisSpeeds(Constants.LINEAR_VELOCITY, 0, Constants.ANGULAR_VELOCITY);
-    m_wheelSpeeds = new DifferentialDriveWheelSpeeds(Constants.LEFT_METER_PER_SECOND, Constants.RIGHT_METER_PER_SECOND);
-
-    m_getWheelSpeeds = m_kinematics.toWheelSpeeds(m_chassisSpeeds);
-    m_getChassisSpeeds = m_kinematics.toChassisSpeeds(m_wheelSpeeds);
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
@@ -145,41 +133,6 @@ public class DriveTrain extends SubsystemBase {
     resetOdometry(0, 0, 0);
   }
 
-  /**
-   * @return the velocity of the left side
-   */
-  public double getLeftVelocity() {
-    return m_getWheelSpeeds.leftMetersPerSecond;
-  }
-
-  /**
-   * @return the velocity of the right side
-   */
-  public double getRightVelocity() {
-    return m_getWheelSpeeds.rightMetersPerSecond;
-  }
-
-  /**
-   * @return the forward linear velocity
-   */
-  public double getForwardLinearVelocity() {
-    return m_getChassisSpeeds.vxMetersPerSecond;
-  }
-
-  /**
-   * 
-   * @return the strafe linear velocity
-   */
-  public double getStrafeLinearVelcity() {
-    return m_getChassisSpeeds.vyMetersPerSecond;
-  }
-
-  /**
-   * @return the angular velocity
-   */
-  public double getAngularVelocit() {
-    return m_getChassisSpeeds.omegaRadiansPerSecond;
-  }
 
   /**
    * @return the left encoder's output
