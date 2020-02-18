@@ -35,17 +35,17 @@ import frc.robot.subsystems.Turret;
  * commands, and button mappings) should be declared here.
  */
 public class RobotContainer {
-  private Joystick m_driveJoystick;
-  private Joystick m_operatorJoystick;
+  private final Joystick m_driveJoystick;
+  private final Joystick m_operatorJoystick;
 
-  private DriveTrain m_driveTrain;
-  private Shooter m_shooter;
-  private Climber m_climber;
-  private Limelight m_limelight;
-  private PowerDistributionPanel m_pdp;
-  private Revolver m_revolver;
-  private Intake m_intake;
-  private Turret m_turret;
+  private final DriveTrain m_driveTrain;
+  private final Shooter m_shooter;
+  private final Climber m_climber;
+  private final Limelight m_limelight;
+  private final PowerDistributionPanel m_pdp;
+  private final Revolver m_revolver;
+  private final Intake m_intake;
+  private final Turret m_turret;
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
