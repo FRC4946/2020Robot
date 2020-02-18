@@ -11,17 +11,18 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.ControlPanelWheel;
 
 public class TurnForDistance extends CommandBase {
-  double m_inchesTurned;
+  double m_distance;
   double m_speed;
-
+  boolean m_clockwise;
   ControlPanelWheel m_controlPanelWheel;
 
   /**
    * Creates a new TurnForDistance.
    */
-  public TurnForDistance(double inchesTurned, double speed, ControlPanelWheel controlPanelWheel) {
-    m_inchesTurned = inchesTurned;
+  public TurnForDistance(double distance, double speed, ControlPanelWheel controlPanelWheel, boolean clockwise) {
+    m_distance = distance;
     m_speed = speed;
+    m_clockwise = clockwise;
     addRequirements(m_controlPanelWheel);
 
     // Use addRequirements() here to declare subsystem dependencies.
@@ -30,12 +31,24 @@ public class TurnForDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_controlPanelWheel.resetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_controlPanelWheel.set(m_speed);
+    if(m_clockwise){
+      if(m_controlPanelWheel.getDistance()<m_distance){
+        m_controlPanelWheel.set(m_speed);
+      }
+    }
+    else if(!m_clockwise){
+      if(m_controlPanelWheel.getDistance()>m_distance){
+        m_controlPanelWheel.set(-m_speed);
+      }
+    }
+    
+    
   }
 
   // Called once the command ends or is interrupted.
@@ -47,6 +60,6 @@ public class TurnForDistance extends CommandBase {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_controlPanelWheel.getDistance() > m_inchesTurned;
+    return (m_clockwise) ? m_controlPanelWheel.getDistance()>m_distance : m_controlPanelWheel.getDistance()<m_distance;
   }
 }

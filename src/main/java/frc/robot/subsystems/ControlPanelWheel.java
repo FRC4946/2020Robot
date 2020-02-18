@@ -24,21 +24,21 @@ public class ControlPanelWheel extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private ColorSensorV3 m_colorSensor;
-  private TalonSRX m_wheelMotor;
-  private ColorMatch m_colorMatcher;
-  private Encoder m_wheelEncoder;
+  private ColorSensorV3 m_sensor;
+  private TalonSRX m_wheel;
+  private ColorMatch m_matcher;
+  private Encoder m_encoder;
 
   public ControlPanelWheel() {
-    m_colorSensor = new ColorSensorV3(Port.kOnboard);
-    m_wheelMotor = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
-    m_colorMatcher = new ColorMatch();
-    m_wheelEncoder = new Encoder(RobotMap.DIO.WHEEL_ENCODER_A, RobotMap.DIO.WHEEL_ENCODER_B);
+    m_sensor = new ColorSensorV3(Port.kOnboard);
+    m_wheel = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
+    m_matcher = new ColorMatch();
+    m_encoder = new Encoder(RobotMap.DIO.WHEEL_ENCODER_A, RobotMap.DIO.WHEEL_ENCODER_B);
 
-    m_colorMatcher.addColorMatch(Constants.COLOR_BLUE);
-    m_colorMatcher.addColorMatch(Constants.COLOR_GREEN);
-    m_colorMatcher.addColorMatch(Constants.COLOR_RED);
-    m_colorMatcher.addColorMatch(Constants.COLOR_YELLOW);
+    m_matcher.addColorMatch(Constants.COLOR_BLUE);
+    m_matcher.addColorMatch(Constants.COLOR_GREEN);
+    m_matcher.addColorMatch(Constants.COLOR_RED);
+    m_matcher.addColorMatch(Constants.COLOR_YELLOW);
   }
 
   /**
@@ -48,7 +48,7 @@ public class ControlPanelWheel extends SubsystemBase {
    */
 
   public void set(double speed) {
-    m_wheelMotor.set(ControlMode.PercentOutput, speed);
+    m_wheel.set(ControlMode.PercentOutput, speed);
   }
 
   /**
@@ -59,18 +59,18 @@ public class ControlPanelWheel extends SubsystemBase {
   }
 
   public double getDistance() {
-    return m_wheelEncoder.getDistance();
+    return m_encoder.getDistance();
   }
 
   public void resetEncoder() {
-    m_wheelEncoder.reset();
+    m_encoder.reset();
   }
 
   public Color getDetectedColor() {
-    return m_colorSensor.getColor();
+    return m_sensor.getColor();
   }
 
   public ColorMatchResult getClosestMatch() {
-    return m_colorMatcher.matchClosestColor(getDetectedColor());
+    return m_matcher.matchClosestColor(getDetectedColor());
   }
 }
