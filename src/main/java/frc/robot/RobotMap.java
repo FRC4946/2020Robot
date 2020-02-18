@@ -82,8 +82,8 @@ public final class RobotMap {
      * CAN IDs
      */
     public static final class CAN {
-        public static final int CLIMBER_LEFT_TALONSRX = 10;
-        public static final int CLIMBER_RIGHT_TALONSRX = 9;
+        public static final int CLIMBER_LEFT_SPARKMAX = 10;
+        public static final int CLIMBER_RIGHT_SPARKMAX = 9;
 
         public static final int SHOOTER_LEFT_SPARKMAX = 6;
         public static final int SHOOTER_RIGHT_SPARKMAX = 5;
