@@ -120,20 +120,6 @@ public class Shooter extends SubsystemBase {
   }
 
   /**
-   * Stops the right motor
-   */
-  public void stopRight(){
-    m_right.set(0.0);
-  }
-
-  /**
-   * Stops the left motor
-   */
-  public void stopLeft(){
-    m_left.set(0.0);
-  }
-
-  /**
    * Stops the motors
    */
   public void stop() {
@@ -164,6 +150,10 @@ public class Shooter extends SubsystemBase {
   public void setHoodSpeed(double speed) {
     m_rightHood.setSpeed(-speed);
     m_leftHood.setSpeed(speed);
+  }
+
+  public void stopHood(){
+    setHoodSpeed(0.0);
   }
 
   public double getHoodAngle() {
