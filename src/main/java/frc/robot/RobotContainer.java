@@ -77,7 +77,7 @@ public class RobotContainer {
 
     JoystickButton climbButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.CLIMB);
 
-    JoystickButton frontIntake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.FRONT_INTAKE);
+    JoystickButton intake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.INTAKE);
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
@@ -89,7 +89,7 @@ public class RobotContainer {
     climbButton.toggleWhenPressed(
         new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
 
-    frontIntake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
+    intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
 
     // Default Commands
 
@@ -99,7 +99,7 @@ public class RobotContainer {
     }, m_driveTrain));
 
     m_intake.setDefaultCommand(new RunCommand(() -> {
-      if (frontIntake.get()) {
+      if (intake.get()) {
         m_intake.setExtended(true);
         m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
             - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));

@@ -20,7 +20,7 @@ public class Intake extends SubsystemBase {
   private VictorSPX m_intake;
 
   public Intake() {
-    m_solenoid = new DoubleSolenoid(RobotMap.PCM.FRONT_INTAKE_A, RobotMap.PCM.FRONT_INTAKE_B);
+    m_solenoid = new DoubleSolenoid(RobotMap.PCM.INTAKE_A, RobotMap.PCM.INTAKE_B);
 
     m_intake = new VictorSPX(RobotMap.CAN.INTAKE_VICTORSPX);
   }
