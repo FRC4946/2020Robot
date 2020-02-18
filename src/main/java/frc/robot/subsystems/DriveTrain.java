@@ -33,18 +33,18 @@ import frc.robot.util.Utilities;
  * </p>
  */
 public class DriveTrain extends SubsystemBase {
-  private SpeedControllerGroup m_leftSide, m_rightSide;
-  private CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
-  private Encoder m_leftEncoder, m_rightEncoder;
+  private final SpeedControllerGroup m_leftSide, m_rightSide;
+  private final CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
+  private final Encoder m_leftEncoder, m_rightEncoder;
 
-  private Solenoid m_highGear;
+  private final Solenoid m_highGear;
+ 
+  private final AHRS m_gyro;
 
-  private AHRS m_gyro;
+  private final DifferentialDrive m_drive;
+  private final DifferentialDriveKinematics m_kinematics;
 
-  private DifferentialDrive m_drive;
-  private DifferentialDriveKinematics m_kinematics;
-
-  private DifferentialDriveOdometry m_odometry;
+  private final DifferentialDriveOdometry m_odometry;
 
   public DriveTrain() {
     m_leftFront = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_FRONT_SPARKMAX, MotorType.kBrushless);

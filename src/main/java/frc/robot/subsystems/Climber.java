@@ -19,9 +19,9 @@ import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
 
-  private CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
-  private AnalogInput m_pot;
-  private DoubleSolenoid m_climberSolenoid;
+  private final CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
+  private final AnalogInput m_pot;
+  private final DoubleSolenoid m_climberSolenoid;
 
 
   public Climber() {
