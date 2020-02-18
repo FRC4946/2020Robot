@@ -76,11 +76,14 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
 
+    AHRS gyro;
     try {
-      m_gyro = new AHRS(SPI.Port.kMXP);
+      gyro = new AHRS(SPI.Port.kMXP);
     } catch (Exception e) {
+      gyro = null;
       e.printStackTrace();
     }
+    m_gyro = gyro;
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()), new Pose2d(
         Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
