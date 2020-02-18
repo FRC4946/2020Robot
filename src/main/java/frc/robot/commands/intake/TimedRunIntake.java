@@ -12,7 +12,6 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
-import frc.robot.commands.intake.RunIntake.IntakeSelector;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Revolver;
 
@@ -22,19 +21,17 @@ public class TimedRunIntake extends CommandBase {
   private Revolver m_revolver;
   private DoubleSupplier m_speed;
   private double m_time;
-  private IntakeSelector m_selector;
   private Timer m_timer;
 
   /**
    * Creates a new TimedRunIntake.
    */
-  public TimedRunIntake(DoubleSupplier speed, double time, IntakeSelector selector, Intake intake, Revolver revolver) {
+  public TimedRunIntake(DoubleSupplier speed, double time, Intake intake, Revolver revolver) {
     m_intake = intake;
     m_revolver = revolver;
     m_timer = new Timer();
     m_time = time;
     m_speed = speed;
-    m_selector = selector;
     addRequirements(m_intake, m_revolver);
   }
 
@@ -43,20 +40,7 @@ public class TimedRunIntake extends CommandBase {
   public void initialize() {
     m_timer.reset();
     m_timer.start();
-    switch (m_selector) {
-      case FRONT:
-        m_intake.setFrontExtended(true);
-        m_intake.setBackExtended(false);
-        break;
-      case BACK:
-        m_intake.setFrontExtended(false);
-        m_intake.setBackExtended(true);
-        break;
-      case BOTH:
-      default:
-        m_intake.setExtended(true);
-        break;
-    }
+    m_intake.setExtended(true);
   }
 
   // Called every time the scheduler runs while the command is scheduled.
