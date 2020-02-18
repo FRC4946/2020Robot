@@ -19,15 +19,14 @@ import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
 
-  private final CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
-  private final AnalogInput m_pot;
-  private final DoubleSolenoid m_climberSolenoid;
+  private CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
+  private DoubleSolenoid m_climberSolenoid;
+
 
   public Climber() {
     m_leftClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_RIGHT_SPARKMAX, MotorType.kBrushless);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
-    m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
 
     setPiston(false);
     m_rightClimberMotor.setInverted(true);
@@ -77,12 +76,5 @@ public class Climber extends SubsystemBase {
    */
   public void togglePiston() {
     setPiston(m_climberSolenoid.get() == Value.kReverse);
-  }
-
-  /**
-   * @return how far extended the climber is
-   */
-  public double getDistance() {
-    return (m_pot.getAverageVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_SCALE_VALUE;
   }
 }
