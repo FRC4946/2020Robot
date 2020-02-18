@@ -147,8 +147,7 @@ public final class RobotMap {
      * PWM Port Numbers
      */
     public static final class PWM{
-        public static final int LEFT_HOOD_SERVO = 0;
-        public static final int RIGHT_HOOD_SERVO = 1;
+        public static final int HOOD_SERVO = 0;
     }
 
     // #endregion
