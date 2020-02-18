@@ -55,8 +55,7 @@ public final class RobotMap {
         public static final int CLIMB = 1; // A on X Box Controller
         public static final int DRIVER_SHOOT = 3;
         
-        public static final int FRONT_INTAKE = 5;
-        public static final int BACK_INTAKE = 6;
+        public static final int INTAKE = 5;
 
         //OPERATOR
 
@@ -107,11 +106,8 @@ public final class RobotMap {
      * PCM Port Numbers
      */
     public static final class PCM {
-        public static final int FRONT_INTAKE_A = 0;
-        public static final int FRONT_INTAKE_B = 1;
-
-        public static final int BACK_INTAKE_A = 2;
-        public static final int BACK_INTAKE_B = 3;
+        public static final int INTAKE_A = 0;
+        public static final int INTAKE_B = 1;
 
         public static final int DRIVE_SHIFTER = 4; 
 

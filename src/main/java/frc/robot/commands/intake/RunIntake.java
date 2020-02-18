@@ -18,33 +18,17 @@ public class RunIntake extends CommandBase {
   private Intake m_intake;
   private Revolver m_revolver;
   private DoubleSupplier m_speed;
-  private IntakeSelector m_selector;
 
-
-  public RunIntake(DoubleSupplier speed, IntakeSelector selector, Intake intake, Revolver revolver) {
+  public RunIntake(DoubleSupplier speed, Intake intake, Revolver revolver) {
     m_intake = intake;
     m_revolver = revolver;
     m_speed = speed;
-    m_selector = selector;
     addRequirements(m_intake, m_revolver);
   }
 
   @Override
   public void initialize() {
-    switch (m_selector) {
-      case FRONT:
-        m_intake.setFrontExtended(true);
-        m_intake.setBackExtended(false);
-        break;
-      case BACK:
-        m_intake.setFrontExtended(false);
-        m_intake.setBackExtended(true);
-        break;
-      case BOTH:
-      default:
-        m_intake.setExtended(true);
-        break;
-    }
+    m_intake.setExtended(true);
   }
 
   @Override
@@ -65,11 +49,5 @@ public class RunIntake extends CommandBase {
   @Override
   public boolean isFinished() {
     return false;
-  }
-
-  public static enum IntakeSelector {
-    FRONT,
-    BACK,
-    BOTH
   }
 }
