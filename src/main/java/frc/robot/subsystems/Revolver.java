@@ -20,11 +20,11 @@ public class Revolver extends SubsystemBase {
   /**
    * Creates a new Hopper.
    */
-  private CANSparkMax m_drumMotor;
-  private CANSparkMax m_feedWheelMotor;
+  private final CANSparkMax m_drumMotor;
+  private final CANSparkMax m_feedWheelMotor;
   private int m_repsAboveDrum = 0;
   private int m_repsAboveFeed = 0;
-  private PowerDistributionPanel m_pdp;
+  private final PowerDistributionPanel m_pdp;
 
   public Revolver(PowerDistributionPanel pdp) {
     m_drumMotor = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);

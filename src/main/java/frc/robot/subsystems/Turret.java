@@ -19,8 +19,8 @@ public class Turret extends SubsystemBase {
   // Put methods for controlling this subsystem
   // here. Call these from Commands.
 
-  private TalonSRX m_turretMotor;
-  private AnalogInput m_pot;
+  private final TalonSRX m_turretMotor;
+  private final AnalogInput m_pot;
 
   public Turret(){
     m_turretMotor = new TalonSRX(RobotMap.CAN.TURRET_TALONSRX);

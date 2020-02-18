@@ -16,8 +16,8 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
-  private DoubleSolenoid m_solenoid;
-  private VictorSPX m_intake;
+  private final DoubleSolenoid m_solenoid;
+  private final VictorSPX m_intake;
 
   public Intake() {
     m_solenoid = new DoubleSolenoid(RobotMap.PCM.INTAKE_A, RobotMap.PCM.INTAKE_B);
