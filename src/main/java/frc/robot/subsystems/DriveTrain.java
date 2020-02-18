@@ -44,7 +44,7 @@ public class DriveTrain extends SubsystemBase {
   private AHRS m_gyro;
 
   private DifferentialDrive m_drive;
-  private DifferentialDriveKinematics m_kinematic;
+  private DifferentialDriveKinematics m_kinematics;
   private ChassisSpeeds m_getChassisSpeeds;
   private DifferentialDriveWheelSpeeds m_getWheelSpeeds;
   private ChassisSpeeds m_chassisSpeeds;
@@ -72,13 +72,13 @@ public class DriveTrain extends SubsystemBase {
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
 
-    m_kinematic = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.TRACK_WIDTH));
+    m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.TRACK_WIDTH));
 
     m_chassisSpeeds = new ChassisSpeeds(Constants.LINEAR_VELOCITY, 0, Constants.ANGULAR_VELOCITY);
     m_wheelSpeeds = new DifferentialDriveWheelSpeeds(Constants.LEFT_METER_PER_SECOND, Constants.RIGHT_METER_PER_SECOND);
 
-    m_getWheelSpeeds = m_kinematic.toWheelSpeeds(m_chassisSpeeds);
-    m_getChassisSpeeds = m_kinematic.toChassisSpeeds(m_wheelSpeeds);
+    m_getWheelSpeeds = m_kinematics.toWheelSpeeds(m_chassisSpeeds);
+    m_getChassisSpeeds = m_kinematics.toChassisSpeeds(m_wheelSpeeds);
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
