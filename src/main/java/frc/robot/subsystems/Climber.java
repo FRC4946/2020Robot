@@ -47,6 +47,20 @@ public class Climber extends SubsystemBase {
   }
 
   /**
+   * Stops the left climber motor
+   */
+  public void stopLeft(){
+    m_leftClimberMotor.set(0.0);
+  }
+
+  /**
+   * Stops the right climber motor 
+   */
+  public void stopRight(){
+    m_rightClimberMotor.set(0.0);
+  }
+
+  /**
    * Stops both motors
    */
   public void stop() {

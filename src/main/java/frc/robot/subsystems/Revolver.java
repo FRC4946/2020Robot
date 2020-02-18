@@ -83,6 +83,20 @@ public class Revolver extends SubsystemBase {
   }
 
   /**
+   * Stops the drum
+   */
+  public void stopDrum(){
+    setDrum(0.0);
+  }
+
+  /**
+   * Stops the drum
+   */
+  public void stopFeedWheel(){
+    setFeedWheel(0.0);
+  }
+
+  /**
    * Stops the drum and the feed wheel
    */
   public void stop() {
