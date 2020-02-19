@@ -42,7 +42,6 @@ public class RobotContainer {
   private final Shooter m_shooter;
   private final Climber m_climber;
   private final Limelight m_limelight;
-  private final PowerDistributionPanel m_pdp;
   private final Revolver m_revolver;
   private final Intake m_intake;
   private final Turret m_turret;
@@ -58,8 +57,7 @@ public class RobotContainer {
     m_shooter = new Shooter();
     m_climber = new Climber();
     m_limelight = new Limelight();
-    m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
-    m_revolver = new Revolver(m_pdp);
+    m_revolver = new Revolver(new PowerDistributionPanel(RobotMap.CAN.PDP));
     m_intake = new Intake();
     m_turret = new Turret();
     configureButtonBindings();
