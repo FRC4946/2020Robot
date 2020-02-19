@@ -55,7 +55,7 @@ public class Shooter extends SubsystemBase {
     m_hoodServo = new Servo(RobotMap.PWM.HOOD_SERVO);
     m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
 
-    m_hoodServo.setBounds(2.5, 2.45, 1.5, 0.55, 0.5);
+    m_hoodServo.setBounds(Constants.HOOD_PWM_MAX, Constants.HOOD_PWM_DEADBAND_MAX, Constants.HOOD_PWM_CENTER, Constants.HOOD_PWM_DEADBAND_MIN, Constants.HOOD_PWM_MIN);
   }
 
   @Override

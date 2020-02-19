@@ -76,6 +76,12 @@ public final class Constants {
 
     public static final double HOOD_MIN_ANGLE = 27.4;
     public static final double HOOD_MAX_ANGLE = 82.5;
+
+    public static final double HOOD_PWM_MAX = 2.5;
+    public static final double HOOD_PWM_DEADBAND_MAX = 2.45;
+    public static final double HOOD_PWM_CENTER = 1.5;
+    public static final double HOOD_PWM_DEADBAND_MIN = 0.55;
+    public static final double HOOD_PWM_MIN = 0.5;
     
     //#endregion
 
