@@ -132,6 +132,12 @@ public final class RobotMap {
 
         public static final int DRIVE_RIGHT_ENCODER_A = 2;
         public static final int DRIVE_RIGHT_ENCODER_B = 3;
+
+        public static final int REVOLVER_DRUM_ENCODER_A = 0;
+        public static final int REVOLVER_DRUM_ENCODER_B = 0;
+
+        public static final int REVOLVER_FEEDWHEEL_ENCODER_A = 0;
+        public static final int REVOLVER_FEEDWHEEL_ENCODER_B = 0;
     }
 
     /**
