@@ -37,6 +37,7 @@ import frc.robot.subsystems.Turret;
 public class RobotContainer {
   private final Joystick m_driveJoystick;
   private final Joystick m_operatorJoystick;
+
   private final DriveTrain m_driveTrain;
   private final Shooter m_shooter;
   private final Climber m_climber;
@@ -52,6 +53,7 @@ public class RobotContainer {
   public RobotContainer() {
     m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
     m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
+
     m_driveTrain = new DriveTrain();
     m_shooter = new Shooter();
     m_climber = new Climber();
@@ -60,7 +62,6 @@ public class RobotContainer {
     m_revolver = new Revolver(m_pdp);
     m_intake = new Intake();
     m_turret = new Turret();
-    
     configureButtonBindings();
   }
 
