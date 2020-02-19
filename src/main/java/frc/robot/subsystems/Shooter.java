@@ -122,7 +122,7 @@ public class Shooter extends SubsystemBase {
   /**
    * Stops the motors
    */
-  public void stop() {
+  public void stopShooter() {
     set(0.0);
   }
 
