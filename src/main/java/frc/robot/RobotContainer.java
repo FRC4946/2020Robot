@@ -124,4 +124,8 @@ public class RobotContainer {
   public Command getAutonomousCommand() {
     return null;
   }
+
+  public void setupAuto() {
+    m_driveTrain.resetDriveTrain();
+  }
 }
