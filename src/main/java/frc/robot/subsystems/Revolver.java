@@ -7,6 +7,7 @@
 
 package frc.robot.subsystems;
 
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -23,36 +24,12 @@ public class Revolver extends SubsystemBase {
    */
   private final CANSparkMax m_drumMotor;
   private final CANSparkMax m_feedWheelMotor;
-  private final Encoder m_drumEncoder;
-  private final Encoder m_feedWheelEncoder;
-  private final PowerDistributionPanel m_pdp;
+  private int m_drumReps = 0;
+  private int m_feedReps = 0;
 
-  private boolean m_drumJammed;
-  private boolean m_feedJammed;
-
-  public Revolver(PowerDistributionPanel pdp) {
+  public Revolver() {
     m_drumMotor = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
     m_feedWheelMotor = new CANSparkMax(RobotMap.CAN.FEED_WHEEL_MOTOR_SPARKMAX, MotorType.kBrushless);
-    m_pdp = pdp;
-    m_drumJammed = false;
-    m_feedJammed = false; 
-    m_drumEncoder = new Encoder(RobotMap.DIO.REVOLVER_DRUM_ENCODER_A, RobotMap.DIO.REVOLVER_DRUM_ENCODER_B);
-    m_drumEncoder.setMaxPeriod(Constants.REVOLVER_DRUM_ENCODER_MAXPERIOD);
-    m_feedWheelEncoder = new Encoder(RobotMap.DIO.REVOLVER_FEEDWHEEL_ENCODER_A, RobotMap.DIO.REVOLVER_FEEDWHEEL_ENCODER_B);
-    m_feedWheelEncoder.setMaxPeriod(Constants.REVOLVER_FEEDWHEEL_ENCODER_MAXPERIOD);
-  }
-
-  private void resetDrumEncoder(){
-    m_drumEncoder.reset();
-  }
-
-  private void resetFeedWheelEncoder(){
-    m_feedWheelEncoder.reset();
-  }
-
-  public void resetEncoders(){
-    resetDrumEncoder();
-    resetFeedWheelEncoder();
   }
 
   /**
@@ -65,17 +42,22 @@ public class Revolver extends SubsystemBase {
     setFeedWheel(feedWheelSpeed);
   }
 
+  public void resetReps(){
+    m_drumReps = 0;
+    m_feedReps = 0;
+  }
+
   /**
    * Sets the speed of the drum
    * @param speed the speed to run the drum at as a percentage from -1 to 1
    */
   public void setDrum(double speed) {
     m_drumMotor.set(speed);
-    if (m_drumEncoder.getStopped()){
-      m_drumJammed = true;
+    if (m_drumMotor.getEncoder().getVelocity()==0.0){
+      m_drumReps++;
     }
-    else{
-      m_drumJammed = false;
+    if(m_drumReps > Constants.REVOLVER_REPS_THRESHOLD){
+      new UnjamRevolver(this).schedule(false);
     }
   }
 
@@ -85,12 +67,12 @@ public class Revolver extends SubsystemBase {
    */
   public void setFeedWheel(double speed) {
     m_feedWheelMotor.set(speed);
-    if (m_feedWheelEncoder.getStopped()) {
-      m_feedJammed = true;
+    if(m_feedWheelMotor.getEncoder().getVelocity()==0.0){
+      m_feedReps++;
     }
-    else{
-      m_feedJammed = false;
-    } 
+    if (m_feedReps > Constants.REVOLVER_REPS_THRESHOLD) {
+      new UnjamRevolver(this).schedule(false);
+    }
   }
 
   /**
@@ -116,8 +98,6 @@ public class Revolver extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (m_drumJammed || m_feedJammed) {
-      new UnjamRevolver(this).schedule(false);
-    }
+  
   }
 }

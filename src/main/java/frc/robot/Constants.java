@@ -140,12 +140,6 @@ public final class Constants {
 
     //#region Revolver Details
 
-    public static final double REVOLVER_DRUM_CURRENT_THRESHOLD = 2.0;
-    public static final double REVOLVER_FEEDWHEEL_CURRENT_THRESHOLD = 2.0;
-
-    public static final double REVOLVER_DRUM_ENCODER_MAXPERIOD = 0.0;
-    public static final double REVOLVER_FEEDWHEEL_ENCODER_MAXPERIOD = 0.0;
-
     public static final double REVOLVER_DRUM_FORWARDS_SPEED = 0.075;
     public static final double REVOLVER_DRUM_BACKWARDS_SPEED = -0.075;
 
