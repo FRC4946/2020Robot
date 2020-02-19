@@ -12,6 +12,7 @@ import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
+import frc.robot.util.Utilities;
 
 public class MoveTurret extends PIDCommand {
 
@@ -26,7 +27,7 @@ public class MoveTurret extends PIDCommand {
 
         () -> turret.getAngle(),
 
-        () -> Math.max(Constants.TURRET_ROTATION_MIN, Math.min(Constants.TURRET_ROTATION_MAX, angle)),
+        () -> Utilities.clip(angle, Constants.TURRET_ROTATION_MAX, Constants.TURRET_ROTATION_MIN),
 
         output -> {
           output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);
