@@ -122,18 +122,6 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Resets the odometry and sets the robot to the inputted position
-   * 
-   * @param xPos  the x position of the robot in inches
-   * @param yPos  the y position of the robot in inches
-   * @param angle the angle of the robot in degrees (WPILIB Format, degrees
-   *              counterclockwise with 0 being straight ahead)
-   */
-  private void resetOdometry(double xPos, double yPos, double angle) {
-    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
-  }
-
-  /**
    * @return the left encoder's output
    */
   public double getLeftDistance() {
@@ -154,29 +142,24 @@ public class DriveTrain extends SubsystemBase {
     return (getLeftDistance() + getRightDistance()) / 2;
   }
 
-  /**
-   * resets the encoder
-   */
-  public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
-  }
-
-  /**
-   * resets the gyro and the odometry
-   */
-  private void resetGyro() {
-    m_gyro.reset();
-  }
-
   public void resetDriveTrain() {
     resetDriveTrain(0.0, 0.0, 0.0);
   }
 
+   /**
+   * Resets the odometry and sets the robot to the inputted position.
+   * Also resets encoders and gyro
+   * 
+   * @param xPos  the x position of the robot in inches
+   * @param yPos  the y position of the robot in inches
+   * @param angle the angle of the robot in degrees (WPILIB Format, degrees
+   *              counterclockwise with 0 being straight ahead)
+   */
   public void resetDriveTrain(double xPos, double yPos, double angle) {
-    resetEncoders();
-    resetGyro();
-    resetOdometry(xPos, yPos, angle);
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
+    m_gyro.reset();
+    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
 
   /**
