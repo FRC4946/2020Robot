@@ -29,12 +29,11 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_RIGHT_SPARKMAX, MotorType.kBrushless);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
     m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
-
+    
     setPiston(false);
-    m_rightClimberMotor.setInverted(true);
-    m_leftClimberMotor.setInverted(false);
     m_rightClimberMotor.burnFlash();
     m_leftClimberMotor.burnFlash();
+    m_rightClimberMotor.follow(m_leftClimberMotor, true);
   }
 
   /**
@@ -42,8 +41,7 @@ public class Climber extends SubsystemBase {
    * @param speed the speed that the motors will run at
    */
   public void set(double speed) {
-    m_leftClimberMotor.set(speed);
-    m_rightClimberMotor.set(speed);
+    m_leftClimberMotor.set(speed); 
   }
 
   /**
@@ -51,7 +49,6 @@ public class Climber extends SubsystemBase {
    */
   public void stop() {
     m_leftClimberMotor.set(0.0);
-    m_rightClimberMotor.set(0.0);
   }
 
   /**
