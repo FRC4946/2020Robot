@@ -27,7 +27,7 @@ public class MoveTurret extends PIDCommand {
 
         () -> turret.getAngle(),
 
-        () -> Utilities.clip(angle, Constants.TURRET_ROTATION_MAX, Constants.TURRET_ROTATION_MIN),
+        () -> Utilities.clip(angle, Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX),
 
         output -> {
           output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);

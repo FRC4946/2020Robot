@@ -101,7 +101,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngleSetpoint(double setpoint) {
-    m_angleController.setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MAX_ANGLE, Constants.HOOD_MIN_ANGLE));
+    m_angleController.setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MIN_ANGLE, Constants.HOOD_MAX_ANGLE));
   }
 
   public double getAngleSetpoint() {
