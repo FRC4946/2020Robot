@@ -40,7 +40,7 @@ public class Turret extends SubsystemBase {
    * Stops the turret
    */
   public void stop(){
-    m_turretMotor.set(ControlMode.PercentOutput, 0.0);
+    set(0.0);
   }
   
   public double getAngle() {

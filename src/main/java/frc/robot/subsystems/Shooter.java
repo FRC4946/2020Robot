@@ -149,6 +149,10 @@ public class Shooter extends SubsystemBase {
     m_hoodServo.setSpeed(speed);
   }
 
+  public void stopHood(){
+    setHoodSpeed(0.0);
+  }
+
   public double getHoodAngle() {
     return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.HOOD_POT_SCALE_VALUE)
         - Constants.HOOD_POT_OFFSET_VALUE) * (Constants.HOOD_MAX_ANGLE - Constants.HOOD_MIN_ANGLE)
