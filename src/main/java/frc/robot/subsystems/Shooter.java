@@ -16,6 +16,7 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.util.Utilities;
 
 public class Shooter extends SubsystemBase {
   private CANSparkMax m_left, m_right;
@@ -100,7 +101,7 @@ public class Shooter extends SubsystemBase {
   }
 
   public void setAngleSetpoint(double setpoint) {
-    m_angleController.setSetpoint(Math.max(Constants.HOOD_MIN_ANGLE, Math.min(setpoint, Constants.HOOD_MAX_ANGLE)));
+    m_angleController.setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MAX_ANGLE, Constants.HOOD_MIN_ANGLE));
   }
 
   public double getAngleSetpoint() {
@@ -109,7 +110,7 @@ public class Shooter extends SubsystemBase {
 
   /**
    * Sets the motors to the desired speed
-   * 
+   *
    * @param speed The speed that the motor runs at
    */
   public void set(double speed) {

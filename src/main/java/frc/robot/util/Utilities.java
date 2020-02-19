@@ -27,4 +27,8 @@ public class Utilities {
   public static double deadzone(double input, double deadzone) {
     return Math.abs(input) < Math.abs(deadzone) ? 0 : input;
   }
+
+  public static double clip(double input, double max, double min) {
+    return Math.max(min, Math.min(input, max));
+  }
 }
