@@ -9,10 +9,8 @@ package frc.robot.util;
 
 import frc.robot.Constants;
 
-/**
- * Add your docs here.
- */
 public class Utilities {
+
   public static double conformAngle(double angle) {
     while (angle < 0) {
       angle += 360;
