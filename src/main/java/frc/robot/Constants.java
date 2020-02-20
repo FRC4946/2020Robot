@@ -138,7 +138,8 @@ public final class Constants {
 
   // #region Climber Details
 
-  public static final double CLIMEBR_ENCODER_INCHES_PER_TICK = 1;
+  //TODO: put the actual reduction value
+  public static final double CLIMBER_ENCODER_INCHES_PER_TICK = 1;
 
   public static final double CLIMBER_POT_SCALE_VALUE = 10.0;
 

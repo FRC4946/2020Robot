@@ -19,7 +19,6 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase {
 
   private CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
-  private CANEncoder m_leftEncoder, m_rightEncoder;
   private DoubleSolenoid m_climberSolenoid;
 
 
@@ -28,8 +27,6 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_RIGHT_SPARKMAX, MotorType.kBrushless);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
 
-    m_leftEncoder = m_leftClimberMotor.getEncoder();
-    m_rightEncoder = m_rightClimberMotor.getEncoder();
 
     setPiston(false);
     m_rightClimberMotor.setInverted(true);
@@ -37,8 +34,8 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor.burnFlash();
     m_leftClimberMotor.burnFlash();
 
-    m_leftEncoder.setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
-    m_rightEncoder.setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_leftClimberMotor.getEncoder().setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_rightClimberMotor.getEncoder().setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
   }
 
   /**
@@ -88,14 +85,14 @@ public class Climber extends SubsystemBase {
    * @return how far extended the left climber is
    */
   public double getLeftDistance() {
-    return m_leftEncoder.getPosition();
+    return m_leftClimberMotor.getEncoder().getPosition();
   }
 
   /**
    * @return how far extended the right climber is
    */
   public double getRightDistance() {
-    return m_rightEncoder.getPosition();
+    return m_rightClimberMotor.getEncoder().getPosition();
   }
 
   /**
@@ -109,7 +106,7 @@ public class Climber extends SubsystemBase {
    * resets the encoder
    */
   public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    m_leftClimberMotor.getEncoder().reset();
+    m_rightClimberMotor.getEncoder().reset();
   }
 }
