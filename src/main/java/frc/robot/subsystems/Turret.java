@@ -38,24 +38,19 @@ public class Turret extends SubsystemBase {
   }
 
   /**
-   * Sets the turret's applied voltage (open-loop).
+   * Moves the Turret
+   *
+   * @param speed the speed at which to set the turret motor to
    */
-<<<<<<< HEAD
   public void set(double speed) {
-    m_turretMotor.set(ControlMode.PercentOutput, speed);
-  }
-=======
-  public void set(double speed){
-    if(getAngle() < Constants.TURRET_ROTATION_MIN && speed < 0){
-      stop();
-    } else if (getAngle() > Constants.TURRET_ROTATION_MAX && speed > 0){
-      stop();
-    } else {
+    if ((getAngle() < Constants.TURRET_ROTATION_MIN && speed > 0.0)
+        || (getAngle() > Constants.TURRET_ROTATION_MAX && speed < 0.0)
+        || (getAngle() > Constants.TURRET_ROTATION_MIN && getAngle() < Constants.TURRET_ROTATION_MAX)) {
       m_turretMotor.set(ControlMode.PercentOutput, speed);
+    } else {
+      m_turretMotor.set(ControlMode.PercentOutput, 0.0);
     }
-<<<<<<< HEAD
   } 
->>>>>>> Moved turret angle limit checking to subsystem
 
   /**
    * Sets the turret PID setpoint.
@@ -64,8 +59,6 @@ public class Turret extends SubsystemBase {
     m_turretMotor.set(ControlMode.Position,
         degreesToSensorUnits(Utilities.clip(setpoint, Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX))
             + 512);
-=======
->>>>>>> Implement requested changes
   }
 
   /**
@@ -76,12 +69,9 @@ public class Turret extends SubsystemBase {
     set(0.0);
   }
 
-<<<<<<< HEAD
   /**
    * @return the current turret angle
    */
-=======
->>>>>>> Implement requested changes
   public double getAngle() {
     return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition() - 512);
   }
