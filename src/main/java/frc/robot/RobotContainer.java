@@ -47,6 +47,8 @@ public class RobotContainer {
   private Intake m_intake;
   private Turret m_turret;
 
+  private Command m_autonomousCommand = null;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
@@ -117,15 +119,23 @@ public class RobotContainer {
   }
 
   /**
-   * Use this to pass the autonomous command to the main {@link Robot} class.
-   *
-   * @return the command to run in autonomous
+   * Resets encoders, gyro, any other sensors necessary for auto, etc...
+   * Also schedules autonomous command
    */
-  public Command getAutonomousCommand() {
-    return null;
-  }
-
   public void setupAuto() {
     m_driveTrain.resetDriveTrain();
+
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.schedule();
+    }
+  }
+
+  /**
+   * Cancels the current autonomous command
+   */
+  public void cancelAuto() {
+    if (m_autonomousCommand != null) {
+      m_autonomousCommand.cancel();
+    }
   }
 }
