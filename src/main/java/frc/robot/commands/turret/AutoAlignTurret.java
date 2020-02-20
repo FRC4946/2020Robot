@@ -26,12 +26,7 @@ public class AutoAlignTurret extends PIDCommand {
     super(new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
         () -> turret.getAngle(),
 
-        () -> {
-          double angle = (turret.getAngle() + limelight.getAngleOffset());
-          Utilities.clip(angle, Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX);
-
-          return angle;
-        },
+        () -> Utilities.clip(turret.getAngle() + limelight.getAngleOffset(), Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX),
 
         output -> {
           output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);
