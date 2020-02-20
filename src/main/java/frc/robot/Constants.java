@@ -130,6 +130,14 @@ public final class Constants {
 
   public static final double TURRET_HOME_ANGLE = 90;
 
+  public static final double TURRET_PID_LOOP_INDEX;
+
+  public static final double TURRET_PID_TIMEOUT;
+
+  public static final double TURRET_POT_TURNS;
+
+  public static final double TURRET_TALONPOT_SCALE_VALUE = 1023;
+
   // #endregion
 
   // #region Climber Details

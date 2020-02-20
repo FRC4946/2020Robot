@@ -8,6 +8,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
 import edu.wpi.first.wpilibj.AnalogInput;
@@ -18,13 +19,12 @@ import frc.robot.RobotMap;
 public class Turret extends SubsystemBase {
 
   private final TalonSRX m_turretMotor;
-  private final AnalogInput m_pot;
 
   public Turret() {
     m_turretMotor = new TalonSRX(RobotMap.CAN.TURRET_TALONSRX);
-    m_pot = new AnalogInput(RobotMap.AIO.TURRET_POT);
+    m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog, Constants.TURRET_PID_LOOP_INDEX, Constants.TURRET_PID_TIMEOUT);
+    m_turretMotor.configPotentiometerTurns(Constants.TURRET_POT_TURNS);
   }
-
   /**
    * Moves the Turret
    *
@@ -42,7 +42,11 @@ public class Turret extends SubsystemBase {
   }
 
   public double getAngle() {
-    return (m_pot.getAverageVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.TURRET_POT_SCALE_VALUE
-        * Constants.TURRET_RATIO;
+    return (m_turretMotor.getSensorCollection().getAnalogInRaw() / Constants.TURRET_TALONPOT_SCALE_VALUE)*360;
+    //return (m_pot.getAverageVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO;
+  }
+
+  public void setSetpoint(double setpoint){
+    m_turretMotor.getSensorCollection().setAnalogPosition(setpoint, Constants.TURRET_PID_TIMEOUT);
   }
 }
