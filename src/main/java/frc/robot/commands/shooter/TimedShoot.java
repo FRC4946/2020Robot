@@ -14,14 +14,14 @@ import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
 
 public class TimedShoot extends CommandBase {
-  
+
   private Shooter m_shooter;
   private Revolver m_revolver;
   private double m_speed, m_angle, m_time;
   private Timer m_timer;
 
   /**
-   * Creates a new TimedShoot.
+   * Creates a new TimedShoot command.
    */
   public TimedShoot(double speed, double angle, double time, Shooter shooter, Revolver revolver) {
     m_shooter = shooter;
@@ -50,7 +50,6 @@ public class TimedShoot extends CommandBase {
       m_revolver.setFeedWheel(0.0);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_timer.stop();

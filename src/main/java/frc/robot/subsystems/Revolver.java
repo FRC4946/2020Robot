@@ -17,9 +17,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.revolver.UnjamRevolver;
 
 public class Revolver extends SubsystemBase {
-  /**
-   * Creates a new Hopper.
-   */
+
   private final CANSparkMax m_drumMotor;
   private final CANSparkMax m_feedWheelMotor;
   private int m_repsAboveDrum = 0;
@@ -48,8 +46,11 @@ public class Revolver extends SubsystemBase {
 
   /**
    * Sets the speed of the revolver drum and feed wheel
-   * @param drumSpeed controls how fast the drum spins as a percentage from -1 to 1
-   * @param feedWheelSpeed controls how fast the feed wheel spins as a percentage from -1 to 1
+   *
+   * @param drumSpeed      controls how fast the drum spins as a percentage from
+   *                       -1 to 1
+   * @param feedWheelSpeed controls how fast the feed wheel spins as a percentage
+   *                       from -1 to 1
    */
   public void setAll(double drumSpeed, double feedWheelSpeed) {
     setDrum(drumSpeed);
@@ -58,6 +59,7 @@ public class Revolver extends SubsystemBase {
 
   /**
    * Sets the speed of the drum
+   *
    * @param speed the speed to run the drum at as a percentage from -1 to 1
    */
   public void setDrum(double speed) {
@@ -71,6 +73,7 @@ public class Revolver extends SubsystemBase {
 
   /**
    * Sets the speed of the feed wheel
+   *
    * @param speed the speed to run the feed wheel at as a percentage from -1 to 1
    */
   public void setFeedWheel(double speed) {
@@ -85,14 +88,14 @@ public class Revolver extends SubsystemBase {
   /**
    * Stops the drum
    */
-  public void stopDrum(){
+  public void stopDrum() {
     setDrum(0.0);
   }
 
   /**
    * Stops the drum
    */
-  public void stopFeedWheel(){
+  public void stopFeedWheel() {
     setFeedWheel(0.0);
   }
 

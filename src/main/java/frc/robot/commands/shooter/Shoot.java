@@ -23,12 +23,13 @@ public class Shoot extends CommandBase {
 
   /**
    * Shoots at the specified speed
-   * @param speed the speed to spin the flywheel (RPM)
-   * @param angle the angle to shoot at in degrees
-   * @param shooter the shooter subsystem
+   *
+   * @param speed    the speed to spin the flywheel (RPM)
+   * @param angle    the angle to shoot at in degrees
+   * @param shooter  the shooter subsystem
    * @param revolver the revolver subsystem
    */
-  public Shoot(double speed, double angle, Shooter shooter, Revolver revolver) {    
+  public Shoot(double speed, double angle, Shooter shooter, Revolver revolver) {
     m_shooter = shooter;
     m_revolver = revolver;
     m_speed = speed;
@@ -48,8 +49,7 @@ public class Shoot extends CommandBase {
     m_revolver.setDrum(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
     if (m_shooter.atSpeedSetpoint()) {
       m_revolver.setFeedWheel(0.3);
-    }
-    else {
+    } else {
       m_revolver.setFeedWheel(0.0);
     }
   }

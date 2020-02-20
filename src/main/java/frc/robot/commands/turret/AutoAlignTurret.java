@@ -20,7 +20,7 @@ public class AutoAlignTurret extends PIDCommand {
   private Limelight m_limelight;
 
   /**
-   * Creates a new AutoAlignTurret.
+   * Creates a new AutoAlignTurret command.
    */
   public AutoAlignTurret(Turret turret, Limelight limelight) {
     super(new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),

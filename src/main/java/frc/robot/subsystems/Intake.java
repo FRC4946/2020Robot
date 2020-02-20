@@ -16,12 +16,12 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class Intake extends SubsystemBase {
+
   private final DoubleSolenoid m_solenoid;
   private final VictorSPX m_intake;
 
   public Intake() {
     m_solenoid = new DoubleSolenoid(RobotMap.PCM.INTAKE_A, RobotMap.PCM.INTAKE_B);
-
     m_intake = new VictorSPX(RobotMap.CAN.INTAKE_VICTORSPX);
   }
 

@@ -20,7 +20,7 @@ public class Climb extends CommandBase {
   private int m_axis1, m_axis2;
 
   /**
-   * Creates a new Climb.
+   * Creates a new Climb command.
    */
   public Climb(Joystick stick, int axis1, int axis2, Climber climber) {
     m_climber = climber;

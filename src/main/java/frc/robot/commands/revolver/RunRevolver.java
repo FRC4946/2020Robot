@@ -11,12 +11,12 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Revolver;
 
 public class RunRevolver extends CommandBase {
-  
+
   private double m_revolverSpeed, m_wheelSpeed;
   private Revolver m_revolver;
-  
+
   /**
-   * Creates a new RunRevolver.
+   * Creates a new RunRevolver command.
    */
   public RunRevolver(double revolverSpeed, double wheelSpeed, Revolver revolver) {
     m_revolver = revolver;
@@ -25,24 +25,20 @@ public class RunRevolver extends CommandBase {
     addRequirements(m_revolver);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_revolver.setAll(m_revolverSpeed, m_wheelSpeed);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_revolver.stop();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;

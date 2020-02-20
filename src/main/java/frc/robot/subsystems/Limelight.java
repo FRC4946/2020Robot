@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -13,10 +13,8 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
-/** 
+/**
  * Limelight Object
- *
- * @author Jacob4649
  */
 public class Limelight extends SubsystemBase {
 
@@ -54,7 +52,7 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Returs the coordinates of the centre of the targeting box
+   * Returns the coordinates of the centre of the targeting box
    *
    * @return An array containing the x offset and y offset of the target {xOffset,
    *         yOffset}
@@ -65,10 +63,10 @@ public class Limelight extends SubsystemBase {
 
   /**
    * Returns the x-offset from the target
+   *
    * @return A double containing the x-offset
    */
-
-  public double getOffsetX(){
+  public double getOffsetX() {
     return m_tx.getDouble(0);
   }
 
@@ -76,7 +74,7 @@ public class Limelight extends SubsystemBase {
    * Returns the area of the target as a percentage of the whole image (0% to
    * 100%)
    *
-   * @return  the area of the target
+   * @return the area of the target
    */
   public double getTargetArea() {
     return m_ta.getDouble(0);
@@ -92,7 +90,8 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Returns true if the LED is on and false if it isn't 
+   * Returns true if the LED is on and false if it isn't
+   *
    * @return true if the LED is on
    */
   public boolean getLED() {
@@ -138,7 +137,8 @@ public class Limelight extends SubsystemBase {
    * Sets the limelight to the desired vision processcing pipeline
    *
    * @param pipeline the pipeline to set the limelight to from 0 to 9
-   * @throws IndexOutOfBoundsException if the pipeine number is not between 0 and 9
+   * @throws IndexOutOfBoundsException if the pipeine number is not between 0 and
+   *                                   9
    */
   public void setPipeline(int pipeline) {
 
@@ -169,8 +169,9 @@ public class Limelight extends SubsystemBase {
   }
 
   public double getAngleOffset() {
-    double angle = 90 - Math.toDegrees(Math.atan(findTurretRelativePosition()[0] == 0 ? 90 : (findTurretRelativePosition()[1] / findTurretRelativePosition()[0])));
-    
+    double angle = 90 - Math.toDegrees(Math.atan(findTurretRelativePosition()[0] == 0 ? 90
+        : (findTurretRelativePosition()[1] / findTurretRelativePosition()[0])));
+
     return ((Math.abs(angle) > Constants.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
   }
 }

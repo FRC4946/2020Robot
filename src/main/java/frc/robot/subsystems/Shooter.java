@@ -19,6 +19,7 @@ import frc.robot.RobotMap;
 import frc.robot.util.Utilities;
 
 public class Shooter extends SubsystemBase {
+
   private CANSparkMax m_left, m_right;
   private Servo m_hoodServo;
   private AnalogInput m_pot;
@@ -26,9 +27,6 @@ public class Shooter extends SubsystemBase {
   private boolean m_speedEnabled = false;
   private boolean m_angleEnabled = false;
 
-  /**
-   * Creates a new PIDShooter.
-   */
   public Shooter() {
     m_speedController = new PIDController(Constants.SHOOTER_VELOCITY_CONTROL_P, Constants.SHOOTER_VELOCITY_CONTROL_I,
         Constants.SHOOTER_VELOCITY_CONTROL_D);
@@ -56,7 +54,8 @@ public class Shooter extends SubsystemBase {
     m_hoodServo = new Servo(RobotMap.PWM.HOOD_SERVO);
     m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
 
-    m_hoodServo.setBounds(Constants.HOOD_PWM_MAX, Constants.HOOD_PWM_DEADBAND_MAX, Constants.HOOD_PWM_CENTER, Constants.HOOD_PWM_DEADBAND_MIN, Constants.HOOD_PWM_MIN);
+    m_hoodServo.setBounds(Constants.HOOD_PWM_MAX, Constants.HOOD_PWM_DEADBAND_MAX, Constants.HOOD_PWM_CENTER,
+        Constants.HOOD_PWM_DEADBAND_MIN, Constants.HOOD_PWM_MIN);
   }
 
   @Override
@@ -64,14 +63,15 @@ public class Shooter extends SubsystemBase {
     System.out.println(getAverageSpeed());
     if (m_speedEnabled) {
       useSpeedOutput(m_speedController.calculate(getAverageSpeed()));
-    }
-    else
+    } else {
       stopShooter();
+    }
 
-    if (m_angleEnabled && !m_angleController.atSetpoint())
+    if (m_angleEnabled && !m_angleController.atSetpoint()) {
       useAngleSetpoint(m_angleController.calculate(getHoodAngle()));
-    else
-      setHoodSpeed(0.0);
+    } else {
+      stopHood();
+    }
   }
 
   public void useSpeedOutput(double output) {
@@ -150,7 +150,7 @@ public class Shooter extends SubsystemBase {
     m_hoodServo.setSpeed(speed);
   }
 
-  public void stopHood(){
+  public void stopHood() {
     setHoodSpeed(0.0);
   }
 
