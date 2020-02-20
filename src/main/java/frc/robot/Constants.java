@@ -145,6 +145,8 @@ public final class Constants {
 
     public static final int REVOLVER_REPS_THRESHOLD = 4;
 
+    public static final double REVOLVER_VELOCITY_THRESHOLD = 5; // Dummy value
+
     /**
      * Time revolver takes to unjam in seconds
      */

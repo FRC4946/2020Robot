@@ -51,18 +51,6 @@ public class Revolver extends SubsystemBase {
    */
   public void setDrum(double speed) {
     m_drumMotor.set(speed);
-
-    if((speed==0) || (speed!=0 && m_drumMotor.getEncoder().getVelocity()!=0)){
-      resetReps();
-    }
-
-    if (speed > 0 && m_drumMotor.getEncoder().getVelocity()==0.0){
-      m_drumReps++;
-    }
-    if(m_drumReps > Constants.REVOLVER_REPS_THRESHOLD){
-      new UnjamRevolver(this).schedule(false);
-      resetReps();
-    }
   }
 
   /**
@@ -96,5 +84,16 @@ public class Revolver extends SubsystemBase {
 
   @Override
   public void periodic() {
+    if (m_drumMotor.get() > 0 && m_drumMotor.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD){
+      m_drumReps++;
+    }
+    else{
+      resetReps();
+    }
+
+    if(m_drumReps > Constants.REVOLVER_REPS_THRESHOLD){
+      new UnjamRevolver(this).schedule(false);
+      resetReps();
+    }
   }
 }
