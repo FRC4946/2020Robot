@@ -39,6 +39,8 @@ public class Shoot extends CommandBase {
 
   @Override
   public void initialize() {
+    m_shooter.setEnabledHood(true);
+    m_shooter.setEnabledShooter(true);
     m_shooter.setAngleSetpoint(m_angle);
     m_shooter.setSpeedSetpoint(m_speed);
   }
@@ -58,6 +60,8 @@ public class Shoot extends CommandBase {
   public void end(boolean interrupted) {
     m_shooter.setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
     m_shooter.setSpeedSetpoint(0.0);
+    m_shooter.setEnabledShooter(false);
+    m_shooter.setEnabledHood(false);
     m_revolver.stop();
   }
 }
