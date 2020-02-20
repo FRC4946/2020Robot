@@ -8,24 +8,20 @@
 package frc.robot.commands.climber;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
-import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Climber;
 
 public class Climb extends CommandBase {
 
   private Climber m_climber;
-  private Joystick m_stick;
-  private int m_axis1, m_axis2;
+  private double m_speed;
 
   /**
    * Creates a new Climb command.
    */
-  public Climb(Joystick stick, int axis1, int axis2, Climber climber) {
+  public Climb(double speed, Climber climber) {
     m_climber = climber;
-    m_stick = stick;
-    m_axis1 = axis1;
+    m_speed = speed;
     addRequirements(m_climber);
   }
 
@@ -36,8 +32,7 @@ public class Climb extends CommandBase {
 
   @Override
   public void execute() {
-    m_climber.set(Math.sqrt(Math.pow(m_stick.getRawAxis(m_axis1), 2) + Math.pow(m_stick.getRawAxis(m_axis2), 2))
-        * Constants.CLIMBER_MAX_PERCENT_OUTPUT);
+    m_climber.set(m_speed);
   }
 
   @Override

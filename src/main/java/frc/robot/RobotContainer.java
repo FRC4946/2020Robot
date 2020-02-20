@@ -90,7 +90,7 @@ public class RobotContainer {
         .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_hood.getSetpoint(), m_shooter, m_hood, m_revolver), false);
 
     climbButton.toggleWhenPressed(
-        new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
+        new Climb(Constants.CLIMBER_SPEED, m_climber));
 
     intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
 
