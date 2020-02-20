@@ -56,7 +56,7 @@ public class RobotContainer {
     m_driveTrain = new DriveTrain();
     m_shooter = new Shooter();
     m_climber = new Climber();
-    m_revolver = new Revolver(m_pdp);
+    m_revolver = new Revolver();
     m_intake = new Intake();
     m_turret = new Turret();
 

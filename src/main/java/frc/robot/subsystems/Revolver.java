@@ -25,7 +25,6 @@ public class Revolver extends SubsystemBase {
   private final CANSparkMax m_drumMotor;
   private final CANSparkMax m_feedWheelMotor;
   private int m_drumReps = 0;
-  private int m_feedReps = 0;
 
   public Revolver() {
     m_drumMotor = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
@@ -44,7 +43,6 @@ public class Revolver extends SubsystemBase {
 
   public void resetReps(){
     m_drumReps = 0;
-    m_feedReps = 0;
   }
 
   /**
@@ -53,11 +51,17 @@ public class Revolver extends SubsystemBase {
    */
   public void setDrum(double speed) {
     m_drumMotor.set(speed);
-    if (m_drumMotor.getEncoder().getVelocity()==0.0){
+
+    if((speed==0) || (speed!=0 && m_drumMotor.getEncoder().getVelocity()!=0)){
+      resetReps();
+    }
+
+    if (speed > 0 && m_drumMotor.getEncoder().getVelocity()==0.0){
       m_drumReps++;
     }
     if(m_drumReps > Constants.REVOLVER_REPS_THRESHOLD){
       new UnjamRevolver(this).schedule(false);
+      resetReps();
     }
   }
 
@@ -67,12 +71,6 @@ public class Revolver extends SubsystemBase {
    */
   public void setFeedWheel(double speed) {
     m_feedWheelMotor.set(speed);
-    if(m_feedWheelMotor.getEncoder().getVelocity()==0.0){
-      m_feedReps++;
-    }
-    if (m_feedReps > Constants.REVOLVER_REPS_THRESHOLD) {
-      new UnjamRevolver(this).schedule(false);
-    }
   }
 
   /**
@@ -98,6 +96,5 @@ public class Revolver extends SubsystemBase {
 
   @Override
   public void periodic() {
-  
   }
 }
