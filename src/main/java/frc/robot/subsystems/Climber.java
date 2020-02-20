@@ -36,6 +36,9 @@ public class Climber extends SubsystemBase {
     m_leftClimberMotor.setInverted(false);
     m_rightClimberMotor.burnFlash();
     m_leftClimberMotor.burnFlash();
+
+    m_leftEncoder.setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_rightEncoder.setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
   }
 
   /**

@@ -101,6 +101,10 @@ public final class Constants {
   public static final double TARGET_HEIGHT = 60.0;
   public static final double LIMELIGHT_HEIGHT = 39.5;
 
+  //#endregion
+
+  //#region Turret Details
+
   public static final double[] LIMELIGHT_OFFSET_ZERO_ROTATION = { 0.0, 3.75 };
 
   public static final double[] TURRET_OFFSET = { 0.0, 0.0 };
@@ -133,6 +137,8 @@ public final class Constants {
   // #endregion
 
   // #region Climber Details
+
+  public static final double CLIMEBR_ENCODER_INCHES_PER_TICK = 1;
 
   public static final double CLIMBER_POT_SCALE_VALUE = 10.0;
 
