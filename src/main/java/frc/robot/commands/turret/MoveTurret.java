@@ -20,7 +20,7 @@ public class MoveTurret extends PIDCommand {
   private Shooter m_shooter;
 
   /**
-   * Creates a new MoveTurret.
+   * Creates a new MoveTurret command.
    */
   public MoveTurret(double angle, Shooter shooter, Turret turret) {
     super(new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
@@ -41,7 +41,6 @@ public class MoveTurret extends PIDCommand {
     getController().setTolerance(Constants.TURRET_PID_TOLERANCE);
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return getController().atSetpoint();

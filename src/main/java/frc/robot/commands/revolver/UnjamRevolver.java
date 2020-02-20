@@ -13,40 +13,36 @@ import frc.robot.Constants;
 import frc.robot.subsystems.Revolver;
 
 public class UnjamRevolver extends CommandBase {
-  
+
   private Revolver m_revolver;
-  
-  private Timer m_timer = new Timer();
+  private Timer m_timer;
 
   /**
-   * Creates a new UnjamRevolver.
+   * Creates a new UnjamRevolver command.
    */
   public UnjamRevolver(Revolver revolver) {
     m_revolver = revolver;
+    m_timer = new Timer();
     addRequirements(m_revolver);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_timer.reset();
     m_timer.start();
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     m_revolver.setAll(Constants.REVOLVER_DRUM_BACKWARDS_SPEED, 0.0);
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_timer.stop();
     m_revolver.stop();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return m_timer.get() > Constants.REVOLVER_UNJAM_TIME;

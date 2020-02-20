@@ -21,7 +21,7 @@ public class POVTurret extends CommandBase {
   Joystick m_joystick;
 
   /**
-   * Creates a new POVTurret.
+   * Creates a new POVTurret command.
    */
   public POVTurret(Joystick joystick, Turret turret, Shooter shooter) {
     m_turret = turret;
@@ -30,13 +30,11 @@ public class POVTurret extends CommandBase {
     addRequirements(turret);
   }
 
-  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
     m_shooter.setEnabledHood(true);
   }
 
-  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if (m_joystick.getPOV() == 0 || m_joystick.getPOV() == 45 || m_joystick.getPOV() == 315) {
@@ -60,13 +58,11 @@ public class POVTurret extends CommandBase {
     }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
     m_turret.stop();
   }
 
-  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
     return false;
