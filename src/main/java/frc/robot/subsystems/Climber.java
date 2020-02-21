@@ -10,7 +10,6 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
@@ -20,20 +19,21 @@ import frc.robot.RobotMap;
 public class Climber extends SubsystemBase {
 
   private final CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
-  private final AnalogInput m_pot;
   private final DoubleSolenoid m_climberSolenoid;
 
   public Climber() {
     m_leftClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_RIGHT_SPARKMAX, MotorType.kBrushless);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
-    m_pot = new AnalogInput(RobotMap.AIO.CLIMBER_POT);
 
     setPiston(false);
     m_rightClimberMotor.setInverted(true);
     m_leftClimberMotor.setInverted(false);
     m_rightClimberMotor.burnFlash();
     m_leftClimberMotor.burnFlash();
+
+    m_leftClimberMotor.getEncoder().setPositionConversionFactor(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_rightClimberMotor.getEncoder().setPositionConversionFactor(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
   }
 
   /**
@@ -80,9 +80,31 @@ public class Climber extends SubsystemBase {
   }
 
   /**
-   * @return how far extended the climber is
+   * @return how far extended the left climber is
    */
-  public double getDistance() {
-    return (m_pot.getAverageVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.CLIMBER_POT_SCALE_VALUE;
+  public double getLeftDistance() {
+    return m_leftClimberMotor.getEncoder().getPosition();
+  }
+
+  /**
+   * @return how far extended the right climber is
+   */
+  public double getRightDistance() {
+    return m_rightClimberMotor.getEncoder().getPosition();
+  }
+
+  /**
+   * @return the avrage of the left and right encoder output
+   */
+  public double getAverageDistance() {
+    return (getLeftDistance() + getRightDistance()) / 2;
+  }
+
+  /**
+   * resets the encoder
+   */
+  public void resetEncoders() {
+    m_leftClimberMotor.getEncoder().setPosition(0.0);
+    m_rightClimberMotor.getEncoder().setPosition(0.0);
   }
 }

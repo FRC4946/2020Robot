@@ -140,7 +140,6 @@ public final class RobotMap {
    * Analog Port Numbers
    */
   public static final class AIO {
-    public static final int CLIMBER_POT = 0;
     public static final int HOOD_POT = 1;
   }
 
