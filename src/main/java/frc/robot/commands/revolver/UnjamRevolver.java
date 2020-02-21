@@ -14,8 +14,8 @@ import frc.robot.subsystems.Revolver;
 
 public class UnjamRevolver extends CommandBase {
 
-  private Revolver m_revolver;
-  private Timer m_timer;
+  private final Revolver m_revolver;
+  private final Timer m_timer;
 
   /**
    * Creates a new UnjamRevolver command.

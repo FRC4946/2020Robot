@@ -17,11 +17,11 @@ import frc.robot.subsystems.Revolver;
 
 public class TimedRunIntake extends CommandBase {
 
-  private Intake m_intake;
-  private Revolver m_revolver;
-  private DoubleSupplier m_speed;
-  private double m_time;
-  private Timer m_timer;
+  private final Intake m_intake;
+  private final Revolver m_revolver;
+  private final DoubleSupplier m_speed;
+  private final double m_time;
+  private final Timer m_timer;
 
   /**
    * Creates a new TimedRunIntake command.

@@ -18,7 +18,7 @@ import frc.robot.util.Utilities;
 
 public class Shooter extends PIDSubsystem {
 
-  private CANSparkMax m_left, m_right;
+  private final CANSparkMax m_left, m_right;
 
   public Shooter() {
     super(new PIDController(Constants.Shooter.VELOCITY_P, Constants.Shooter.VELOCITY_I, Constants.Shooter.VELOCITY_D));
@@ -27,8 +27,8 @@ public class Shooter extends PIDSubsystem {
 
     setSetpoint(0.0);
 
-    m_left = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
-    m_right = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
+    m_left = new CANSparkMax(RobotMap.CAN.SPARKMAX_SHOOTER_LEFT, MotorType.kBrushless);
+    m_right = new CANSparkMax(RobotMap.CAN.SPARKMAX_SHOOTER_RIGHT, MotorType.kBrushless);
     m_right.setInverted(true);
     m_left.setInverted(false);
     m_left.setOpenLoopRampRate(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);

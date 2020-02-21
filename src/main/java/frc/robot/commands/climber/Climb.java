@@ -15,8 +15,8 @@ import frc.robot.subsystems.Climber;
 
 public class Climb extends CommandBase {
 
-  private Climber m_climber;
-  private DoubleSupplier m_speed;
+  private final Climber m_climber;
+  private final DoubleSupplier m_speed;
 
   /**
    * Creates a new Climb command.
@@ -48,10 +48,5 @@ public class Climb extends CommandBase {
     // This means that if the robot is disabled after climbing, the climber will
     // stay up, but if the button is pressed again the climber will come down
     m_climber.setPiston(interrupted ? Value.kReverse : Value.kOff);
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }

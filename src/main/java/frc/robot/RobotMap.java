@@ -15,11 +15,7 @@ package frc.robot;
  */
 public final class RobotMap {
 
-  // TODO : Finalize Values
-
   // #region OI
-
-  // JOYSTICKS
 
   /**
    * OI Port Numbers For Joystick Axes
@@ -64,41 +60,33 @@ public final class RobotMap {
    * OI Port Numbers For Joysticks
    */
   public static final class JOYSTICK {
-    public static final int DRIVE_JOYSTICK = 0;
-    public static final int OPERATOR_JOYSTICK = 1;
+    public static final int DRIVER = 0;
+    public static final int OPERATOR = 1;
   }
 
   // #endregion
 
   // #region IO
 
-  // MOTORS AND SENSORS
-
   /**
    * CAN IDs
    */
   public static final class CAN {
-    public static final int CLIMBER_LEFT_SPARKMAX = 10;
-    public static final int CLIMBER_RIGHT_SPARKMAX = 9;
+    public static final int SPARKMAX_DRIVE_RIGHT_FRONT = 1;
+    public static final int SPARKMAX_DRIVE_RIGHT_BACK = 2;
+    public static final int SPARKMAX_DRIVE_LEFT_FRONT = 3;
+    public static final int SPARKMAX_DRIVE_LEFT_BACK = 4;
+    public static final int SPARKMAX_SHOOTER_RIGHT = 5;
+    public static final int SPARKMAX_SHOOTER_LEFT = 6;
+    public static final int SPARKMAX_REVOLVER = 7;
+    public static final int SPARKMAX_FEED_WHEEL = 8;
+    public static final int SPARKMAX_CLIMBER_RIGHT = 9;
+    public static final int SPARKMAX_CLIMBER_LEFT = 10;
 
-    public static final int SHOOTER_LEFT_SPARKMAX = 6;
-    public static final int SHOOTER_RIGHT_SPARKMAX = 5;
+    public static final int TALONSRX_TURRET = 0;
+    public static final int TALONSRX_CONTROL_PANEL = 1;
 
-    public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 1;
-    public static final int DRIVE_RIGHT_BACK_SPARKMAX = 2;
-    public static final int DRIVE_LEFT_FRONT_SPARKMAX = 3;
-    public static final int DRIVE_LEFT_BACK_SPARKMAX = 4;
-
-    public static final int TURRET_TALONSRX = 0;
-
-    public static final int DRUM_MOTOR_SPARKMAX = 7;
-    public static final int FEED_WHEEL_MOTOR_SPARKMAX = 8;
-
-    public static final int INTAKE_VICTORSPX = 0;
-
-    public static final int CONTROL_PANEL_TALONSRX = 11;
-
-    public static final int PDP = 0;
+    public static final int VICTORSPX_INTAKE = 0;
   }
 
   /**
@@ -112,14 +100,6 @@ public final class RobotMap {
 
     public static final int CLIMBER_A = 5;
     public static final int CLIMBER_B = 6;
-  }
-
-  /**
-   * PDP Port Numbers
-   */
-  public static final class PDP {
-    public static final int DRUM_PORT = 0;
-    public static final int FEEDWHEEL_PORT = 1;
   }
 
   /**
@@ -140,7 +120,7 @@ public final class RobotMap {
    * Analog Port Numbers
    */
   public static final class AIO {
-    public static final int HOOD_POT = 1;
+    public static final int HOOD_POT = 0;
   }
 
   /**

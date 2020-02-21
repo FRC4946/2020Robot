@@ -28,7 +28,7 @@ public class ControlPanel extends SubsystemBase {
 
   public ControlPanel() {
     m_sensor = new ColorSensorV3(Port.kOnboard);
-    m_wheel = new TalonSRX(RobotMap.CAN.CONTROL_PANEL_TALONSRX);
+    m_wheel = new TalonSRX(RobotMap.CAN.TALONSRX_CONTROL_PANEL);
     m_matcher = new ColorMatch();
     m_encoder = new Encoder(RobotMap.DIO.WHEEL_ENCODER_A, RobotMap.DIO.WHEEL_ENCODER_B);
 

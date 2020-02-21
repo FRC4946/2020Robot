@@ -16,9 +16,9 @@ import frc.robot.subsystems.Revolver;
 
 public class RunIntake extends CommandBase {
 
-  private Intake m_intake;
-  private Revolver m_revolver;
-  private DoubleSupplier m_speed;
+  private final Intake m_intake;
+  private final Revolver m_revolver;
+  private final DoubleSupplier m_speed;
 
   /**
    * Creates a new RunIntake command.
@@ -46,10 +46,5 @@ public class RunIntake extends CommandBase {
     m_revolver.stop();
     m_intake.setExtended(false);
     m_intake.stop();
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }

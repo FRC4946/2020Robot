@@ -21,7 +21,7 @@ public class Turret extends SubsystemBase {
   private final TalonSRX m_turretMotor;
 
   public Turret() {
-    m_turretMotor = new TalonSRX(RobotMap.CAN.TURRET_TALONSRX);
+    m_turretMotor = new TalonSRX(RobotMap.CAN.TALONSRX_TURRET);
     m_turretMotor.configSelectedFeedbackSensor(FeedbackDevice.Analog);
 
     m_turretMotor.configNominalOutputForward(0.0);

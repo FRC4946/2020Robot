@@ -17,8 +17,8 @@ import frc.robot.util.Utilities;
 
 public class Hood extends PIDSubsystem {
 
-  private Servo m_servo;
-  private AnalogInput m_pot;
+  private final Servo m_servo;
+  private final AnalogInput m_pot;
 
   /**
    * Creates a new Hood.

@@ -12,8 +12,8 @@ import frc.robot.subsystems.Revolver;
 
 public class RunRevolver extends CommandBase {
 
-  private double m_speed;
-  private Revolver m_revolver;
+  private final double m_speed;
+  private final Revolver m_revolver;
 
   /**
    * Creates a new RunRevolver command.
@@ -25,10 +25,6 @@ public class RunRevolver extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-  }
-
-  @Override
   public void execute() {
     m_revolver.set(m_speed);
   }
@@ -36,10 +32,5 @@ public class RunRevolver extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_revolver.stop();
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
