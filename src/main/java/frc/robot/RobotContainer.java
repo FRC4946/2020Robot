@@ -98,7 +98,7 @@ public class RobotContainer {
     operatorShootButton.whenHeld(new SetShooterWithLimelight(m_shooter, m_turret, m_hood, m_limelight));
 
     driverShootButton.and(operatorShootButton)
-        .whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood));
+        .whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
 
     climbButton
         .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
