@@ -9,6 +9,7 @@ package frc.robot.commands.revolver;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.FeedWheel;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
@@ -20,18 +21,21 @@ public class Shoot extends CommandBase {
   private final Shooter m_shooter;
   private final Hood m_hood;
   private final Turret m_turret;
+  private final FeedWheel m_feedWheel;
 
   /**
    * Starts the revolver and feedwheel if the shooter speed, turret angle, and
    * hood angle are all at the setpoints
    * 
-   * @param revolver the revolver to use for this command
-   * @param shooter  the shooter to use for this command
-   * @param turret   the turret to use for this command
-   * @param hood     the hood to use for this command
+   * @param revolver  the revolver to use for this command
+   * @param shooter   the shooter to use for this command
+   * @param turret    the turret to use for this command
+   * @param hood      the hood to use for this command
+   * @param feedWheel the feedwheel to use for this command
    */
-  public Shoot(Revolver revolver, Shooter shooter, Turret turret, Hood hood) {
+  public Shoot(Revolver revolver, Shooter shooter, Turret turret, Hood hood, FeedWheel feedWheel) {
     m_revolver = revolver;
+    m_feedWheel = feedWheel;
     m_shooter = shooter;
     m_turret = turret;
     m_hood = hood;
@@ -41,14 +45,17 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_shooter.atSetpoint() && m_turret.atSetpoint()) {
-      m_revolver.setAll(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.3);
+      m_revolver.set(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
+      m_feedWheel.set(0.3);
     } else {
-      m_revolver.setAll(0.0, 0.0);
+      m_revolver.stop();
+      m_feedWheel.stop();
     }
   }
 
   @Override
   public void end(boolean interrupted) {
     m_revolver.stop();
+    m_feedWheel.stop();
   }
 }
