@@ -9,7 +9,6 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
@@ -43,7 +42,6 @@ public class RobotContainer {
   private final Shooter m_shooter;
   private final Climber m_climber;
   private final Limelight m_limelight;
-  private final PowerDistributionPanel m_pdp;
   private final Hood m_hood;
   private final Revolver m_revolver;
   private final Intake m_intake;
@@ -60,11 +58,11 @@ public class RobotContainer {
     m_shooter = new Shooter();
     m_climber = new Climber();
     m_limelight = new Limelight();
-    m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
-    m_revolver = new Revolver(m_pdp);
+    m_revolver = new Revolver();
     m_hood = new Hood();
     m_intake = new Intake();
     m_turret = new Turret();
+    
     configureButtonBindings();
   }
 

@@ -142,9 +142,11 @@ public final class Constants {
   public static final double CLIMBER_MAX_PERCENT_OUTPUT = 0.5;
 
   // #endregion
-
+  
   // #region Revolver Details
 
+  public static final double REVOLVER_VELOCITY_THRESHOLD = 5; // Dummy value
+  
   public static final double REVOLVER_DRUM_CURRENT_THRESHOLD = 2.0;
   public static final double REVOLVER_FEEDWHEEL_CURRENT_THRESHOLD = 2.0;
 
