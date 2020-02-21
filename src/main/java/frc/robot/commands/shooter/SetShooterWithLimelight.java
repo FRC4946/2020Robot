@@ -10,60 +10,52 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
 import frc.robot.subsystems.Hood;
-import frc.robot.subsystems.Revolver;
+import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
+import frc.robot.subsystems.Turret;
+import frc.robot.util.Utilities;
 
 /**
  * Instant command to shoot
  */
-public class Shoot extends CommandBase {
+public class SetShooterWithLimelight extends CommandBase {
 
-  private double m_speed, m_angle;
-  private Revolver m_revolver;
   private Shooter m_shooter;
+  Turret m_turret;
   private Hood m_hood;
+  private Limelight m_limelight;
 
   /**
-   * Shoots at the specified speed
-   *
-   * @param speed    the speed to spin the flywheel (RPM)
-   * @param angle    the angle to shoot at in degrees
-   * @param shooter  the shooter subsystem
-   * @param revolver the revolver subsystem
-   * @param hood     the hood subsystem
+   * 
+   * @param shooter the shooter to use for this command
+   * @param turret the turret to use for this command
+   * @param hood the hood to use for this command
+   * @param limelight the limelight to use for this command
    */
-  public Shoot(double speed, double angle, Shooter shooter, Hood hood, Revolver revolver) {
+  public SetShooterWithLimelight(Shooter shooter, Turret turret, Hood hood, Limelight limelight) {
     m_shooter = shooter;
-    m_revolver = revolver;
+    m_turret = turret;
     m_hood = hood;
-    m_speed = speed;
-    m_angle = angle;
+    m_limelight = limelight;
 
-    addRequirements(m_shooter, m_hood, m_revolver);
+    addRequirements(m_shooter, m_turret, m_hood);
   }
 
   @Override
   public void initialize() {
     m_hood.enable();
     m_shooter.enable();
-    m_hood.setSetpoint(m_angle);
-    m_shooter.setSetpoint(m_speed);
   }
 
   @Override
   public void execute() {
-    m_revolver.setDrum(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
-    if (m_shooter.atSetpoint()) {
-      m_revolver.setFeedWheel(0.3);
-    } else {
-      m_revolver.setFeedWheel(0.0);
-    }
+    m_shooter.setSetpoint(Utilities.distanceToSpeed(m_limelight.findDistance()));
+    m_hood.setSetpoint(Utilities.distanceToHoodAngle(m_limelight.findDistance()));
+    m_turret.setSetpoint(m_turret.getAngle() + m_limelight.getAngleOffset());
   }
 
   @Override
   public void end(boolean interrupted) {
-    m_shooter.setSetpoint(Constants.HOOD_MIN_ANGLE);
-    m_shooter.setSetpoint(0.0);
-    m_revolver.stop();
+    
   }
 }

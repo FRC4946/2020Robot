@@ -37,4 +37,22 @@ public class Utilities {
   public static double clip(double input, double min, double max) {
     return Math.max(min, Math.min(input, max));
   }
+
+  /**
+   * Gets a turret hood angle from a distance to the limelight target
+   * @param distance the distance to the limelight target in inches
+   * @return the desired hood angle in degrees
+   */
+  public static double distanceToHoodAngle(double distance) {
+    return 0;
+  }
+
+  /**
+   * Gets a shooter wheel speed from a distance to the limelight target
+   * @param distance the distance to the limelight target in inches
+   * @return the desired wheel speed in rpm
+   */
+  public static double distanceToSpeed(double distance) {
+    return 0;
+  }
 }
