@@ -7,6 +7,8 @@
 
 package frc.robot.commands.climber;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
@@ -14,12 +16,12 @@ import frc.robot.subsystems.Climber;
 public class Climb extends CommandBase {
 
   private Climber m_climber;
-  private double m_speed;
+  private DoubleSupplier m_speed;
 
   /**
    * Creates a new Climb command.
    */
-  public Climb(double speed, Climber climber) {
+  public Climb(DoubleSupplier speed, Climber climber) {
     m_climber = climber;
     m_speed = speed;
     addRequirements(m_climber);
@@ -32,13 +34,13 @@ public class Climb extends CommandBase {
 
   @Override
   public void execute() {
-    m_climber.set(m_speed);
+    m_climber.set(m_speed.getAsDouble());
   }
 
   @Override
   public void end(boolean interrupted) {
     m_climber.stop();
-    m_climber.setPiston(Value.kOff);
+    m_climber.setPiston(interrupted ? Value.kReverse : Value.kOff);
   }
 
   @Override
