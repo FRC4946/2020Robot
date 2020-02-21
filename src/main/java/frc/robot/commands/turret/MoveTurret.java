@@ -32,7 +32,7 @@ public class MoveTurret extends PIDCommand {
         output -> {
           output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);
           output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
-          turret.set(Constants.TURRET_MAX_PERCENT * (output));
+          turret.setSpeed(Constants.TURRET_MAX_PERCENT_OUTPUT * (output));
         });
 
     m_turret = turret;
