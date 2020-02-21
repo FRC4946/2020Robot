@@ -14,9 +14,9 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class FeedWheel extends SubsystemBase {
-  
+
   private final CANSparkMax m_feedWheel;
-  
+
   /**
    * Creates a new FeedWheel.
    */

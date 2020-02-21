@@ -26,14 +26,14 @@ public class Turret extends SubsystemBase {
 
     m_turretMotor.configNominalOutputForward(0.0);
     m_turretMotor.configNominalOutputReverse(0.0);
-    m_turretMotor.configPeakOutputReverse(Constants.TURRET_MAX_PERCENT_OUTPUT);
-    m_turretMotor.configPeakOutputReverse(-Constants.TURRET_MAX_PERCENT_OUTPUT);
+    m_turretMotor.configPeakOutputReverse(Constants.Turret.MAX_PERCENT_OUTPUT);
+    m_turretMotor.configPeakOutputReverse(-Constants.Turret.MAX_PERCENT_OUTPUT);
 
-    m_turretMotor.configAllowableClosedloopError(0, degreesToSensorUnits(Constants.TURRET_POSITION_TOLERANCE));
+    m_turretMotor.configAllowableClosedloopError(0, degreesToSensorUnits(Constants.Turret.POSITION_TOLERANCE));
 
-    m_turretMotor.config_kP(0, Constants.PID_TURRET_P);
-    m_turretMotor.config_kI(0, Constants.PID_TURRET_I);
-    m_turretMotor.config_kD(0, Constants.PID_TURRET_D);
+    m_turretMotor.config_kP(0, Constants.Turret.POSITION_P);
+    m_turretMotor.config_kI(0, Constants.Turret.POSITION_I);
+    m_turretMotor.config_kD(0, Constants.Turret.POSITION_D);
     m_turretMotor.config_kF(0, 0.0);
   }
 
@@ -43,22 +43,21 @@ public class Turret extends SubsystemBase {
    * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
-    if ((getAngle() < Constants.TURRET_ROTATION_MIN && speed > 0.0)
-        || (getAngle() > Constants.TURRET_ROTATION_MAX && speed < 0.0)
-        || (getAngle() > Constants.TURRET_ROTATION_MIN && getAngle() < Constants.TURRET_ROTATION_MAX)) {
+    if ((getAngle() < Constants.Turret.MIN_ANGLE && speed > 0.0)
+        || (getAngle() > Constants.Turret.MAX_ANGLE && speed < 0.0)
+        || (getAngle() > Constants.Turret.MIN_ANGLE && getAngle() < Constants.Turret.MAX_ANGLE)) {
       m_turretMotor.set(ControlMode.PercentOutput, speed);
     } else {
       m_turretMotor.set(ControlMode.PercentOutput, 0.0);
     }
-  } 
+  }
 
   /**
    * Sets the turret PID setpoint.
    */
   public void setSetpoint(double setpoint) {
     m_turretMotor.set(ControlMode.Position,
-        degreesToSensorUnits(Utilities.clip(setpoint, Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX))
-            + 512);
+        degreesToSensorUnits(Utilities.clip(setpoint, Constants.Turret.MIN_ANGLE, Constants.Turret.MAX_ANGLE)) + 512);
   }
 
   /**
@@ -87,21 +86,21 @@ public class Turret extends SubsystemBase {
    * @return the current turret angle setpoint
    */
   public boolean atSetpoint() {
-    return sensorUnitsToDegrees(m_turretMotor.getClosedLoopError()) < Constants.TURRET_POSITION_TOLERANCE && Math
-        .abs(sensorUnitsToDegrees(m_turretMotor.getSelectedSensorVelocity())) < Constants.TURRET_VELOCITY_TOLERANCE;
+    return sensorUnitsToDegrees(m_turretMotor.getClosedLoopError()) < Constants.Turret.POSITION_TOLERANCE && Math
+        .abs(sensorUnitsToDegrees(m_turretMotor.getSelectedSensorVelocity())) < Constants.Turret.VELOCITY_TOLERANCE;
   }
 
   /**
    * Converts raw TalonSRX sensor units to degrees.
    */
   private double sensorUnitsToDegrees(int raw) {
-    return (raw / 1023d) * Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO;
+    return (raw / 1023d) * Constants.Turret.POT_SCALE * Constants.Turret.RATIO;
   }
 
   /**
    * Converts degrees to raw TalonSRX sensor units.
    */
   private int degreesToSensorUnits(double degrees) {
-    return (int) Math.round(degrees / (Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO) * 1023d);
+    return (int) Math.round(degrees / (Constants.Turret.POT_SCALE * Constants.Turret.RATIO) * 1023d);
   }
 }

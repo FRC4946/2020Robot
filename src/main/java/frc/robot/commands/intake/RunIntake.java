@@ -38,7 +38,7 @@ public class RunIntake extends CommandBase {
   @Override
   public void execute() {
     m_intake.set(m_speed.getAsDouble());
-    m_revolver.set(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
+    m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
   }
 
   @Override

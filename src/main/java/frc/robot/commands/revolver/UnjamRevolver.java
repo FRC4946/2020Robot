@@ -34,7 +34,7 @@ public class UnjamRevolver extends CommandBase {
 
   @Override
   public void execute() {
-    m_revolver.set(Constants.REVOLVER_DRUM_BACKWARDS_SPEED);
+    m_revolver.set(Constants.Revolver.BACKWARDS_SPEED);
   }
 
   @Override
@@ -45,6 +45,6 @@ public class UnjamRevolver extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_timer.get() > Constants.REVOLVER_UNJAM_TIME;
+    return m_timer.get() > Constants.Revolver.UNJAM_TIME;
   }
 }

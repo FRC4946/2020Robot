@@ -67,13 +67,13 @@ public class DriveTrain extends SubsystemBase {
     m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
     m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
 
-    m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.TRACK_WIDTH));
+    m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 
-    m_leftEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
-    m_rightEncoder.setDistancePerPulse(Constants.ENCODER_INCHES_PER_TICK);
+    m_leftEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_INCHES_PER_TICK);
+    m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_INCHES_PER_TICK);
 
     AHRS gyro;
     try {
@@ -84,8 +84,8 @@ public class DriveTrain extends SubsystemBase {
     }
     m_gyro = gyro;
 
-    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()), new Pose2d(
-        Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
+    m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()),
+        new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)));
 
     resetDriveTrain();
   }
@@ -148,10 +148,10 @@ public class DriveTrain extends SubsystemBase {
     resetDriveTrain(0.0, 0.0, 0.0);
   }
 
-   /**
-   * Resets the odometry and sets the robot to the specified position.
-   * Also resets encoders and gyro
-   * 
+  /**
+   * Resets the odometry and sets the robot to the specified position. Also resets
+   * encoders and gyro
+   *
    * @param xPos  the x position of the robot in inches
    * @param yPos  the y position of the robot in inches
    * @param angle the angle of the robot in degrees CCW from forward

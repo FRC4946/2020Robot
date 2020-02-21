@@ -32,12 +32,12 @@ public class ControlPanel extends SubsystemBase {
     m_matcher = new ColorMatch();
     m_encoder = new Encoder(RobotMap.DIO.WHEEL_ENCODER_A, RobotMap.DIO.WHEEL_ENCODER_B);
 
-    m_encoder.setDistancePerPulse(Constants.CONTROL_PANEL_ENCODER_DEGREES_PER_TICK);
+    m_encoder.setDistancePerPulse(Constants.ControlPanel.ENCODER_DEGREES_PER_TICK);
 
-    m_matcher.addColorMatch(Constants.COLOR_BLUE);
-    m_matcher.addColorMatch(Constants.COLOR_GREEN);
-    m_matcher.addColorMatch(Constants.COLOR_RED);
-    m_matcher.addColorMatch(Constants.COLOR_YELLOW);
+    m_matcher.addColorMatch(Constants.ControlPanel.COLOR_BLUE);
+    m_matcher.addColorMatch(Constants.ControlPanel.COLOR_GREEN);
+    m_matcher.addColorMatch(Constants.ControlPanel.COLOR_RED);
+    m_matcher.addColorMatch(Constants.ControlPanel.COLOR_YELLOW);
   }
 
   /**

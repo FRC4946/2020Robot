@@ -24,15 +24,15 @@ public class Hood extends PIDSubsystem {
    * Creates a new Hood.
    */
   public Hood() {
-    super(new PIDController(Constants.SHOOTER_HOOD_P, Constants.SHOOTER_HOOD_I, Constants.SHOOTER_HOOD_D));
+    super(new PIDController(Constants.Hood.POSITION_P, Constants.Hood.POSITION_I, Constants.Hood.POSITION_D));
 
     m_servo = new Servo(RobotMap.PWM.HOOD_SERVO);
     m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
 
-    m_servo.setBounds(Constants.HOOD_PWM_MAX, Constants.HOOD_PWM_DEADBAND_MAX, Constants.HOOD_PWM_CENTER,
-        Constants.HOOD_PWM_DEADBAND_MIN, Constants.HOOD_PWM_MIN);
+    m_servo.setBounds(Constants.Hood.PWM_MAX, Constants.Hood.PWM_DEADBAND_MAX, Constants.Hood.PWM_CENTER,
+        Constants.Hood.PWM_DEADBAND_MIN, Constants.Hood.PWM_MIN);
 
-    getController().setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
+    getController().setTolerance(Constants.Hood.POSITION_TOLERANCE);
 
     enable();
   }
@@ -58,21 +58,22 @@ public class Hood extends PIDSubsystem {
    * @return the angle of the hood in degrees
    */
   public double getAngle() {
-    return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.HOOD_POT_SCALE_VALUE)
-        - Constants.HOOD_POT_OFFSET_VALUE) * (Constants.HOOD_MAX_ANGLE - Constants.HOOD_MIN_ANGLE)
-        + Constants.HOOD_MIN_ANGLE;
+    return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.Hood.POT_SCALE) - Constants.Hood.POT_OFFSET)
+        * (Constants.Hood.MAX_ANGLE - Constants.Hood.MIN_ANGLE) + Constants.Hood.MIN_ANGLE;
   }
 
   /**
    * Sets the setpoint for the hood to the specified value
+   *
    * @param setpoint the desired angle for the hood in degrees
    */
   public void setSetpoint(double setpoint) {
-    getController().setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MIN_ANGLE, Constants.HOOD_MAX_ANGLE));
+    getController().setSetpoint(Utilities.clip(setpoint, Constants.Hood.MIN_ANGLE, Constants.Hood.MAX_ANGLE));
   }
 
   /**
    * Gets the setpoint for the hood
+   *
    * @return the setpoint
    */
   public double getSetpoint() {
@@ -81,10 +82,11 @@ public class Hood extends PIDSubsystem {
 
   /**
    * Sets the servo to a specified speed
+   *
    * @param speed the speed to set the servo to as a percent from -1 to 1
    */
   public void set(double speed) {
-    if ((getAngle() < Constants.HOOD_MIN_ANGLE && speed < 0) || (getAngle() > Constants.HOOD_MAX_ANGLE && speed > 0)) {
+    if ((getAngle() < Constants.Hood.MIN_ANGLE && speed < 0) || (getAngle() > Constants.Hood.MAX_ANGLE && speed > 0)) {
       stop();
     } else {
       m_servo.setSpeed(speed);

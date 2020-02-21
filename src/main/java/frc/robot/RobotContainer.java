@@ -103,9 +103,9 @@ public class RobotContainer {
     climbButton
         .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
             + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
-            * Constants.CLIMBER_MAX_PERCENT_OUTPUT, m_climber));
+            * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber));
 
-    intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, m_revolver));
+    intake.whenHeld(new RunRevolver(Constants.Revolver.FORWARDS_SPEED, m_revolver));
 
     // Default Commands
 
@@ -174,13 +174,13 @@ public class RobotContainer {
   public static Color getFMSColor() {
     switch (DriverStation.getInstance().getGameSpecificMessage()) {
     case "B":
-      return Constants.COLOR_BLUE;
+      return Constants.ControlPanel.COLOR_BLUE;
     case "G":
-      return Constants.COLOR_GREEN;
+      return Constants.ControlPanel.COLOR_GREEN;
     case "R":
-      return Constants.COLOR_RED;
+      return Constants.ControlPanel.COLOR_RED;
     case "Y":
-      return Constants.COLOR_YELLOW;
+      return Constants.ControlPanel.COLOR_YELLOW;
     default:
       return null;
     }
