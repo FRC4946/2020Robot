@@ -38,9 +38,9 @@ public class Turret extends SubsystemBase {
   }
 
   /**
-   * Moves the Turret
+   * Sets the turret's applied voltage (open-loop).
    *
-   * @param speed the speed at which to set the turret motor to
+   * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
     if ((getAngle() < Constants.TURRET_ROTATION_MIN && speed > 0.0)
