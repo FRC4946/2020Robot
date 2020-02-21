@@ -15,6 +15,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
+import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.turret.ManualTurret;
@@ -114,6 +115,24 @@ public class RobotContainer {
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       m_revolver.stop();
     }, m_revolver));
+
+    m_hood.setDefaultCommand(new ManualHood(() -> {
+      if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
+        return 0.6;
+      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135 || m_operatorJoystick.getPOV() == 225) {
+        return -0.6;
+      } 
+      return 0.0;
+    }, m_hood));
+
+    m_turret.setDefaultCommand(new ManualTurret(() -> {
+      if (m_operatorJoystick.getPOV() == 90 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 135) {
+        return 0.3;
+      } else if (m_operatorJoystick.getPOV() == 270 || m_operatorJoystick.getPOV() == 225 || m_operatorJoystick.getPOV() == 315) {
+        return -0.3;
+      } 
+      return 0.0;
+    }, m_turret));
   }
 
   /**
