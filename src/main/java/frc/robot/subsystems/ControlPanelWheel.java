@@ -43,7 +43,7 @@ public class ControlPanelWheel extends SubsystemBase {
 
   /**
    * Moves the color wheel
-   * 
+   *
    * @param speed the speed of the wheel motor
    */
 

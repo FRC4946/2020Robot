@@ -38,30 +38,4 @@ public class Utilities {
     return Math.max(min, Math.min(input, max));
   }
 
-  public static Color getFMSColor(){
-    String desiredColor;
-    desiredColor = DriverStation.getInstance().getGameSpecificMessage();
-
-
-    if(desiredColor.charAt(0) = 'B') {
-      return Constants.COLOR_BLUE;
-    }
-
-    else if(desiredColor.charAt(0) = 'G') {
-      return Constants.COLOR_GREEN;
-    }
-
-    else if(desiredColor.charAt(0) = 'R') {
-      return Constants.COLOR_RED;
-    }
-
-    else if(desiredColor.charAt(0) =='Y') {
-      return Constants.COLOR_YELLOW;
-    }
-
-    else {
-      return null;
-    }
-
-  }
 }
