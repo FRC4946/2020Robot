@@ -34,8 +34,8 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor.burnFlash();
     m_leftClimberMotor.burnFlash();
 
-    m_leftClimberMotor.getEncoder().setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
-    m_rightClimberMotor.getEncoder().setDistancePerPulse(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_leftClimberMotor.getEncoder().setPositionConversionFactor(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_rightClimberMotor.getEncoder().setPositionConversionFactor(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
   }
 
   /**
@@ -106,7 +106,7 @@ public class Climber extends SubsystemBase {
    * resets the encoder
    */
   public void resetEncoders() {
-    m_leftClimberMotor.getEncoder().reset();
-    m_rightClimberMotor.getEncoder().reset();
+    m_leftClimberMotor.getEncoder().setPosition(0.0);
+    m_rightClimberMotor.getEncoder().setPosition(0.0);
   }
 }
