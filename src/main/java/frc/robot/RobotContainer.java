@@ -17,7 +17,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.shooter.Shoot;
-import frc.robot.commands.turret.POVTurret;
+import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Intake;
@@ -108,7 +108,7 @@ public class RobotContainer {
       }
     }, m_intake));
 
-    m_turret.setDefaultCommand(new POVTurret(m_operatorJoystick, m_turret, m_shooter));
+    m_turret.setDefaultCommand(new ManualTurret(m_operatorJoystick, m_turret, m_shooter));
 
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       m_revolver.stop();
