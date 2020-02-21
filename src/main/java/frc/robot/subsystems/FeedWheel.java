@@ -24,7 +24,7 @@ public class FeedWheel extends SubsystemBase {
     m_feedWheel = new CANSparkMax(RobotMap.CAN.FEED_WHEEL_MOTOR_SPARKMAX, MotorType.kBrushless);
   }
 
-    /**
+  /**
    * Sets the feed wheel's applied voltage (open-loop).
    *
    * @param speed the voltage to apply to the motor as a percentage from -1 to 1

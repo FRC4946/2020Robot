@@ -17,74 +17,36 @@ import frc.robot.commands.revolver.UnjamRevolver;
 
 public class Revolver extends SubsystemBase {
 
-  private final CANSparkMax m_drumMotor;
-  private final CANSparkMax m_feedWheelMotor;
+  private final CANSparkMax m_revolver;
   private int m_drumReps = 0;
 
   public Revolver() {
-    m_drumMotor = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
-    m_feedWheelMotor = new CANSparkMax(RobotMap.CAN.FEED_WHEEL_MOTOR_SPARKMAX, MotorType.kBrushless);
+    m_revolver = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
   }
 
-  /**
-   * Sets the speed of the revolver drum and feed wheel
-   *
-   * @param drumSpeed      controls how fast the drum spins as a percentage from
-   *                       -1 to 1
-   * @param feedWheelSpeed controls how fast the feed wheel spins as a percentage
-   *                       from -1 to 1
-   */
-  public void setAll(double drumSpeed, double feedWheelSpeed) {
-    setDrum(drumSpeed);
-    setFeedWheel(feedWheelSpeed);
-  }
-
-  public void resetReps() {
+  private void resetReps() {
     m_drumReps = 0;
   }
 
   /**
-   * Sets the speed of the drum
+   * Sets the revolver's applied voltage (open-loop).
    *
-   * @param speed the speed to run the drum at as a percentage from -1 to 1
+   * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
-  public void setDrum(double speed) {
-    m_drumMotor.set(speed);
-  }
-
-  /**
-   * Sets the speed of the feed wheel
-   *
-   * @param speed the speed to run the feed wheel at as a percentage from -1 to 1
-   */
-  public void setFeedWheel(double speed) {
-    m_feedWheelMotor.set(speed);
+  public void set(double speed) {
+    m_revolver.set(speed);
   }
 
   /**
    * Stops the drum
-   */
-  public void stopDrum() {
-    setDrum(0.0);
-  }
-
-  /**
-   * Stops the drum
-   */
-  public void stopFeedWheel() {
-    setFeedWheel(0.0);
-  }
-
-  /**
-   * Stops the drum and the feed wheel
    */
   public void stop() {
-    setAll(0, 0);
+    set(0.0);
   }
 
   @Override
   public void periodic() {
-    if (m_drumMotor.get() > 0.0 && m_drumMotor.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD) {
+    if (m_revolver.get() > 0.0 && m_revolver.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD) {
       m_drumReps++;
     } else {
       resetReps();
