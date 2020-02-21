@@ -7,6 +7,10 @@
 
 package frc.robot;
 
+import com.revrobotics.ColorMatch;
+
+import edu.wpi.first.wpilibj.util.Color;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean constants. This class should not be used for any other
@@ -159,6 +163,19 @@ public final class Constants {
    * Time revolver takes to unjam in seconds
    */
   public static final double REVOLVER_UNJAM_TIME = 1;
+
+  // #endregion
+
+  // #region Control Panel Details
+
+  public static final Color COLOR_BLUE = ColorMatch.makeColor(0, 1, 1);
+  public static final Color COLOR_GREEN = ColorMatch.makeColor(0, 1, 0);
+  public static final Color COLOR_RED = ColorMatch.makeColor(1, 0, 0);
+  public static final Color COLOR_YELLOW = ColorMatch.makeColor(1, 1, 0);
+
+  public static final double CONTROL_PANEL_CIRCUMFERENCE = 32 * Math.PI; // On-field mechanism. Inches
+  public static final double CONTROL_PANEL_WHEEL_CIRCUMFERENCE = 4 * Math.PI; // On-robot wheel. Inches
+  public static final double CONTROL_PANEL_ENCODER_DEGREES_PER_TICK = 360.0 / 128.0;
 
   // #endregion
 }

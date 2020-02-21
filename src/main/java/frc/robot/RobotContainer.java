@@ -7,9 +7,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
@@ -19,6 +21,7 @@ import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
+import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
@@ -46,6 +49,7 @@ public class RobotContainer {
   private final Revolver m_revolver;
   private final Intake m_intake;
   private final Turret m_turret;
+  private final ControlPanel m_controlPanel;
 
   private Command m_autonomousCommand = null;
 
@@ -64,6 +68,7 @@ public class RobotContainer {
     m_hood = new Hood();
     m_intake = new Intake();
     m_turret = new Turret();
+    m_controlPanel = new ControlPanel();
 
     configureButtonBindings();
   }
@@ -157,6 +162,21 @@ public class RobotContainer {
   public void cancelAuto() {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
+    }
+  }
+
+  public static Color getFMSColor() {
+    switch (DriverStation.getInstance().getGameSpecificMessage()) {
+    case "B":
+      return Constants.COLOR_BLUE;
+    case "G":
+      return Constants.COLOR_GREEN;
+    case "R":
+      return Constants.COLOR_RED;
+    case "Y":
+      return Constants.COLOR_YELLOW;
+    default:
+      return null;
     }
   }
 }
