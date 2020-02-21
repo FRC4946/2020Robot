@@ -10,18 +10,19 @@ package frc.robot.commands.turret;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
 
 public class HomeTurret extends PIDCommand {
 
   private Turret m_turret;
-  private Shooter m_shooter;
+  private Hood m_hood;
 
   /**
    * Creates a new HomeTurret.
    */
-  public HomeTurret(Shooter shooter, Turret turret) {
+  public HomeTurret(Hood hood, Turret turret) {
     super(new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
 
         () -> turret.getAngle(),
@@ -34,21 +35,21 @@ public class HomeTurret extends PIDCommand {
           turret.set(Constants.TURRET_MAX_PERCENT * (output));
         });
     m_turret = turret;
-    m_shooter = shooter;
-    addRequirements(m_shooter, m_turret);
+    m_hood = hood;
+    addRequirements(m_turret, m_hood);
     getController().setTolerance(Constants.TURRET_PID_TOLERANCE);
   }
 
   @Override
   public void initialize() {
     super.initialize();
-    m_shooter.setSpeedSetpoint(0.0);
+    m_hood.setSetpoint(Constants.HOOD_MIN_ANGLE);
   }
 
   @Override
   public void end(boolean interrupted) {
     super.end(interrupted);
-    m_shooter.setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
+    m_hood.setSetpoint(Constants.HOOD_MIN_ANGLE);
   }
 
   @Override

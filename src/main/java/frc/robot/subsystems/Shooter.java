@@ -27,7 +27,6 @@ public class Shooter extends PIDSubsystem {
     super(new PIDController(Constants.SHOOTER_VELOCITY_CONTROL_P, Constants.SHOOTER_VELOCITY_CONTROL_I,
         Constants.SHOOTER_VELOCITY_CONTROL_D));
 
-    m_angleController.setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
     getController().setTolerance(Constants.SHOOTER_SPEED_TOLERANCE);
 
     setSetpoint(0.0);
@@ -50,7 +49,7 @@ public class Shooter extends PIDSubsystem {
    * @return true if the shooter wheel is within 100rpm of its desired speed
    */
   public boolean atSetpoint() {
-    return m_speedController.atSetpoint();
+    return getController().atSetpoint();
   }
 
   public void setSetpoint(double setpoint) {
@@ -58,7 +57,7 @@ public class Shooter extends PIDSubsystem {
   }
 
   public double getSetpoint() {
-    return m_speedController.getSetpoint();
+    return getController().getSetpoint();
   }
 
   /**
@@ -101,7 +100,7 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    output += Constants.SHOOTER_VELOCITY_CONTROL_FF * m_speedController.getSetpoint();
+    output += Constants.SHOOTER_VELOCITY_CONTROL_FF * setpoint;
     set(Utilities.clip(output, -Constants.SHOOTER_MAX_PERCENT, Constants.SHOOTER_MAX_PERCENT));
   }
 

@@ -61,7 +61,7 @@ public class Hood extends PIDSubsystem {
    * @param setpoint the desired angle for the hood in degrees
    */
   public void setSetpoint(double setpoint) {
-    getController.setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MIN_ANGLE, Constants.HOOD_MAX_ANGLE));
+    getController().setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MIN_ANGLE, Constants.HOOD_MAX_ANGLE));
   }
 
   /**
