@@ -171,9 +171,6 @@ public final class Constants {
   public static final Color COLOR_RED = ColorMatch.makeColor(1, 0, 0);
   public static final Color COLOR_YELLOW = ColorMatch.makeColor(1, 1, 0);
 
-  public static final double WHEEL_PIECE_DIAMETER = 0.4572; // The circumference of each wheel piece
-
-  public static final double COLOR_WHEEL_CIRCUMFERENCE = 0;
-
-  public static final double COLOR_SLICE_CIRCUMFERENCE = 18; // Inches
+  public static final double CONTROL_PANEL_CIRCUMFERENCE = 32 * Math.PI; // On-field mechanism. Inches
+  public static final double CONTROL_PANEL_WHEEL_CIRCUMFERENCE = 4 * Math.PI; // On-robot wheel. Inches
 }
