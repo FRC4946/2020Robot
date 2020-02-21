@@ -7,12 +7,9 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -33,20 +30,24 @@ public class Revolver extends SubsystemBase {
 
   /**
    * Sets the speed of the revolver drum and feed wheel
-   * @param drumSpeed controls how fast the drum spins as a percentage from -1 to 1
-   * @param feedWheelSpeed controls how fast the feed wheel spins as a percentage from -1 to 1
+   *
+   * @param drumSpeed      controls how fast the drum spins as a percentage from
+   *                       -1 to 1
+   * @param feedWheelSpeed controls how fast the feed wheel spins as a percentage
+   *                       from -1 to 1
    */
   public void setAll(double drumSpeed, double feedWheelSpeed) {
     setDrum(drumSpeed);
     setFeedWheel(feedWheelSpeed);
   }
 
-  public void resetReps(){
+  public void resetReps() {
     m_drumReps = 0;
   }
 
   /**
    * Sets the speed of the drum
+   *
    * @param speed the speed to run the drum at as a percentage from -1 to 1
    */
   public void setDrum(double speed) {
@@ -55,6 +56,7 @@ public class Revolver extends SubsystemBase {
 
   /**
    * Sets the speed of the feed wheel
+   *
    * @param speed the speed to run the feed wheel at as a percentage from -1 to 1
    */
   public void setFeedWheel(double speed) {
@@ -64,14 +66,14 @@ public class Revolver extends SubsystemBase {
   /**
    * Stops the drum
    */
-  public void stopDrum(){
+  public void stopDrum() {
     setDrum(0.0);
   }
 
   /**
    * Stops the drum
    */
-  public void stopFeedWheel(){
+  public void stopFeedWheel() {
     setFeedWheel(0.0);
   }
 
@@ -84,16 +86,15 @@ public class Revolver extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (m_drumMotor.get() > 0 && m_drumMotor.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD){
+    if (m_drumMotor.get() > 0.0 && m_drumMotor.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD) {
       m_drumReps++;
-    }
-    else{
+    } else {
       resetReps();
     }
 
-    if(m_drumReps > Constants.REVOLVER_REPS_THRESHOLD){
-      new UnjamRevolver(this).schedule(false);
+    if (m_drumReps > Constants.REVOLVER_REPS_THRESHOLD) {
       resetReps();
+      new UnjamRevolver(this).schedule(false);
     }
   }
 }
