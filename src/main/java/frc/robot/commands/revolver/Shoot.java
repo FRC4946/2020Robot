@@ -26,7 +26,7 @@ public class Shoot extends CommandBase {
   /**
    * Starts the revolver and feedwheel if the shooter speed, turret angle, and
    * hood angle are all at the setpoints
-   * 
+   *
    * @param revolver  the revolver to use for this command
    * @param shooter   the shooter to use for this command
    * @param turret    the turret to use for this command
@@ -45,7 +45,7 @@ public class Shoot extends CommandBase {
   @Override
   public void execute() {
     if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_shooter.atSetpoint() && m_turret.atSetpoint()) {
-      m_revolver.set(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
+      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
       m_feedWheel.set(0.3);
     } else {
       m_revolver.stop();

@@ -154,30 +154,27 @@ public class Limelight extends SubsystemBase {
    * @return estimated distance in metres
    */
   public double findDistance() {
-    return (Constants.TARGET_HEIGHT - Constants.LIMELIGHT_HEIGHT)
-        * Math.sin(Math.toRadians(90 - (m_ty.getDouble(0) + Constants.LIMELIGHT_PITCH)))
-        / Math.sin(Math.toRadians((m_ty.getDouble(0) + Constants.LIMELIGHT_PITCH)));
+    return (Constants.Vision.TARGET_HEIGHT - Constants.Vision.LIMELIGHT_HEIGHT)
+        * Math.sin(Math.toRadians(90 - (m_ty.getDouble(0) + Constants.Vision.LIMELIGHT_PITCH)))
+        / Math.sin(Math.toRadians((m_ty.getDouble(0) + Constants.Vision.LIMELIGHT_PITCH)));
   }
 
   public double[] findTurretRelativePosition() {
     double distance = findDistance();
-    return new double[] {
-        Constants.LIMELIGHT_OFFSET_ZERO_ROTATION[0]
-            + Math.cos(Math.toRadians(90 - (m_tx.getDouble(0) - Constants.LIMELIGHT_ANGLE_OFFSET))) * findDistance(),
-        Constants.LIMELIGHT_OFFSET_ZERO_ROTATION[1]
-            + Math.sin(Math.toRadians(90 - (m_tx.getDouble(0) - Constants.LIMELIGHT_ANGLE_OFFSET))) * distance };
+    return new double[] { Math.cos(Math.toRadians(90 - m_tx.getDouble(0))) * findDistance(),
+        Constants.Vision.LIMELIGHT_POSITION_OFFSET + Math.sin(Math.toRadians(90 - m_tx.getDouble(0))) * distance };
   }
 
   public double getAngleOffset() {
     double angle = 90 - Math.toDegrees(Math.atan(findTurretRelativePosition()[0] == 0 ? 90
         : (findTurretRelativePosition()[1] / findTurretRelativePosition()[0])));
 
-    return ((Math.abs(angle) > Constants.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
+    return ((Math.abs(angle) > Constants.Vision.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
   }
 
   /**
    * Gets a turret hood angle from a distance to the limelight target
-   * 
+   *
    * @return the desired hood angle in degrees
    */
   public double getHoodAngle() {
@@ -186,7 +183,7 @@ public class Limelight extends SubsystemBase {
 
   /**
    * Gets a shooter wheel speed from a distance to the limelight target
-   * 
+   *
    * @return the desired wheel speed in rpm
    */
   public double getShooterSpeed() {

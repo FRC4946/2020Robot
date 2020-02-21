@@ -32,8 +32,8 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor.burnFlash();
     m_leftClimberMotor.burnFlash();
 
-    m_leftClimberMotor.getEncoder().setPositionConversionFactor(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
-    m_rightClimberMotor.getEncoder().setPositionConversionFactor(Constants.CLIMBER_ENCODER_INCHES_PER_TICK);
+    m_leftClimberMotor.getEncoder().setPositionConversionFactor(Constants.Climber.ENCODER_INCHES_PER_TICK);
+    m_rightClimberMotor.getEncoder().setPositionConversionFactor(Constants.Climber.ENCODER_INCHES_PER_TICK);
   }
 
   /**

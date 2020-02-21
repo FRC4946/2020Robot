@@ -46,13 +46,13 @@ public class Revolver extends SubsystemBase {
 
   @Override
   public void periodic() {
-    if (m_revolver.get() > 0.0 && m_revolver.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD) {
+    if (m_revolver.get() > 0.0 && m_revolver.getEncoder().getVelocity() < Constants.Revolver.VELOCITY_THRESHOLD) {
       m_drumReps++;
     } else {
       resetReps();
     }
 
-    if (m_drumReps > Constants.REVOLVER_REPS_THRESHOLD) {
+    if (m_drumReps > Constants.Revolver.STALL_REPS_THRESHOLD) {
       resetReps();
       new UnjamRevolver(this).schedule(false);
     }

@@ -12,7 +12,6 @@ import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
-import frc.robot.util.Utilities;
 
 /**
  * Command to shoot
@@ -27,7 +26,7 @@ public class SetShooterWithLimelight extends CommandBase {
   /**
    * Uses the limelight to calculate shooter speed, hood angle, and turret angle,
    * moves to these calculated values
-   * 
+   *
    * @param shooter   the shooter to use for this command
    * @param turret    the turret to use for this command
    * @param hood      the hood to use for this command
