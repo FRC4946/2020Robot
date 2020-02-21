@@ -15,11 +15,7 @@ package frc.robot;
  */
 public final class RobotMap {
 
-  // TODO : Finalize Values
-
   // #region OI
-
-  // JOYSTICKS
 
   /**
    * OI Port Numbers For Joystick Axes
@@ -72,8 +68,6 @@ public final class RobotMap {
 
   // #region IO
 
-  // MOTORS AND SENSORS
-
   /**
    * CAN IDs
    */
@@ -91,14 +85,12 @@ public final class RobotMap {
 
     public static final int TURRET_TALONSRX = 0;
 
-    public static final int DRUM_MOTOR_SPARKMAX = 7;
+    public static final int REVOLVER_SPARKMAX = 7;
     public static final int FEED_WHEEL_MOTOR_SPARKMAX = 8;
 
     public static final int INTAKE_VICTORSPX = 0;
 
-    public static final int CONTROL_PANEL_TALONSRX = 11;
-
-    public static final int PDP = 0;
+    public static final int CONTROL_PANEL_TALONSRX = 1;
   }
 
   /**
@@ -112,14 +104,6 @@ public final class RobotMap {
 
     public static final int CLIMBER_A = 5;
     public static final int CLIMBER_B = 6;
-  }
-
-  /**
-   * PDP Port Numbers
-   */
-  public static final class PDP {
-    public static final int DRUM_PORT = 0;
-    public static final int FEEDWHEEL_PORT = 1;
   }
 
   /**
@@ -140,7 +124,7 @@ public final class RobotMap {
    * Analog Port Numbers
    */
   public static final class AIO {
-    public static final int HOOD_POT = 1;
+    public static final int HOOD_POT = 0;
   }
 
   /**
