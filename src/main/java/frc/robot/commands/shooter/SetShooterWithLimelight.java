@@ -25,10 +25,12 @@ public class SetShooterWithLimelight extends CommandBase {
   private Limelight m_limelight;
 
   /**
+   * Uses the limelight to calculate shooter speed, hood angle, and turret angle,
+   * moves to these calculated values
    * 
-   * @param shooter the shooter to use for this command
-   * @param turret the turret to use for this command
-   * @param hood the hood to use for this command
+   * @param shooter   the shooter to use for this command
+   * @param turret    the turret to use for this command
+   * @param hood      the hood to use for this command
    * @param limelight the limelight to use for this command
    */
   public SetShooterWithLimelight(Shooter shooter, Turret turret, Hood hood, Limelight limelight) {
