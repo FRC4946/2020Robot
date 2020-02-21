@@ -114,21 +114,21 @@ public final class Constants {
 
   // #region Turret Details
 
-  public static final double TURRET_MAX_PERCENT = 0.9;
+  public static final double TURRET_MAX_PERCENT_OUTPUT = 0.9;
 
   public static final double TURRET_PID_TOLERANCE = 0.3;
 
-  public static final double TURRET_ROTATION_MIN = 0;
+  public static final double TURRET_POSITION_TOLERANCE = 1.0; // Degrees
+  public static final double TURRET_VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
 
-  public static final double TURRET_ROTATION_MAX = 180;
+  public static final double TURRET_ROTATION_MIN = -90.0; // Full left
+  public static final double TURRET_ROTATION_MAX = 90.0;  // Full right
 
   public static final double TURRET_RATIO = 18d / 265d;
 
-  public static final double TURRET_VELOCITY_ERROR_THRESHOLD = 0.0;
-
   public static final double TURRET_POT_SCALE_VALUE = 3600;
 
-  public static final double TURRET_HOME_ANGLE = 90;
+  public static final double TURRET_HOME_ANGLE = 0.0;
 
   // #endregion
 

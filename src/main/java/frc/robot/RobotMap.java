@@ -137,7 +137,6 @@ public final class RobotMap {
   public static final class AIO {
     public static final int CLIMBER_POT = 0;
     public static final int HOOD_POT = 1;
-    public static final int TURRET_POT = 2;
   }
 
   /**

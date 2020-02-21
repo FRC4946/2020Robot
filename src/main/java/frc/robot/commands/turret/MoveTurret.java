@@ -7,42 +7,32 @@
 
 package frc.robot.commands.turret;
 
-import edu.wpi.first.wpilibj.controller.PIDController;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
-import frc.robot.Constants;
-import frc.robot.subsystems.Shooter;
+import java.util.function.DoubleSupplier;
+
+import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Turret;
-import frc.robot.util.Utilities;
 
-public class MoveTurret extends PIDCommand {
+public class MoveTurret extends CommandBase {
 
-  private Turret m_turret;
-  private Shooter m_shooter;
+  private final Turret m_turret;
+  private final DoubleSupplier m_target;
 
   /**
    * Creates a new MoveTurret command.
    */
-  public MoveTurret(double angle, Shooter shooter, Turret turret) {
-    super(new PIDController(Constants.PID_TURRET_P, Constants.PID_TURRET_I, Constants.PID_TURRET_D),
-
-        () -> turret.getAngle(),
-
-        () -> Utilities.clip(angle, Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX),
-
-        output -> {
-          output += (output > 0 ? Constants.PID_TURRET_OFFSET : -Constants.PID_TURRET_OFFSET);
-          output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
-          turret.set(Constants.TURRET_MAX_PERCENT * (output));
-        });
-
+  public MoveTurret(DoubleSupplier target, Turret turret) {
+    m_target = target;
     m_turret = turret;
-    m_shooter = shooter;
-    addRequirements(m_shooter, m_turret);
-    getController().setTolerance(Constants.TURRET_PID_TOLERANCE);
+    addRequirements(m_turret);
+  }
+
+  @Override
+  public void execute() {
+    m_turret.setSetpoint(m_target.getAsDouble());
   }
 
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    return m_turret.atSetpoint();
   }
 }
