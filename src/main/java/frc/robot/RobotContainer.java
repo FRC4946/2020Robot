@@ -173,16 +173,16 @@ public class RobotContainer {
 
   public static Color getFMSColor() {
     switch (DriverStation.getInstance().getGameSpecificMessage()) {
-      case "B":
-        return Constants.ControlPanel.COLOR_BLUE;
-      case "G":
-        return Constants.ControlPanel.COLOR_GREEN;
-      case "R":
-        return Constants.ControlPanel.COLOR_RED;
-      case "Y":
-        return Constants.ControlPanel.COLOR_YELLOW;
-      default:
-        return null;
+    case "B":
+      return Constants.ControlPanel.COLOR_BLUE;
+    case "G":
+      return Constants.ControlPanel.COLOR_GREEN;
+    case "R":
+      return Constants.ControlPanel.COLOR_RED;
+    case "Y":
+      return Constants.ControlPanel.COLOR_YELLOW;
+    default:
+      return null;
     }
   }
 }
