@@ -24,10 +24,6 @@ public class Revolver extends SubsystemBase {
     m_revolver = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
   }
 
-  private void resetReps() {
-    m_drumReps = 0;
-  }
-
   /**
    * Sets the revolver's applied voltage (open-loop).
    *
@@ -49,11 +45,11 @@ public class Revolver extends SubsystemBase {
     if (m_revolver.get() > 0.0 && m_revolver.getEncoder().getVelocity() < Constants.Revolver.VELOCITY_THRESHOLD) {
       m_drumReps++;
     } else {
-      resetReps();
+      m_drumReps = 0;
     }
 
     if (m_drumReps > Constants.Revolver.STALL_REPS_THRESHOLD) {
-      resetReps();
+      m_drumReps = 0;
       new UnjamRevolver(this).schedule(false);
     }
   }
