@@ -25,11 +25,10 @@ public class Shoot extends CommandBase {
    * Starts the revolver and feedwheel if the shooter speed, turret angle, and
    * hood angle are all at the setpoints
    * 
-   * 
    * @param revolver the revolver to use for this command
-   * @param shooter  the shooter to use for this subsystem
-   * @param turret   the turret to use for this subsystem
-   * @param hood     the hood to use for this subsystem
+   * @param shooter  the shooter to use for this command
+   * @param turret   the turret to use for this command
+   * @param hood     the hood to use for this command
    */
   public Shoot(Revolver revolver, Shooter shooter, Turret turret, Hood hood) {
     m_revolver = revolver;
@@ -51,10 +50,5 @@ public class Shoot extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_revolver.stop();
-  }
-
-  @Override
-  public boolean isFinished() {
-    return false;
   }
 }
