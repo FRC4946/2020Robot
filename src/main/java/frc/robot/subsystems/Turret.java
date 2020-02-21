@@ -14,6 +14,7 @@ import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
+import frc.robot.util.Utilities;
 
 public class Turret extends SubsystemBase {
 
@@ -28,7 +29,7 @@ public class Turret extends SubsystemBase {
     m_turretMotor.configPeakOutputReverse(Constants.TURRET_MAX_PERCENT_OUTPUT);
     m_turretMotor.configPeakOutputReverse(-Constants.TURRET_MAX_PERCENT_OUTPUT);
 
-		m_turretMotor.configAllowableClosedloopError(0, degreesToSensorUnits(Constants.TURRET_PID_TOLERANCE));
+    m_turretMotor.configAllowableClosedloopError(0, degreesToSensorUnits(Constants.TURRET_POSITION_TOLERANCE));
 
     m_turretMotor.config_kP(0, Constants.PID_TURRET_P);
     m_turretMotor.config_kI(0, Constants.PID_TURRET_I);
@@ -47,7 +48,9 @@ public class Turret extends SubsystemBase {
    * Sets the turret PID setpoint.
    */
   public void setSetpoint(double setpoint) {
-    m_turretMotor.set(ControlMode.Position, degreesToSensorUnits(setpoint));
+    m_turretMotor.set(ControlMode.Position,
+        degreesToSensorUnits(Utilities.clip(setpoint, Constants.TURRET_ROTATION_MIN, Constants.TURRET_ROTATION_MAX))
+            + 512);
   }
 
   /**
@@ -62,7 +65,7 @@ public class Turret extends SubsystemBase {
    * @return the current turret angle
    */
   public double getAngle() {
-    return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition());
+    return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition() - 512);
   }
 
   /**
@@ -73,16 +76,24 @@ public class Turret extends SubsystemBase {
   }
 
   /**
+   * @return the current turret angle setpoint
+   */
+  public boolean atSetpoint() {
+    return sensorUnitsToDegrees(m_turretMotor.getClosedLoopError()) < Constants.TURRET_POSITION_TOLERANCE && Math
+        .abs(sensorUnitsToDegrees(m_turretMotor.getSelectedSensorVelocity())) < Constants.TURRET_VELOCITY_TOLERANCE;
+  }
+
+  /**
    * Converts raw TalonSRX sensor units to degrees.
    */
   private double sensorUnitsToDegrees(int raw) {
-    return ((raw - 512) / 1023d) * Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO;
+    return (raw / 1023d) * Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO;
   }
 
   /**
    * Converts degrees to raw TalonSRX sensor units.
    */
   private int degreesToSensorUnits(double degrees) {
-    return (int) Math.round(degrees / (Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO) * 1023) + 512;
+    return (int) Math.round(degrees / (Constants.TURRET_POT_SCALE_VALUE * Constants.TURRET_RATIO) * 1023d);
   }
 }
