@@ -40,6 +40,13 @@ public class Climb extends CommandBase {
   @Override
   public void end(boolean interrupted) {
     m_climber.stop();
+
+    // If the robot is disabled after climbing at the end of the match, the
+    // interrupted flag will be set false,
+    // If the button this command is assigned to is pressed again, interrupted will
+    // be true,
+    // This means that if the robot is disabled after climbing, the climber will
+    // stay up, but if the button is pressed again the climber will come down
     m_climber.setPiston(interrupted ? Value.kReverse : Value.kOff);
   }
 

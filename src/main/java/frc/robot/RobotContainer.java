@@ -89,10 +89,10 @@ public class RobotContainer {
     driverShootButton.and(operatorShootButton)
         .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_hood.getSetpoint(), m_shooter, m_hood, m_revolver), false);
 
-    climbButton.toggleWhenPressed(new Climb(
-        () -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2) + Math.pow(
-            m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2) * Constants.CLIMBER_MAX_PERCENT_OUTPUT, 2)),
-        m_climber));
+    climbButton
+        .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
+            + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
+            * Constants.CLIMBER_MAX_PERCENT_OUTPUT, m_climber));
 
     intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
 
@@ -141,8 +141,7 @@ public class RobotContainer {
   }
 
   /**
-   * Resets encoders, gyro, any other sensors necessary for auto, etc... Also
-   * schedules autonomous command
+   * Resets sensors and schedules the autonomous command.
    */
   public void setupAuto() {
     m_driveTrain.resetDriveTrain();
