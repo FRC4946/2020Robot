@@ -11,50 +11,32 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotMap;
-import frc.robot.commands.revolver.UnjamRevolver;
 
-public class Revolver extends SubsystemBase {
-
-  private final CANSparkMax m_revolver;
-  private int m_drumReps = 0;
-
-  public Revolver() {
-    m_revolver = new CANSparkMax(RobotMap.CAN.DRUM_MOTOR_SPARKMAX, MotorType.kBrushless);
-  }
-
-  private void resetReps() {
-    m_drumReps = 0;
+public class FeedWheel extends SubsystemBase {
+  
+  private final CANSparkMax m_feedWheel;
+  
+  /**
+   * Creates a new FeedWheel.
+   */
+  public FeedWheel() {
+    m_feedWheel = new CANSparkMax(RobotMap.CAN.FEED_WHEEL_MOTOR_SPARKMAX, MotorType.kBrushless);
   }
 
   /**
-   * Sets the revolver's applied voltage (open-loop).
+   * Sets the feed wheel's applied voltage (open-loop).
    *
    * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
-    m_revolver.set(speed);
+    m_feedWheel.set(speed);
   }
 
   /**
-   * Stops the drum
+   * Stops the feed wheel
    */
   public void stop() {
     set(0.0);
-  }
-
-  @Override
-  public void periodic() {
-    if (m_revolver.get() > 0.0 && m_revolver.getEncoder().getVelocity() < Constants.REVOLVER_VELOCITY_THRESHOLD) {
-      m_drumReps++;
-    } else {
-      resetReps();
-    }
-
-    if (m_drumReps > Constants.REVOLVER_REPS_THRESHOLD) {
-      resetReps();
-      new UnjamRevolver(this).schedule(false);
-    }
   }
 }

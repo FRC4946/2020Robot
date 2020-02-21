@@ -34,7 +34,7 @@ public class UnjamRevolver extends CommandBase {
 
   @Override
   public void execute() {
-    m_revolver.setAll(Constants.REVOLVER_DRUM_BACKWARDS_SPEED, 0.0);
+    m_revolver.set(Constants.REVOLVER_DRUM_BACKWARDS_SPEED);
   }
 
   @Override
