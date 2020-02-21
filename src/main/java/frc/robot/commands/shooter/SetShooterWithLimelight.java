@@ -8,7 +8,6 @@
 package frc.robot.commands.shooter;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Shooter;
@@ -52,10 +51,5 @@ public class SetShooterWithLimelight extends CommandBase {
     m_shooter.setSetpoint(Utilities.distanceToSpeed(m_limelight.findDistance()));
     m_hood.setSetpoint(Utilities.distanceToHoodAngle(m_limelight.findDistance()));
     m_turret.setSetpoint(m_turret.getAngle() + m_limelight.getAngleOffset());
-  }
-
-  @Override
-  public void end(boolean interrupted) {
-    
   }
 }
