@@ -86,6 +86,8 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()), new Pose2d(
         Constants.ROBOT_START_X, Constants.ROBOT_START_Y, Rotation2d.fromDegrees(Constants.ROBOT_START_ANGLE)));
+
+    resetDriveTrain();
   }
 
   /**
@@ -118,26 +120,6 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Resets the odometry and sets the robot to the inputted position
-   *
-   * @param xPos  the x position of the robot in inches
-   * @param yPos  the y position of the robot in inches
-   * @param angle the angle of the robot in degrees (WPILIB Format, degrees
-   *              counterclockwise with 0 being straight ahead)
-   */
-  public void resetOdometry(double xPos, double yPos, double angle) {
-    resetEncoders();
-    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
-  }
-
-  /**
-   * Resets the odometry and sets the robot to the inputted position
-   */
-  public void resetOdometry() {
-    resetOdometry(0, 0, 0);
-  }
-
-  /**
    * @return the left encoder's output
    */
   public double getLeftDistance() {
@@ -159,19 +141,26 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Resets the encoder
+   * Resets the odometry and sets the robot position to (0, 0) with an angle of 0.
+   * Also resets encoders and gyro
    */
-  public void resetEncoders() {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+  public void resetDriveTrain() {
+    resetDriveTrain(0.0, 0.0, 0.0);
   }
 
-  /**
-   * Resets the gyro and the odometry
+   /**
+   * Resets the odometry and sets the robot to the specified position.
+   * Also resets encoders and gyro
+   * 
+   * @param xPos  the x position of the robot in inches
+   * @param yPos  the y position of the robot in inches
+   * @param angle the angle of the robot in degrees CCW from forward
    */
-  public void resetGyro() {
+  public void resetDriveTrain(double xPos, double yPos, double angle) {
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
     m_gyro.reset();
-    resetOdometry();
+    m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
 
   /**
