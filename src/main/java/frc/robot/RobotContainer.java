@@ -94,8 +94,10 @@ public class RobotContainer {
     driverShootButton.and(operatorShootButton)
         .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_hood.getSetpoint(), m_shooter, m_hood, m_revolver), false);
 
-    climbButton.toggleWhenPressed(
-        new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
+    climbButton
+        .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
+            + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
+            * Constants.CLIMBER_MAX_PERCENT_OUTPUT, m_climber));
 
     intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
 
@@ -124,16 +126,19 @@ public class RobotContainer {
     m_hood.setDefaultCommand(new ManualHood(() -> {
       if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
         return 0.6;
-      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135 || m_operatorJoystick.getPOV() == 225) {
+      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135
+          || m_operatorJoystick.getPOV() == 225) {
         return -0.6;
       }
       return 0.0;
     }, m_hood));
 
     m_turret.setDefaultCommand(new ManualTurret(() -> {
-      if (m_operatorJoystick.getPOV() == 90 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 135) {
+      if (m_operatorJoystick.getPOV() == 90 || m_operatorJoystick.getPOV() == 45
+          || m_operatorJoystick.getPOV() == 135) {
         return 0.3;
-      } else if (m_operatorJoystick.getPOV() == 270 || m_operatorJoystick.getPOV() == 225 || m_operatorJoystick.getPOV() == 315) {
+      } else if (m_operatorJoystick.getPOV() == 270 || m_operatorJoystick.getPOV() == 225
+          || m_operatorJoystick.getPOV() == 315) {
         return -0.3;
       }
       return 0.0;
@@ -141,8 +146,7 @@ public class RobotContainer {
   }
 
   /**
-   * Resets encoders, gyro, any other sensors necessary for auto, etc...
-   * Also schedules autonomous command
+   * Resets sensors and schedules the autonomous command.
    */
   public void setupAuto() {
     m_driveTrain.resetDriveTrain();
