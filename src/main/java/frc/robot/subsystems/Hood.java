@@ -48,6 +48,14 @@ public class Hood extends PIDSubsystem {
   }
 
   /**
+   * Gets whether the hood is at the desired angle
+   * @return true if the hood is at the desired angle
+   */
+  public boolean atSetpoint() {
+    return getController().atSetpoint();
+  }
+
+  /**
    * Gets the angle the hood is at in degrees
    */
   public double getAngle() {
