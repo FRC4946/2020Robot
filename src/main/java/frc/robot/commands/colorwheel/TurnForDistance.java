@@ -8,22 +8,22 @@
 package frc.robot.commands.colorwheel;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.subsystems.ControlPanelWheel;
+import frc.robot.subsystems.ControlPanel;
 
 public class TurnForDistance extends CommandBase {
   double m_distance;
   double m_speed;
   boolean m_clockwise;
-  ControlPanelWheel m_controlPanelWheel;
+  ControlPanel m_controlPanel;
 
   /**
    * Creates a new TurnForDistance.
    */
-  public TurnForDistance(double distance, double speed, ControlPanelWheel controlPanelWheel, boolean clockwise) {
+  public TurnForDistance(double distance, double speed, ControlPanel controlPanel, boolean clockwise) {
     m_distance = distance;
     m_speed = speed;
     m_clockwise = clockwise;
-    addRequirements(m_controlPanelWheel);
+    addRequirements(m_controlPanel);
 
     // Use addRequirements() here to declare subsystem dependencies.
   }
@@ -31,35 +31,35 @@ public class TurnForDistance extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_controlPanelWheel.resetEncoder();
+    m_controlPanel.resetEncoder();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
     if(m_clockwise){
-      if(m_controlPanelWheel.getDistance()<m_distance){
-        m_controlPanelWheel.set(m_speed);
+      if(m_controlPanel.getDistance()<m_distance){
+        m_controlPanel.set(m_speed);
       }
     }
     else if(!m_clockwise){
-      if(m_controlPanelWheel.getDistance()>m_distance){
-        m_controlPanelWheel.set(-m_speed);
+      if(m_controlPanel.getDistance()>m_distance){
+        m_controlPanel.set(-m_speed);
       }
     }
-    
-    
+
+
   }
 
   // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_controlPanelWheel.stop();
+    m_controlPanel.stop();
   }
 
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return (m_clockwise) ? m_controlPanelWheel.getDistance()>m_distance : m_controlPanelWheel.getDistance()<m_distance;
+    return (m_clockwise) ? m_controlPanel.getDistance()>m_distance : m_controlPanel.getDistance()<m_distance;
   }
 }

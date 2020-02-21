@@ -126,7 +126,7 @@ public final class Constants {
   public static final double TURRET_VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
 
   public static final double TURRET_ROTATION_MIN = -90.0; // Full left
-  public static final double TURRET_ROTATION_MAX = 90.0; // Full right
+  public static final double TURRET_ROTATION_MAX = 90.0;  // Full right
 
   public static final double TURRET_RATIO = 18d / 265d;
 
@@ -175,6 +175,7 @@ public final class Constants {
 
   public static final double CONTROL_PANEL_CIRCUMFERENCE = 32 * Math.PI; // On-field mechanism. Inches
   public static final double CONTROL_PANEL_WHEEL_CIRCUMFERENCE = 4 * Math.PI; // On-robot wheel. Inches
+  public static final double CONTROL_PANEL_ENCODER_DEGREES_PER_TICK = 360.0 / 128.0;
 
   // #endregion
 }
