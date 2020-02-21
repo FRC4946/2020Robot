@@ -20,6 +20,7 @@ import frc.robot.commands.shooter.Shoot;
 import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Revolver;
@@ -42,6 +43,7 @@ public class RobotContainer {
   private final Climber m_climber;
   private final Limelight m_limelight;
   private final PowerDistributionPanel m_pdp;
+  private final Hood m_hood;
   private final Revolver m_revolver;
   private final Intake m_intake;
   private final Turret m_turret;
@@ -59,6 +61,7 @@ public class RobotContainer {
     m_limelight = new Limelight();
     m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
     m_revolver = new Revolver(m_pdp);
+    m_hood = new Hood();
     m_intake = new Intake();
     m_turret = new Turret();
     configureButtonBindings();
@@ -83,7 +86,7 @@ public class RobotContainer {
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
 
     driverShootButton.and(operatorShootButton)
-        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_shooter.getAngleSetpoint(), m_shooter, m_revolver), false);
+        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_hood.getSetpoint(), m_shooter, m_hood, m_revolver), false);
 
     climbButton.toggleWhenPressed(
         new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
@@ -107,8 +110,6 @@ public class RobotContainer {
         m_intake.setExtended(false);
       }
     }, m_intake));
-
-    m_turret.setDefaultCommand(new ManualTurret(m_operatorJoystick, m_turret, m_shooter));
 
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       m_revolver.stop();
