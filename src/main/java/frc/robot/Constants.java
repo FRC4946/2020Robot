@@ -126,7 +126,7 @@ public final class Constants {
   public static final double TURRET_VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
 
   public static final double TURRET_ROTATION_MIN = -90.0; // Full left
-  public static final double TURRET_ROTATION_MAX = 90.0;  // Full right
+  public static final double TURRET_ROTATION_MAX = 90.0; // Full right
 
   public static final double TURRET_RATIO = 18d / 265d;
 
@@ -166,6 +166,8 @@ public final class Constants {
 
   // #endregion
 
+  // #region Control Panel Details
+
   public static final Color COLOR_BLUE = ColorMatch.makeColor(0, 1, 1);
   public static final Color COLOR_GREEN = ColorMatch.makeColor(0, 1, 0);
   public static final Color COLOR_RED = ColorMatch.makeColor(1, 0, 0);
@@ -173,4 +175,6 @@ public final class Constants {
 
   public static final double CONTROL_PANEL_CIRCUMFERENCE = 32 * Math.PI; // On-field mechanism. Inches
   public static final double CONTROL_PANEL_WHEEL_CIRCUMFERENCE = 4 * Math.PI; // On-robot wheel. Inches
+
+  // #endregion
 }
