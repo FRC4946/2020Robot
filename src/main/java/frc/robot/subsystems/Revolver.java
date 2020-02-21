@@ -16,9 +16,7 @@ import frc.robot.RobotMap;
 import frc.robot.commands.revolver.UnjamRevolver;
 
 public class Revolver extends SubsystemBase {
-  /**
-   * Creates a new Hopper.
-   */
+
   private final CANSparkMax m_drumMotor;
   private final CANSparkMax m_feedWheelMotor;
   private int m_drumReps = 0;

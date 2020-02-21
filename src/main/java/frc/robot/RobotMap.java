@@ -9,146 +9,142 @@ package frc.robot;
 
 /**
  * Contains all port numbers for motors, sensors, joysticks & OI stuff, etc...
- * <p>
+ *
  * Only reason these values aren't in constants is because I like having the
  * port numbers and OI stuff separate from the PID Tunings, etc...
- * </p>
- * 
- * @author Jacob
  */
 public final class RobotMap {
 
-    // TODO : Finalize Values
+  // TODO : Finalize Values
 
-    //#region OI
+  // #region OI
 
-    // JOYSTICKS
+  // JOYSTICKS
 
-    /**
-     * OI Port Numbers For Joystick Axes
-     */
-    public static final class JOYSTICK_AXIS {
+  /**
+   * OI Port Numbers For Joystick Axes
+   */
+  public static final class JOYSTICK_AXIS {
 
-        //DRIVER
+    // DRIVER
 
-        public static final int DRIVE = 0;
-        public static final int TURN = 1;
+    public static final int DRIVE = 0;
+    public static final int TURN = 1;
 
-        public static final int CLIMB_1 = 4;
-        public static final int CLIMB_2 = 5;
+    public static final int CLIMB_1 = 4;
+    public static final int CLIMB_2 = 5;
 
-        public static final int INTAKE = 2;
-        public static final int OUTTAKE = 3;
+    public static final int INTAKE = 2;
+    public static final int OUTTAKE = 3;
 
-        //OPERATOR
+    // OPERATOR
 
-        public static final int TURRET = 0;
-    }
+    public static final int TURRET = 0;
+  }
 
-    /**
-     * OI Port Numbers For Joystick Buttons
-     */
-    public static final class JOYSTICK_BUTTON {
-        
-        //DRIVER
+  /**
+   * OI Port Numbers For Joystick Buttons
+   */
+  public static final class JOYSTICK_BUTTON {
 
-        public static final int CLIMB = 1; // A on X Box Controller
-        public static final int DRIVER_SHOOT = 3;
-        
-        public static final int INTAKE = 5;
+    // DRIVER
 
-        //OPERATOR
+    public static final int CLIMB = 1; // A on X Box Controller
+    public static final int DRIVER_SHOOT = 3;
 
-        public static final int OPERATOR_SHOOT = 3;
+    public static final int INTAKE = 5;
 
-    }
+    // OPERATOR
 
-    /**
-     * OI Port Numbers For Joysticks
-     */
-    public static final class JOYSTICK {
-        public static final int DRIVE_JOYSTICK = 0;
-        public static final int OPERATOR_JOYSTICK = 1;
-    }
+    public static final int OPERATOR_SHOOT = 3;
 
-    // #endregion
+  }
 
-    // #region IO
+  /**
+   * OI Port Numbers For Joysticks
+   */
+  public static final class JOYSTICK {
+    public static final int DRIVE_JOYSTICK = 0;
+    public static final int OPERATOR_JOYSTICK = 1;
+  }
 
-    // MOTORS AND SENSORS
+  // #endregion
 
-    /**
-     * CAN IDs
-     */
-    public static final class CAN {
-        public static final int CLIMBER_LEFT_SPARKMAX = 10;
-        public static final int CLIMBER_RIGHT_SPARKMAX = 9;
+  // #region IO
 
-        public static final int SHOOTER_LEFT_SPARKMAX = 6;
-        public static final int SHOOTER_RIGHT_SPARKMAX = 5;
+  // MOTORS AND SENSORS
 
-        public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 1;
-        public static final int DRIVE_RIGHT_BACK_SPARKMAX = 2;
-        public static final int DRIVE_LEFT_FRONT_SPARKMAX = 3;
-        public static final int DRIVE_LEFT_BACK_SPARKMAX = 4;
-        
-        public static final int TURRET_TALONSRX = 0;
+  /**
+   * CAN IDs
+   */
+  public static final class CAN {
+    public static final int CLIMBER_LEFT_SPARKMAX = 10;
+    public static final int CLIMBER_RIGHT_SPARKMAX = 9;
 
-        public static final int DRUM_MOTOR_SPARKMAX = 7;
-        public static final int FEED_WHEEL_MOTOR_SPARKMAX = 8;
+    public static final int SHOOTER_LEFT_SPARKMAX = 6;
+    public static final int SHOOTER_RIGHT_SPARKMAX = 5;
 
-        public static final int INTAKE_VICTORSPX = 0;
+    public static final int DRIVE_RIGHT_FRONT_SPARKMAX = 1;
+    public static final int DRIVE_RIGHT_BACK_SPARKMAX = 2;
+    public static final int DRIVE_LEFT_FRONT_SPARKMAX = 3;
+    public static final int DRIVE_LEFT_BACK_SPARKMAX = 4;
 
-        public static final int PDP = 0;
-    }
+    public static final int TURRET_TALONSRX = 0;
 
-    /**
-     * PCM Port Numbers
-     */
-    public static final class PCM {
-        public static final int INTAKE_A = 0;
-        public static final int INTAKE_B = 1;
+    public static final int DRUM_MOTOR_SPARKMAX = 7;
+    public static final int FEED_WHEEL_MOTOR_SPARKMAX = 8;
 
-        public static final int DRIVE_SHIFTER = 4; 
+    public static final int INTAKE_VICTORSPX = 0;
 
-        public static final int CLIMBER_A = 5;
-        public static final int CLIMBER_B = 6;
-    }
+    public static final int PDP = 0;
+  }
 
-    /**
-     * PDP Port Numbers
-     */
-    public static final class PDP {
-        public static final int DRUM_PORT = 0;
-        public static final int FEEDWHEEL_PORT = 1;
-    }
+  /**
+   * PCM Port Numbers
+   */
+  public static final class PCM {
+    public static final int INTAKE_A = 0;
+    public static final int INTAKE_B = 1;
 
-    /**
-     * DIO Port Numbers
-     */
-    public static final class DIO {
-        public static final int DRIVE_LEFT_ENCODER_A = 0;
-        public static final int DRIVE_LEFT_ENCODER_B = 1;
+    public static final int DRIVE_SHIFTER = 4;
 
-        public static final int DRIVE_RIGHT_ENCODER_A = 2;
-        public static final int DRIVE_RIGHT_ENCODER_B = 3;
-    }
+    public static final int CLIMBER_A = 5;
+    public static final int CLIMBER_B = 6;
+  }
 
-    /**
-     * Analog Port Numbers
-     */
-    public static final class AIO {
-        public static final int CLIMBER_POT = 0;
-        public static final int HOOD_POT = 1;
-        public static final int TURRET_POT = 2;
-    }
+  /**
+   * PDP Port Numbers
+   */
+  public static final class PDP {
+    public static final int DRUM_PORT = 0;
+    public static final int FEEDWHEEL_PORT = 1;
+  }
 
-    /**
-     * PWM Port Numbers
-     */
-    public static final class PWM{
-        public static final int HOOD_SERVO = 0;
-    }
+  /**
+   * DIO Port Numbers
+   */
+  public static final class DIO {
+    public static final int DRIVE_LEFT_ENCODER_A = 0;
+    public static final int DRIVE_LEFT_ENCODER_B = 1;
 
-    // #endregion
+    public static final int DRIVE_RIGHT_ENCODER_A = 2;
+    public static final int DRIVE_RIGHT_ENCODER_B = 3;
+  }
+
+  /**
+   * Analog Port Numbers
+   */
+  public static final class AIO {
+    public static final int CLIMBER_POT = 0;
+    public static final int HOOD_POT = 1;
+  }
+
+  /**
+   * PWM Port Numbers
+   */
+  public static final class PWM {
+    public static final int HOOD_SERVO = 0;
+  }
+
+  // #endregion
 }
