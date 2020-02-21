@@ -9,6 +9,7 @@ package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
+import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 import com.revrobotics.EncoderType;
 
@@ -53,20 +54,45 @@ public class DriveTrain extends SubsystemBase {
     m_leftFront.setInverted(false);
     m_leftBack.setInverted(false);
 
+    m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
+        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
+    m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
+        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
+
+    m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
+        .setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
+    m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
+        .setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
+
+    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
+    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
+    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
+    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
+
+    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
+    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
+    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
+    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
+
+    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
+    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
+    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
+    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
+
+    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
+    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
+    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
+    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
+
+    m_leftFront.follow(m_leftBack);
+    m_rightFront.follow(m_rightFront);
+
     m_rightFront.burnFlash();
     m_rightBack.burnFlash();
     m_leftFront.burnFlash();
     m_leftBack.burnFlash();
 
-    m_leftFront.follow(m_leftBack);
-    m_rightFront.follow(m_rightFront);
-
     m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
-
-    m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
-        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
-    m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
-        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
     AHRS gyro;
     try {
@@ -172,6 +198,26 @@ public class DriveTrain extends SubsystemBase {
 
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
+  }
+
+  /**
+   * Sets the speed for the internal PID Controller on the Spark Max on the left
+   * side of the drivetrain
+   * 
+   * @param speed the speed to set in meters per second
+   */
+  public void setLeftSpeed(double speed) {
+    m_rightFront.getPIDController().setReference(speed, ControlType.kVelocity);
+  }
+
+  /**
+   * Sets the speed for the internal PID Controller on the Spark Max on the right
+   * side of the drivetrain
+   * 
+   * @param speed the speed to set in meters per second
+   */
+  public void setRightSpeed(double speed) {
+    m_rightBack.getPIDController().setReference(speed, ControlType.kVelocity);
   }
 
   public void setHighGear(boolean on) {
