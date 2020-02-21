@@ -101,10 +101,6 @@ public final class Constants {
   public static final double TARGET_HEIGHT = 60.0;
   public static final double LIMELIGHT_HEIGHT = 39.5;
 
-  //#endregion
-
-  //#region Turret Details
-
   public static final double[] LIMELIGHT_OFFSET_ZERO_ROTATION = { 0.0, 3.75 };
 
   public static final double[] TURRET_OFFSET = { 0.0, 0.0 };
@@ -126,7 +122,7 @@ public final class Constants {
   public static final double TURRET_VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
 
   public static final double TURRET_ROTATION_MIN = -90.0; // Full left
-  public static final double TURRET_ROTATION_MAX = 90.0;  // Full right
+  public static final double TURRET_ROTATION_MAX = 90.0; // Full right
 
   public static final double TURRET_RATIO = 18d / 265d;
 
@@ -138,7 +134,7 @@ public final class Constants {
 
   // #region Climber Details
 
-  //TODO: put the actual reduction value
+  // TODO: put the actual reduction value
   public static final double CLIMBER_ENCODER_INCHES_PER_TICK = 1;
 
   public static final double CLIMBER_POT_SCALE_VALUE = 10.0;
@@ -149,11 +145,11 @@ public final class Constants {
   public static final double CLIMBER_MAX_PERCENT_OUTPUT = 0.5;
 
   // #endregion
-  
+
   // #region Revolver Details
 
   public static final double REVOLVER_VELOCITY_THRESHOLD = 5; // Dummy value
-  
+
   public static final double REVOLVER_DRUM_CURRENT_THRESHOLD = 2.0;
   public static final double REVOLVER_FEEDWHEEL_CURRENT_THRESHOLD = 2.0;
 

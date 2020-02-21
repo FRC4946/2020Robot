@@ -18,15 +18,13 @@ import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
 
-  private CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
-  private DoubleSolenoid m_climberSolenoid;
-
+  private final CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
+  private final DoubleSolenoid m_climberSolenoid;
 
   public Climber() {
     m_leftClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.CLIMBER_RIGHT_SPARKMAX, MotorType.kBrushless);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
-
 
     setPiston(false);
     m_rightClimberMotor.setInverted(true);
