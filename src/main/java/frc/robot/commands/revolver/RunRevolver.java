@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Revolver;
 
 public class RunRevolver extends CommandBase {
-  
+
   private double m_revolverSpeed, m_wheelSpeed;
   private Revolver m_revolver;
-  
+
   /**
    * Creates a new RunRevolver.
    */
@@ -28,7 +28,6 @@ public class RunRevolver extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    
   }
 
   // Called every time the scheduler runs while the command is scheduled.
