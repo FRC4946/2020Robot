@@ -33,6 +33,8 @@ public class Hood extends PIDSubsystem {
         Constants.HOOD_PWM_DEADBAND_MIN, Constants.HOOD_PWM_MIN);
 
     getController().setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
+
+    enable();
   }
 
   @Override

@@ -30,7 +30,7 @@ public class Shooter extends PIDSubsystem {
     m_angleController.setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
     getController().setTolerance(Constants.SHOOTER_SPEED_TOLERANCE);
 
-    setSpeedSetpoint(0.0);
+    setSetpoint(0.0);
 
     m_left = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_right = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
@@ -41,6 +41,8 @@ public class Shooter extends PIDSubsystem {
 
     m_left.burnFlash();
     m_right.burnFlash();
+
+    enable();
   }
 
   /**
