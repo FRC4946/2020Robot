@@ -24,6 +24,7 @@ import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.FeedWheel;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
@@ -48,6 +49,7 @@ public class RobotContainer {
   private final Limelight m_limelight;
   private final Hood m_hood;
   private final Revolver m_revolver;
+  private final FeedWheel m_feedWheel;
   private final Intake m_intake;
   private final Turret m_turret;
   private final ControlPanel m_controlPanel;
@@ -66,6 +68,7 @@ public class RobotContainer {
     m_climber = new Climber();
     m_limelight = new Limelight();
     m_revolver = new Revolver();
+    m_feedWheel = new FeedWheel();
     m_hood = new Hood();
     m_intake = new Intake();
     m_turret = new Turret();
@@ -102,7 +105,7 @@ public class RobotContainer {
             + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
             * Constants.CLIMBER_MAX_PERCENT_OUTPUT, m_climber));
 
-    intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, 0.0, m_revolver));
+    intake.whenHeld(new RunRevolver(Constants.REVOLVER_DRUM_FORWARDS_SPEED, m_revolver));
 
     // Default Commands
 
