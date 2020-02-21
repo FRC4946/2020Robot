@@ -17,29 +17,20 @@ import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
 import frc.robot.util.Utilities;
+import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 
-public class Shooter extends SubsystemBase {
+public class Shooter extends PIDSubsystem {
 
   private CANSparkMax m_left, m_right;
-  private Servo m_hoodServo;
-  private AnalogInput m_pot;
-  private PIDController m_speedController, m_angleController;
-  private boolean m_speedEnabled = false;
-  private boolean m_angleEnabled = false;
 
   public Shooter() {
-    m_speedController = new PIDController(Constants.SHOOTER_VELOCITY_CONTROL_P, Constants.SHOOTER_VELOCITY_CONTROL_I,
-        Constants.SHOOTER_VELOCITY_CONTROL_D);
-    m_angleController = new PIDController(Constants.SHOOTER_HOOD_P, Constants.SHOOTER_HOOD_I, Constants.SHOOTER_HOOD_D);
+    super(new PIDController(Constants.SHOOTER_VELOCITY_CONTROL_P, Constants.SHOOTER_VELOCITY_CONTROL_I,
+        Constants.SHOOTER_VELOCITY_CONTROL_D));
 
     m_angleController.setTolerance(Constants.HOOD_ANGLE_TOLERANCE);
-    m_speedController.setTolerance(Constants.SHOOTER_SPEED_TOLERANCE);
+    getController().setTolerance(Constants.SHOOTER_SPEED_TOLERANCE);
 
-    setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
     setSpeedSetpoint(0.0);
-
-    m_speedEnabled = true;
-    m_angleEnabled = true;
 
     m_left = new CANSparkMax(RobotMap.CAN.SHOOTER_LEFT_SPARKMAX, MotorType.kBrushless);
     m_right = new CANSparkMax(RobotMap.CAN.SHOOTER_RIGHT_SPARKMAX, MotorType.kBrushless);
@@ -50,62 +41,22 @@ public class Shooter extends SubsystemBase {
 
     m_left.burnFlash();
     m_right.burnFlash();
-
-    m_hoodServo = new Servo(RobotMap.PWM.HOOD_SERVO);
-    m_pot = new AnalogInput(RobotMap.AIO.HOOD_POT);
-
-    m_hoodServo.setBounds(Constants.HOOD_PWM_MAX, Constants.HOOD_PWM_DEADBAND_MAX, Constants.HOOD_PWM_CENTER,
-        Constants.HOOD_PWM_DEADBAND_MIN, Constants.HOOD_PWM_MIN);
   }
 
-  @Override
-  public void periodic() {
-    System.out.println(getAverageSpeed());
-    if (m_speedEnabled) {
-      useSpeedOutput(m_speedController.calculate(getAverageSpeed()));
-    } else {
-      stopShooter();
-    }
-
-    if (m_angleEnabled && !m_angleController.atSetpoint()) {
-      useAngleSetpoint(m_angleController.calculate(getHoodAngle()));
-    } else {
-      stopHood();
-    }
-  }
-
-  public void useSpeedOutput(double output) {
-    output += Constants.SHOOTER_VELOCITY_CONTROL_FF * m_speedController.getSetpoint();
-    output = (output < 0 ? -1 : 1) * Math.min(Math.abs(output), 1.0);
-    set(Constants.SHOOTER_MAX_PERCENT * (output));
-  }
-
-  public void useAngleSetpoint(double output) {
-    setHoodSpeed(output);
-  }
-
-  public boolean atSpeedSetpoint() {
+  /**
+   * Gets whether the shooter is within tolerance of the desired speed
+   * @return true if the shooter wheel is within 100rpm of its desired speed
+   */
+  public boolean atSetpoint() {
     return m_speedController.atSetpoint();
   }
 
-  public boolean atAngleSetpoint() {
-    return m_angleController.atSetpoint();
+  public void setSetpoint(double setpoint) {
+    getController().setSetpoint(Math.min(Constants.SHOOTER_MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
   }
 
-  public void setSpeedSetpoint(double setpoint) {
-    m_speedController.setSetpoint(Math.min(Constants.SHOOTER_MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
-  }
-
-  public double getSpeedSetpoint() {
+  public double getSetpoint() {
     return m_speedController.getSetpoint();
-  }
-
-  public void setAngleSetpoint(double setpoint) {
-    m_angleController.setSetpoint(Utilities.clip(setpoint, Constants.HOOD_MIN_ANGLE, Constants.HOOD_MAX_ANGLE));
-  }
-
-  public double getAngleSetpoint() {
-    return m_angleController.getSetpoint();
   }
 
   /**
@@ -121,7 +72,7 @@ public class Shooter extends SubsystemBase {
   /**
    * Stops the motors
    */
-  public void stopShooter() {
+  public void stop() {
     set(0.0);
   }
 
@@ -146,30 +97,14 @@ public class Shooter extends SubsystemBase {
     return m_left.getEncoder().getVelocity() * Constants.SHOOTER_RATIO;
   }
 
-  public void setHoodSpeed(double speed) {
-    m_hoodServo.setSpeed(speed);
+  @Override
+  public void useOutput(double output, double setpoint) {
+    output += Constants.SHOOTER_VELOCITY_CONTROL_FF * m_speedController.getSetpoint();
+    set(Utilities.clip(output, -Constants.SHOOTER_MAX_PERCENT, Constants.SHOOTER_MAX_PERCENT));
   }
 
-  public void stopHood() {
-    setHoodSpeed(0.0);
-  }
-
-  public double getHoodAngle() {
-    return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.HOOD_POT_SCALE_VALUE)
-        - Constants.HOOD_POT_OFFSET_VALUE) * (Constants.HOOD_MAX_ANGLE - Constants.HOOD_MIN_ANGLE)
-        + Constants.HOOD_MIN_ANGLE;
-  }
-
-  public void setEnabled(boolean enabled) {
-    setEnabledHood(enabled);
-    setEnabledShooter(enabled);
-  }
-
-  public void setEnabledShooter(boolean enabled) {
-    m_speedEnabled = enabled;
-  }
-
-  public void setEnabledHood(boolean enabled) {
-    m_angleEnabled = enabled;
+  @Override
+  public double getMeasurement() {
+    return getAverageSpeed();
   }
 }
