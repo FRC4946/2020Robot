@@ -21,7 +21,7 @@ public class Revolver extends SubsystemBase {
   private int m_drumReps = 0;
 
   public Revolver() {
-    m_revolver = new CANSparkMax(RobotMap.CAN.REVOLVER_SPARKMAX, MotorType.kBrushless);
+    m_revolver = new CANSparkMax(RobotMap.CAN.SPARKMAX_REVOLVER, MotorType.kBrushless);
   }
 
   /**

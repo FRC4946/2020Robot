@@ -21,7 +21,7 @@ public class FeedWheel extends SubsystemBase {
    * Creates a new FeedWheel.
    */
   public FeedWheel() {
-    m_feedWheel = new CANSparkMax(RobotMap.CAN.FEED_WHEEL_MOTOR_SPARKMAX, MotorType.kBrushless);
+    m_feedWheel = new CANSparkMax(RobotMap.CAN.SPARKMAX_FEED_WHEEL, MotorType.kBrushless);
   }
 
   /**

@@ -46,10 +46,10 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDriveOdometry m_odometry;
 
   public DriveTrain() {
-    m_leftFront = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_FRONT_SPARKMAX, MotorType.kBrushless);
-    m_leftBack = new CANSparkMax(RobotMap.CAN.DRIVE_LEFT_BACK_SPARKMAX, MotorType.kBrushless);
-    m_rightFront = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_FRONT_SPARKMAX, MotorType.kBrushless);
-    m_rightBack = new CANSparkMax(RobotMap.CAN.DRIVE_RIGHT_BACK_SPARKMAX, MotorType.kBrushless);
+    m_leftFront = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_LEFT_FRONT, MotorType.kBrushless);
+    m_leftBack = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_LEFT_BACK, MotorType.kBrushless);
+    m_rightFront = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_RIGHT_FRONT, MotorType.kBrushless);
+    m_rightBack = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_RIGHT_BACK, MotorType.kBrushless);
 
     m_highGear = new Solenoid(RobotMap.PCM.DRIVE_SHIFTER);
 

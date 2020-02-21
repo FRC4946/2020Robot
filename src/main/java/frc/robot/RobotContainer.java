@@ -60,8 +60,8 @@ public class RobotContainer {
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
-    m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
-    m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
+    m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVER);
+    m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR);
 
     m_climber = new Climber();
     m_controlPanel = new ControlPanel();

@@ -22,7 +22,7 @@ public class Intake extends SubsystemBase {
 
   public Intake() {
     m_solenoid = new DoubleSolenoid(RobotMap.PCM.INTAKE_A, RobotMap.PCM.INTAKE_B);
-    m_intake = new VictorSPX(RobotMap.CAN.INTAKE_VICTORSPX);
+    m_intake = new VictorSPX(RobotMap.CAN.VICTORSPX_INTAKE);
   }
 
   public void set(double speed) {
