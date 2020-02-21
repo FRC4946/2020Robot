@@ -44,16 +44,13 @@ public final class Constants {
   }
 
   public static final class DriveTrain {
-    /**
-     * Track width in inches
-     */
-    public static final double TRACK_WIDTH = 0.0;
-    public static final double ENCODER_METERS_PER_TICK = 1;
-    public static final double ENCODER_MPS_PER_RPM = 0.0;
+    public static final double TRACK_WIDTH = 0.0; //Inches
     public static final int ENCODER_RESOLUTION = 128;
+    public static final double ENCODER_METERS_PER_TICK = 6d * Math.PI / (double) ENCODER_RESOLUTION;
+    public static final double ENCODER_MPS_PER_RPM = 6d * Math.PI / 60d;
 
-    public static final double RAMSETE_B = 0.0;
-    public static final double RAMSETE_ZETA = 0.0;
+    public static final double RAMSETE_B = 2.0;
+    public static final double RAMSETE_ZETA = 0.7;
 
     public static final double VELOCITY_P = 0.0;
     public static final double VELOCITY_I = 0.0;
