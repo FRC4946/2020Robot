@@ -43,16 +43,16 @@ public class RobotContainer {
   private final Joystick m_driveJoystick;
   private final Joystick m_operatorJoystick;
 
-  private final DriveTrain m_driveTrain;
-  private final Shooter m_shooter;
   private final Climber m_climber;
-  private final Limelight m_limelight;
-  private final Hood m_hood;
-  private final Revolver m_revolver;
-  private final FeedWheel m_feedWheel;
-  private final Intake m_intake;
-  private final Turret m_turret;
   private final ControlPanel m_controlPanel;
+  private final DriveTrain m_driveTrain;
+  private final FeedWheel m_feedWheel;
+  private final Hood m_hood;
+  private final Intake m_intake;
+  private final Limelight m_limelight;
+  private final Revolver m_revolver;
+  private final Shooter m_shooter;
+  private final Turret m_turret;
 
   private Command m_autonomousCommand = null;
 
@@ -63,16 +63,16 @@ public class RobotContainer {
     m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVE_JOYSTICK);
     m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR_JOYSTICK);
 
-    m_driveTrain = new DriveTrain();
-    m_shooter = new Shooter();
     m_climber = new Climber();
-    m_limelight = new Limelight();
-    m_revolver = new Revolver();
+    m_controlPanel = new ControlPanel();
+    m_driveTrain = new DriveTrain();
     m_feedWheel = new FeedWheel();
     m_hood = new Hood();
     m_intake = new Intake();
+    m_limelight = new Limelight();
+    m_revolver = new Revolver();
+    m_shooter = new Shooter();
     m_turret = new Turret();
-    m_controlPanel = new ControlPanel();
 
     configureButtonBindings();
   }
