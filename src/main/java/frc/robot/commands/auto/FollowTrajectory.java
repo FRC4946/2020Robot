@@ -15,7 +15,7 @@ import frc.robot.subsystems.DriveTrain;
 
 public class FollowTrajectory extends RamseteCommand {
 
-  DriveTrain m_driveTrain;
+  private final DriveTrain m_driveTrain;
 
   /**
    * Follows a specified trajectory until the estimated time to complete the
@@ -31,6 +31,7 @@ public class FollowTrajectory extends RamseteCommand {
           driveTrain.setLeftSpeed(leftSpeed);
           driveTrain.setRightSpeed(rightSpeed);
         }, driveTrain);
+    m_driveTrain = driveTrain;
   }
 
   @Override
