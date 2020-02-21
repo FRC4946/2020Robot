@@ -50,8 +50,8 @@ public class SetShooterWithLimelight extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.setSetpoint(Utilities.distanceToSpeed(m_limelight.findDistance()));
-    m_hood.setSetpoint(Utilities.distanceToHoodAngle(m_limelight.findDistance()));
+    m_shooter.setSetpoint(m_limelight.getShooterSpeed());
+    m_hood.setSetpoint(m_limelight.getHoodAngle());
     m_turret.setSetpoint(m_turret.getAngle() + m_limelight.getAngleOffset());
   }
 }
