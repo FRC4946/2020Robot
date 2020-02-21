@@ -39,10 +39,18 @@ public class Turret extends SubsystemBase {
 
   /**
    * Sets the turret's applied voltage (open-loop).
+   *
+   * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
-    m_turretMotor.set(ControlMode.PercentOutput, speed);
-  }
+    if ((getAngle() < Constants.TURRET_ROTATION_MIN && speed > 0.0)
+        || (getAngle() > Constants.TURRET_ROTATION_MAX && speed < 0.0)
+        || (getAngle() > Constants.TURRET_ROTATION_MIN && getAngle() < Constants.TURRET_ROTATION_MAX)) {
+      m_turretMotor.set(ControlMode.PercentOutput, speed);
+    } else {
+      m_turretMotor.set(ControlMode.PercentOutput, 0.0);
+    }
+  } 
 
   /**
    * Sets the turret PID setpoint.
