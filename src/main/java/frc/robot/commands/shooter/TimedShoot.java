@@ -10,53 +10,69 @@ package frc.robot.commands.shooter;
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
 
+/**
+ * Instant command to shoot
+ */
 public class TimedShoot extends CommandBase {
-  
-  private Shooter m_shooter;
-  private Revolver m_revolver;
+
   private double m_speed, m_angle, m_time;
+  private Revolver m_revolver;
+  private Shooter m_shooter;
+  private Hood m_hood;
   private Timer m_timer;
 
   /**
-   * Creates a new TimedShoot.
+   * Shoots at the specified speed
+   *
+   * @param speed    the speed to spin the flywheel (RPM)
+   * @param angle    the angle to shoot at in degrees
+   * @param time     the time to shoot for in seconds
+   * @param shooter  the shooter subsystem
+   * @param revolver the revolver subsystem
+   * @param hood     the hood subsystem
    */
-  public TimedShoot(double speed, double angle, double time, Shooter shooter, Revolver revolver) {
+  public TimedShoot(double speed, double angle, double time, Shooter shooter, Hood hood, Revolver revolver) {
     m_shooter = shooter;
     m_revolver = revolver;
-    m_timer = new Timer();
+    m_hood = hood;
     m_speed = speed;
     m_angle = angle;
     m_time = time;
-    addRequirements(m_shooter, m_revolver);
+    m_timer = new Timer();
+
+    addRequirements(m_shooter, m_hood, m_revolver);
   }
 
   @Override
   public void initialize() {
+    m_hood.enable();
+    m_shooter.enable();
+    m_hood.setSetpoint(m_angle);
+    m_shooter.setSetpoint(m_speed);
     m_timer.reset();
     m_timer.start();
-    m_shooter.setAngleSetpoint(m_angle);
-    m_shooter.setSpeedSetpoint(m_speed);
   }
 
   @Override
   public void execute() {
     m_revolver.setDrum(Constants.REVOLVER_DRUM_FORWARDS_SPEED);
-    if (m_shooter.atSpeedSetpoint() && m_shooter.atAngleSetpoint())
+    if (m_shooter.atSetpoint()) {
       m_revolver.setFeedWheel(0.3);
-    else
+    } else {
       m_revolver.setFeedWheel(0.0);
+    }
   }
 
-  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_timer.stop();
-    m_shooter.setAngleSetpoint(Constants.HOOD_MIN_ANGLE);
-    m_shooter.setSpeedSetpoint(0.0);
+    m_shooter.setSetpoint(Constants.HOOD_MIN_ANGLE);
+    m_shooter.setSetpoint(0.0);
     m_revolver.stop();
+    m_timer.stop();
   }
 
   @Override

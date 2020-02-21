@@ -5,46 +5,49 @@
 /* the project.                                                               */
 /*----------------------------------------------------------------------------*/
 
-package frc.robot.commands.revolver;
+package frc.robot.commands.hood;
 
-import edu.wpi.first.wpilibj.Timer;
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import frc.robot.Constants;
-import frc.robot.subsystems.Revolver;
+import frc.robot.subsystems.Hood;
 
-public class UnjamRevolver extends CommandBase {
+public class ManualHood extends CommandBase {
 
-  private Revolver m_revolver;
-  private Timer m_timer;
+  Hood m_hood;
+  DoubleSupplier m_speedSupplier;
 
   /**
-   * Creates a new UnjamRevolver command.
+   * Creates a new ManualHood.
    */
-  public UnjamRevolver(Revolver revolver) {
-    m_revolver = revolver;
-    m_timer = new Timer();
-    addRequirements(m_revolver);
+  public ManualHood(DoubleSupplier speedSupplier, Hood hood) {
+    m_hood = hood;
+    m_speedSupplier = speedSupplier;
+    addRequirements(m_hood);
   }
 
+  // Called when the command is initially scheduled.
   @Override
   public void initialize() {
-    m_timer.reset();
-    m_timer.start();
+    m_hood.disable();
   }
 
+  // Called every time the scheduler runs while the command is scheduled.
   @Override
   public void execute() {
-    m_revolver.setAll(Constants.REVOLVER_DRUM_BACKWARDS_SPEED, 0.0);
+    m_hood.set(m_speedSupplier.getAsDouble());
   }
 
+  // Called once the command ends or is interrupted.
   @Override
   public void end(boolean interrupted) {
-    m_timer.stop();
-    m_revolver.stop();
+    m_hood.stop();
+    m_hood.enable();
   }
 
+  // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return m_timer.get() > Constants.REVOLVER_UNJAM_TIME;
+    return false;
   }
 }

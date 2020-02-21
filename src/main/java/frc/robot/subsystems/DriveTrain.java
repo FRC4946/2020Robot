@@ -1,5 +1,5 @@
 /*----------------------------------------------------------------------------*/
-/* Copyright (c) 2018 FIRST. All Rights Reserved.                             */
+/* Copyright (c) 2019 FIRST. All Rights Reserved.                             */
 /* Open Source Software - may be modified and shared by FRC teams. The code   */
 /* must be accompanied by the FIRST BSD license file in the root directory of */
 /* the project.                                                               */
@@ -28,9 +28,8 @@ import frc.robot.util.Utilities;
 
 /**
  * DriveTrain Subsystem
- * <p>
+ *
  * Subsystem for moving and tracking the movement of the robot
- * </p>
  */
 public class DriveTrain extends SubsystemBase {
   private final SpeedControllerGroup m_leftSide, m_rightSide;
@@ -38,7 +37,7 @@ public class DriveTrain extends SubsystemBase {
   private final Encoder m_leftEncoder, m_rightEncoder;
 
   private final Solenoid m_highGear;
- 
+
   private final AHRS m_gyro;
 
   private final DifferentialDrive m_drive;
@@ -93,7 +92,7 @@ public class DriveTrain extends SubsystemBase {
 
   /**
    * Runs motors on each side at the desired speed
-   * 
+   *
    * @param leftSpeed  the speed that the motors on the left side will run at
    * @param rightSpeed the speed that the motors on the right side will run at
    */
@@ -102,7 +101,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * stops the robot
+   * Stops the robot
    */
   public void stop() {
     m_drive.tankDrive(0.0, 0.0);
@@ -184,5 +183,4 @@ public class DriveTrain extends SubsystemBase {
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
   }
-
 }
