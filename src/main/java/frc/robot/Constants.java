@@ -44,8 +44,12 @@ public final class Constants {
   }
 
   public static final class DriveTrain {
-    public static final double TRACK_WIDTH = 0.0; // Inches
-    public static final double ENCODER_INCHES_PER_TICK = 1.0;
+    /**
+     * Track width in inches
+     */
+    public static final double TRACK_WIDTH = 0.0;
+    public static final double ENCODER_METERS_PER_TICK = 1;
+    public static final int ENCODER_RESOLUTION = 128;
   }
 
   public static final class Hood {

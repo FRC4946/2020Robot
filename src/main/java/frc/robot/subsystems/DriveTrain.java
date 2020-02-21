@@ -10,12 +10,10 @@ package frc.robot.subsystems;
 import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.revrobotics.EncoderType;
 
-import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
-import edu.wpi.first.wpilibj.SpeedControllerGroup;
-import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
@@ -32,15 +30,12 @@ import frc.robot.util.Utilities;
  * Subsystem for moving and tracking the movement of the robot
  */
 public class DriveTrain extends SubsystemBase {
-  private final SpeedControllerGroup m_leftSide, m_rightSide;
   private final CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
-  private final Encoder m_leftEncoder, m_rightEncoder;
 
   private final Solenoid m_highGear;
 
   private final AHRS m_gyro;
 
-  private final DifferentialDrive m_drive;
   private final DifferentialDriveKinematics m_kinematics;
 
   private final DifferentialDriveOdometry m_odometry;
@@ -63,17 +58,15 @@ public class DriveTrain extends SubsystemBase {
     m_leftFront.burnFlash();
     m_leftBack.burnFlash();
 
-    m_leftSide = new SpeedControllerGroup(m_leftFront, m_leftBack);
-    m_rightSide = new SpeedControllerGroup(m_rightFront, m_rightBack);
-    m_drive = new DifferentialDrive(m_rightSide, m_leftSide);
+    m_leftFront.follow(m_leftBack);
+    m_rightFront.follow(m_rightFront);
 
     m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
 
-    m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
-    m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
-
-    m_leftEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_INCHES_PER_TICK);
-    m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_INCHES_PER_TICK);
+    m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
+        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
+    m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
+        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
     AHRS gyro;
     try {
@@ -97,14 +90,15 @@ public class DriveTrain extends SubsystemBase {
    * @param rightSpeed the speed that the motors on the right side will run at
    */
   public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_drive.tankDrive(leftSpeed, rightSpeed);
+    m_leftBack.set(leftSpeed);
+    m_rightBack.set(rightSpeed);
   }
 
   /**
    * Stops the robot
    */
   public void stop() {
-    m_drive.tankDrive(0.0, 0.0);
+    tankDrive(0.0, 0.0);
   }
 
   /**
@@ -112,29 +106,26 @@ public class DriveTrain extends SubsystemBase {
    * @param turn  the angle that the robot would turn to
    */
   public void arcadeDrive(double drive, double turn) {
-    m_drive.arcadeDrive(drive, turn);
-  }
-
-  public void curvatureDrive(double xSpeed, double zRotation, boolean isQuickTurn) {
-    m_drive.curvatureDrive(xSpeed, zRotation, isQuickTurn);
+    m_leftBack.set(drive + turn);
+    m_rightBack.set(drive - turn);
   }
 
   /**
    * @return the left encoder's output
    */
   public double getLeftDistance() {
-    return m_leftEncoder.getDistance();
+    return m_leftBack.getEncoder().getPosition();
   }
 
   /**
    * @return the right encoder's output
    */
   public double getRightDistance() {
-    return m_rightEncoder.getDistance();
+    return m_rightBack.getEncoder().getPosition();
   }
 
   /**
-   * @return the avrage of the left and right encoder output
+   * @return the average of the left and right encoder output
    */
   public double getAverageDistance() {
     return (getLeftDistance() + getRightDistance()) / 2;
@@ -157,8 +148,8 @@ public class DriveTrain extends SubsystemBase {
    * @param angle the angle of the robot in degrees CCW from forward
    */
   public void resetDriveTrain(double xPos, double yPos, double angle) {
-    m_leftEncoder.reset();
-    m_rightEncoder.reset();
+    m_leftBack.getEncoder().setPosition(0.0);
+    m_rightBack.getEncoder().setPosition(0.0);
     m_gyro.reset();
     m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
@@ -173,6 +164,14 @@ public class DriveTrain extends SubsystemBase {
       System.out.println("Gyro Not Found");
       return 0;
     }
+  }
+
+  public DifferentialDriveKinematics getKinematics() {
+    return m_kinematics;
+  }
+
+  public Pose2d getPose() {
+    return m_odometry.getPoseMeters();
   }
 
   public void setHighGear(boolean on) {
