@@ -18,7 +18,8 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.RunRevolver;
-import frc.robot.commands.shooter.Shoot;
+import frc.robot.commands.revolver.Shoot;
+import frc.robot.commands.shooter.SetShooterWithLimelight;
 import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
@@ -91,8 +92,10 @@ public class RobotContainer {
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
 
+    operatorShootButton.whenHeld(new SetShooterWithLimelight(m_shooter, m_turret, m_hood, m_limelight));
+
     driverShootButton.and(operatorShootButton)
-        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_hood.getSetpoint(), m_shooter, m_hood, m_revolver), false);
+        .whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood));
 
     climbButton
         .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)

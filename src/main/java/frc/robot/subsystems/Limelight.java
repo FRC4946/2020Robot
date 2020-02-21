@@ -174,4 +174,22 @@ public class Limelight extends SubsystemBase {
 
     return ((Math.abs(angle) > Constants.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
   }
+
+  /**
+   * Gets a turret hood angle from a distance to the limelight target
+   * 
+   * @return the desired hood angle in degrees
+   */
+  public double getHoodAngle() {
+    return 0;
+  }
+
+  /**
+   * Gets a shooter wheel speed from a distance to the limelight target
+   * 
+   * @return the desired wheel speed in rpm
+   */
+  public double getShooterSpeed() {
+    return 0;
+  }
 }

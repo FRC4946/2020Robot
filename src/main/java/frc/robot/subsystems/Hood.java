@@ -48,7 +48,14 @@ public class Hood extends PIDSubsystem {
   }
 
   /**
-   * Gets the angle the hood is at in degrees
+   * @return true if the hood is at the desired angle
+   */
+  public boolean atSetpoint() {
+    return getController().atSetpoint();
+  }
+
+  /**
+   * @return the angle of the hood in degrees
    */
   public double getAngle() {
     return (((m_pot.getVoltage() / Constants.AIO_MAX_VOLTAGE) * Constants.HOOD_POT_SCALE_VALUE)
