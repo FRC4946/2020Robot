@@ -142,7 +142,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Resets the odometry and sets the robot to the inputted position.
+   * Resets the odometry and sets the robot position to (0, 0) with an angle of 0.
    * Also resets encoders and gyro
    */
   public void resetDriveTrain() {
@@ -150,7 +150,7 @@ public class DriveTrain extends SubsystemBase {
   }
 
    /**
-   * Resets the odometry and sets the robot to the inputted position.
+   * Resets the odometry and sets the robot to the specified position.
    * Also resets encoders and gyro
    * 
    * @param xPos  the x position of the robot in inches
@@ -163,7 +163,7 @@ public class DriveTrain extends SubsystemBase {
     m_gyro.reset();
     m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
-  
+
   /**
    * @return the gyro's angle
    */
