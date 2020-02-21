@@ -15,11 +15,13 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
+import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.shooter.Shoot;
-import frc.robot.commands.turret.POVTurret;
+import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Intake;
 import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Revolver;
@@ -42,6 +44,7 @@ public class RobotContainer {
   private final Climber m_climber;
   private final Limelight m_limelight;
   private final PowerDistributionPanel m_pdp;
+  private final Hood m_hood;
   private final Revolver m_revolver;
   private final Intake m_intake;
   private final Turret m_turret;
@@ -59,6 +62,7 @@ public class RobotContainer {
     m_limelight = new Limelight();
     m_pdp = new PowerDistributionPanel(RobotMap.CAN.PDP);
     m_revolver = new Revolver(m_pdp);
+    m_hood = new Hood();
     m_intake = new Intake();
     m_turret = new Turret();
     configureButtonBindings();
@@ -83,7 +87,7 @@ public class RobotContainer {
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
 
     driverShootButton.and(operatorShootButton)
-        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_shooter.getAngleSetpoint(), m_shooter, m_revolver), false);
+        .whileActiveOnce(new Shoot(Constants.SHOOT_SPEED, m_hood.getSetpoint(), m_shooter, m_hood, m_revolver), false);
 
     climbButton.toggleWhenPressed(
         new Climb(m_driveJoystick, RobotMap.JOYSTICK_AXIS.CLIMB_1, RobotMap.JOYSTICK_AXIS.CLIMB_2, m_climber));
@@ -108,11 +112,27 @@ public class RobotContainer {
       }
     }, m_intake));
 
-    m_turret.setDefaultCommand(new POVTurret(m_operatorJoystick, m_turret, m_shooter));
-
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       m_revolver.stop();
     }, m_revolver));
+
+    m_hood.setDefaultCommand(new ManualHood(() -> {
+      if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
+        return 0.6;
+      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135 || m_operatorJoystick.getPOV() == 225) {
+        return -0.6;
+      } 
+      return 0.0;
+    }, m_hood));
+
+    m_turret.setDefaultCommand(new ManualTurret(() -> {
+      if (m_operatorJoystick.getPOV() == 90 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 135) {
+        return 0.3;
+      } else if (m_operatorJoystick.getPOV() == 270 || m_operatorJoystick.getPOV() == 225 || m_operatorJoystick.getPOV() == 315) {
+        return -0.3;
+      } 
+      return 0.0;
+    }, m_turret));
   }
 
   /**
