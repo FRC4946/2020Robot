@@ -8,10 +8,10 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
+import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.ControlType;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.EncoderType;
+import com.revrobotics.ControlType;
 
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
@@ -32,6 +32,8 @@ import frc.robot.util.Utilities;
  */
 public class DriveTrain extends SubsystemBase {
   private final CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
+
+  private final CANEncoder m_leftEncoder, m_rightEncoder;
 
   private final Solenoid m_highGear;
 
@@ -54,15 +56,20 @@ public class DriveTrain extends SubsystemBase {
     m_leftFront.setInverted(false);
     m_leftBack.setInverted(false);
 
-    m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
-        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
-    m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
-        .setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
-    m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
-        .setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
-    m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION)
-        .setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
+    //QUADRATURE ENCODERS WHEN PLUGGED IN TO SPARKS
+    //m_leftEncoder = m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION);
+    //m_rightEncoder = m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION);
+
+    //HALL SENSORS
+    m_leftEncoder = m_leftBack.getEncoder();
+    m_rightEncoder = m_rightBack.getEncoder();
+
+    m_leftEncoder.setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
+    m_rightEncoder.setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
+
+    m_leftEncoder.setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
+    m_rightEncoder.setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
 
     m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
     m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
@@ -73,16 +80,6 @@ public class DriveTrain extends SubsystemBase {
     m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
     m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
     m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
-
-    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
-    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
-    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
-    m_leftFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
-
-    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
-    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
-    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
-    m_rightFront.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
 
     m_leftFront.follow(m_leftBack);
     m_rightFront.follow(m_rightFront);
@@ -110,21 +107,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Runs motors on each side at the desired speed
-   *
-   * @param leftSpeed  the speed that the motors on the left side will run at
-   * @param rightSpeed the speed that the motors on the right side will run at
-   */
-  public void tankDrive(double leftSpeed, double rightSpeed) {
-    m_leftBack.set(leftSpeed);
-    m_rightBack.set(rightSpeed);
-  }
-
-  /**
    * Stops the robot
    */
   public void stop() {
-    tankDrive(0.0, 0.0);
+   m_leftBack.set(0.0);
+   m_rightBack.set(0.0);
   }
 
   /**
@@ -132,6 +119,13 @@ public class DriveTrain extends SubsystemBase {
    * @param turn  the angle that the robot would turn to
    */
   public void arcadeDrive(double drive, double turn) {
+
+    drive = Utilities.clip(drive, -1, 1);
+    turn = Utilities.clip(turn, -1, 1);
+
+    drive = Math.copySign(Math.pow(drive, 2), drive);
+    turn = Math.copySign(Math.pow(turn, 2), turn);
+
     m_leftBack.set(drive + turn);
     m_rightBack.set(drive - turn);
   }
@@ -140,14 +134,14 @@ public class DriveTrain extends SubsystemBase {
    * @return the left encoder's output
    */
   public double getLeftDistance() {
-    return m_leftBack.getEncoder().getPosition();
+    return m_leftEncoder.getPosition();
   }
 
   /**
    * @return the right encoder's output
    */
   public double getRightDistance() {
-    return m_rightBack.getEncoder().getPosition();
+    return m_rightEncoder.getPosition();
   }
 
   /**
@@ -174,8 +168,8 @@ public class DriveTrain extends SubsystemBase {
    * @param angle the angle of the robot in degrees CCW from forward
    */
   public void resetDriveTrain(double xPos, double yPos, double angle) {
-    m_leftBack.getEncoder().setPosition(0.0);
-    m_rightBack.getEncoder().setPosition(0.0);
+    m_leftEncoder.setPosition(0.0);
+    m_rightEncoder.setPosition(0.0);
     m_gyro.reset();
     m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
   }
@@ -206,7 +200,7 @@ public class DriveTrain extends SubsystemBase {
    * 
    * @param speed the speed to set in meters per second
    */
-  public void setLeftSpeed(double speed) {
+  public void setLeftVelocity(double speed) {
     m_rightFront.getPIDController().setReference(speed, ControlType.kVelocity);
   }
 
@@ -216,7 +210,7 @@ public class DriveTrain extends SubsystemBase {
    * 
    * @param speed the speed to set in meters per second
    */
-  public void setRightSpeed(double speed) {
+  public void setRightVelocity(double speed) {
     m_rightBack.getPIDController().setReference(speed, ControlType.kVelocity);
   }
 

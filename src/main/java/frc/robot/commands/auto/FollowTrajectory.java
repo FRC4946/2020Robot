@@ -28,8 +28,8 @@ public class FollowTrajectory extends RamseteCommand {
     super(trajectory, () -> driveTrain.getPose(),
         new RamseteController(Constants.DriveTrain.RAMSETE_B, Constants.DriveTrain.RAMSETE_ZETA),
         driveTrain.getKinematics(), (leftSpeed, rightSpeed) -> {
-          driveTrain.setLeftSpeed(leftSpeed);
-          driveTrain.setRightSpeed(rightSpeed);
+          driveTrain.setLeftVelocity(leftSpeed);
+          driveTrain.setRightVelocity(rightSpeed);
         }, driveTrain);
     m_driveTrain = driveTrain;
   }
