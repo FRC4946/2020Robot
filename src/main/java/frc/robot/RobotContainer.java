@@ -95,7 +95,7 @@ public class RobotContainer {
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
 
-    operatorShootButton.whenHeld(new SetShooterWithLimelight(m_shooter, m_turret, m_hood, m_limelight));
+    operatorShootButton.whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
 
     driverShootButton.and(operatorShootButton)
         .whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
