@@ -43,10 +43,7 @@ public class DriveTrain extends SubsystemBase {
 
   private final DifferentialDriveOdometry m_odometry;
 
-  private long m_prevTime = 0;
-  private double m_prevLeftPosition, m_prevRightPosition;
-
-  private PIDController m_leftController, m_rightController;
+  private final PIDController m_leftController, m_rightController;
 
   public DriveTrain() {
     m_leftFront = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_LEFT_FRONT, MotorType.kBrushless);
@@ -88,9 +85,6 @@ public class DriveTrain extends SubsystemBase {
 
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()),
         new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)));
-
-    m_prevLeftPosition = 0;
-    m_prevRightPosition = 0;
 
     m_leftController = new PIDController(Constants.DriveTrain.VELOCITY_P, Constants.DriveTrain.VELOCITY_I,
         Constants.DriveTrain.VELOCITY_D);
@@ -183,7 +177,7 @@ public class DriveTrain extends SubsystemBase {
    * @return the speed of the right side of the drivetrain in meters/second
    */
   public double getRightVelocity() {
-    return (1000 * (getRightDistance() - m_prevRightPosition)) / (double) (System.currentTimeMillis() - m_prevTime);
+    return m_rightEncoder.getRate();
   }
 
   /**
@@ -192,31 +186,31 @@ public class DriveTrain extends SubsystemBase {
    * @return the speed of the left side of the drivetrain in meters/second
    */
   public double getLeftVelocity() {
-    return (1000d * (getLeftDistance() - m_prevLeftPosition)) / (double) (System.currentTimeMillis() - m_prevTime);
+    return m_leftEncoder.getRate();
   }
 
   /**
-   * Sets the speed for the left side of the drivetrain, must be called once every
+   * Sets the velocity for the left side of the drivetrain, must be called once every
    * scheduler cycle
    * 
-   * @param speed the speed to set the left side at in meters per second
+   * @param velocity the velocity to set the left side at in meters per second
    */
-  public void setLeftVelocity(double speed) {
-    double output = m_leftController.calculate(getLeftVelocity(), speed);
-    output += Constants.DriveTrain.VELOCITY_FF * speed;
+  public void setLeftVelocity(double velocity) {
+    double output = m_leftController.calculate(getLeftVelocity(), velocity);
+    output += Constants.DriveTrain.VELOCITY_FF * velocity;
 
     m_leftBack.set(output);
   }
 
     /**
-   * Sets the speed for the right side of the drivetrain, must be called once every
+   * Sets the velocity for the right side of the drivetrain, must be called once every
    * scheduler cycle
    * 
-   * @param speed the speed to set the right side at in meters per second
+   * @param velocity the velocity to set the right side at in meters per second
    */
-  public void setRightVelocity(double speed) {
-    double output = m_rightController.calculate(getRightVelocity(), speed);
-    output += Constants.DriveTrain.VELOCITY_FF * speed;
+  public void setRightVelocity(double velocity) {
+    double output = m_rightController.calculate(getRightVelocity(), velocity);
+    output += Constants.DriveTrain.VELOCITY_FF * velocity;
 
     m_rightBack.set(output);
   }
@@ -248,10 +242,5 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
-
-    m_prevTime = System.currentTimeMillis();
-
-    m_prevRightPosition = getRightDistance();
-    m_prevLeftPosition = getLeftDistance();
   }
 }
