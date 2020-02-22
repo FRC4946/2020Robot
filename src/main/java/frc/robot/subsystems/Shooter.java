@@ -111,6 +111,6 @@ public class Shooter extends PIDSubsystem {
   public void periodic() {
     SmartDashboard.putNumber("shooter/speed", getAverageSpeed());
     SmartDashboard.putNumber("shooter/setpoint", getSetpoint());
-    SmartDashboard.putNumber("shooter/percentSpeed", getAverageSpeed()/getSetpoint());
+    SmartDashboard.putNumber("shooter/percentSetpoint", getAverageSpeed()/getSetpoint());
   }
 }

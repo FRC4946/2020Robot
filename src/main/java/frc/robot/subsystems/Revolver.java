@@ -21,10 +21,11 @@ public class Revolver extends SubsystemBase {
   private final CANSparkMax m_revolver;
   private int m_drumReps = 0;
 
-  private UnjamRevolver m_unjam = new UnjamRevolver(this);
+  private final UnjamRevolver m_unjam;
 
   public Revolver() {
     m_revolver = new CANSparkMax(RobotMap.CAN.SPARKMAX_REVOLVER, MotorType.kBrushless);
+    m_unjam = new UnjamRevolver(this);
   }
 
   /**
