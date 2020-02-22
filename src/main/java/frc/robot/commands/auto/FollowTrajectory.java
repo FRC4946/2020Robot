@@ -32,6 +32,7 @@ public class FollowTrajectory extends RamseteCommand {
           driveTrain.setRightVelocity(rightSpeed);
         }, driveTrain);
     m_driveTrain = driveTrain;
+    m_driveTrain.resetControllers();
   }
 
   @Override

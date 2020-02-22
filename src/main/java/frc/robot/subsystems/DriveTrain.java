@@ -8,13 +8,13 @@
 package frc.robot.subsystems;
 
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANEncoder;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.ControlType;
 
+import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
 import edu.wpi.first.wpilibj.Solenoid;
+import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
@@ -33,7 +33,7 @@ import frc.robot.util.Utilities;
 public class DriveTrain extends SubsystemBase {
   private final CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
 
-  private final CANEncoder m_leftEncoder, m_rightEncoder;
+  private final Encoder m_leftEncoder, m_rightEncoder;
 
   private final Solenoid m_highGear;
 
@@ -42,6 +42,8 @@ public class DriveTrain extends SubsystemBase {
   private final DifferentialDriveKinematics m_kinematics;
 
   private final DifferentialDriveOdometry m_odometry;
+
+  private final PIDController m_leftController, m_rightController;
 
   public DriveTrain() {
     m_leftFront = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_LEFT_FRONT, MotorType.kBrushless);
@@ -56,30 +58,11 @@ public class DriveTrain extends SubsystemBase {
     m_leftFront.setInverted(false);
     m_leftBack.setInverted(false);
 
+    m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
+    m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 
-    //QUADRATURE ENCODERS WHEN PLUGGED IN TO SPARKS
-    //m_leftEncoder = m_leftBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION);
-    //m_rightEncoder = m_rightBack.getEncoder(EncoderType.kQuadrature, Constants.DriveTrain.ENCODER_RESOLUTION);
-
-    //HALL SENSORS
-    m_leftEncoder = m_leftBack.getEncoder();
-    m_rightEncoder = m_rightBack.getEncoder();
-
-    m_leftEncoder.setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
-    m_rightEncoder.setPositionConversionFactor(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
-
-    m_leftEncoder.setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
-    m_rightEncoder.setVelocityConversionFactor(Constants.DriveTrain.ENCODER_MPS_PER_RPM);
-
-    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
-    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
-    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
-    m_leftBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
-
-    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_P);
-    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_I);
-    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_D);
-    m_rightBack.getPIDController().setP(Constants.DriveTrain.VELOCITY_FF);
+    m_leftEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
+    m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
     m_leftFront.follow(m_leftBack);
     m_rightFront.follow(m_rightFront);
@@ -103,6 +86,11 @@ public class DriveTrain extends SubsystemBase {
     m_odometry = new DifferentialDriveOdometry(Rotation2d.fromDegrees(-getGyroAngle()),
         new Pose2d(0.0, 0.0, Rotation2d.fromDegrees(0.0)));
 
+    m_leftController = new PIDController(Constants.DriveTrain.VELOCITY_P, Constants.DriveTrain.VELOCITY_I,
+        Constants.DriveTrain.VELOCITY_D);
+    m_rightController = new PIDController(Constants.DriveTrain.VELOCITY_P, Constants.DriveTrain.VELOCITY_I,
+        Constants.DriveTrain.VELOCITY_D);
+
     resetDriveTrain();
   }
 
@@ -110,8 +98,8 @@ public class DriveTrain extends SubsystemBase {
    * Stops the robot
    */
   public void stop() {
-   m_leftBack.set(0.0);
-   m_rightBack.set(0.0);
+    m_leftBack.set(0.0);
+    m_rightBack.set(0.0);
   }
 
   /**
@@ -134,14 +122,14 @@ public class DriveTrain extends SubsystemBase {
    * @return the left encoder's output
    */
   public double getLeftDistance() {
-    return m_leftEncoder.getPosition();
+    return m_leftEncoder.getDistance();
   }
 
   /**
    * @return the right encoder's output
    */
   public double getRightDistance() {
-    return m_rightEncoder.getPosition();
+    return m_rightEncoder.getDistance();
   }
 
   /**
@@ -160,6 +148,14 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
+   * Resets the PID Controllers
+   */
+  public void resetControllers() {
+    m_rightController.reset();
+    m_leftController.reset();
+  }
+
+  /**
    * Resets the odometry and sets the robot to the specified position. Also resets
    * encoders and gyro
    *
@@ -168,10 +164,55 @@ public class DriveTrain extends SubsystemBase {
    * @param angle the angle of the robot in degrees CCW from forward
    */
   public void resetDriveTrain(double xPos, double yPos, double angle) {
-    m_leftEncoder.setPosition(0.0);
-    m_rightEncoder.setPosition(0.0);
+    resetControllers();
+    m_leftEncoder.reset();
+    m_rightEncoder.reset();
     m_gyro.reset();
     m_odometry.resetPosition(new Pose2d(xPos, yPos, new Rotation2d(xPos, yPos)), Rotation2d.fromDegrees(angle));
+  }
+
+  /**
+   * Gets the speed of the right side of the drivetrain
+   * 
+   * @return the speed of the right side of the drivetrain in meters/second
+   */
+  public double getRightVelocity() {
+    return m_rightEncoder.getRate();
+  }
+
+  /**
+   * Gets the speed of the left side of the drivetrain
+   * 
+   * @return the speed of the left side of the drivetrain in meters/second
+   */
+  public double getLeftVelocity() {
+    return m_leftEncoder.getRate();
+  }
+
+  /**
+   * Sets the velocity for the left side of the drivetrain, must be called once every
+   * scheduler cycle
+   * 
+   * @param velocity the velocity to set the left side at in meters per second
+   */
+  public void setLeftVelocity(double velocity) {
+    double output = m_leftController.calculate(getLeftVelocity(), velocity);
+    output += Constants.DriveTrain.VELOCITY_FF * velocity;
+
+    m_leftBack.set(output);
+  }
+
+    /**
+   * Sets the velocity for the right side of the drivetrain, must be called once every
+   * scheduler cycle
+   * 
+   * @param velocity the velocity to set the right side at in meters per second
+   */
+  public void setRightVelocity(double velocity) {
+    double output = m_rightController.calculate(getRightVelocity(), velocity);
+    output += Constants.DriveTrain.VELOCITY_FF * velocity;
+
+    m_rightBack.set(output);
   }
 
   /**
@@ -192,26 +233,6 @@ public class DriveTrain extends SubsystemBase {
 
   public Pose2d getPose() {
     return m_odometry.getPoseMeters();
-  }
-
-  /**
-   * Sets the speed for the internal PID Controller on the Spark Max on the left
-   * side of the drivetrain
-   * 
-   * @param speed the speed to set in meters per second
-   */
-  public void setLeftVelocity(double speed) {
-    m_rightFront.getPIDController().setReference(speed, ControlType.kVelocity);
-  }
-
-  /**
-   * Sets the speed for the internal PID Controller on the Spark Max on the right
-   * side of the drivetrain
-   * 
-   * @param speed the speed to set in meters per second
-   */
-  public void setRightVelocity(double speed) {
-    m_rightBack.getPIDController().setReference(speed, ControlType.kVelocity);
   }
 
   public void setHighGear(boolean on) {
