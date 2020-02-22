@@ -7,6 +7,8 @@
 
 package frc.robot.commands.shooter;
 
+import edu.wpi.first.wpilibj.GenericHID.RumbleType;
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Limelight;
@@ -22,21 +24,24 @@ public class SetShooterWithLimelight extends CommandBase {
   private final Turret m_turret;
   private final Hood m_hood;
   private final Limelight m_limelight;
+  private final Joystick m_joystick;
 
   /**
    * Uses the limelight to calculate shooter speed, hood angle, and turret angle,
    * moves to these calculated values
    *
+   * @param joystick  the joystick to vibrate when the shooter is at setpoint
    * @param shooter   the shooter to use for this command
    * @param turret    the turret to use for this command
    * @param hood      the hood to use for this command
    * @param limelight the limelight to use for this command
    */
-  public SetShooterWithLimelight(Shooter shooter, Turret turret, Hood hood, Limelight limelight) {
+  public SetShooterWithLimelight(Joystick joystick, Shooter shooter, Turret turret, Hood hood, Limelight limelight) {
     m_shooter = shooter;
     m_turret = turret;
     m_hood = hood;
     m_limelight = limelight;
+    m_joystick = joystick;
 
     addRequirements(m_shooter, m_turret, m_hood);
   }
@@ -52,5 +57,13 @@ public class SetShooterWithLimelight extends CommandBase {
     m_shooter.setSetpoint(m_limelight.getShooterSpeed());
     m_hood.setSetpoint(m_limelight.getHoodAngle());
     m_turret.setSetpoint(m_turret.getAngle() + m_limelight.getAngleOffset());
+
+    if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_turret.atSetpoint()) {
+      m_joystick.setRumble(RumbleType.kLeftRumble, 0.7);
+      m_joystick.setRumble(RumbleType.kRightRumble, 0.7);
+    } else {
+      m_joystick.setRumble(RumbleType.kLeftRumble, 0.0);
+      m_joystick.setRumble(RumbleType.kRightRumble, 0.0);
+    }
   }
 }
