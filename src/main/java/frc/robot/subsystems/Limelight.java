@@ -159,15 +159,93 @@ public class Limelight extends SubsystemBase {
         / Math.sin(Math.toRadians((m_ty.getDouble(0) + Constants.Vision.LIMELIGHT_PITCH)));
   }
 
+  /**
+   * Finds the vector between the robot and the limelight target in a turret
+   * relative coordinate system
+   * 
+   * @return the components of the vector from the robot to the target in inches
+   *         relative to the turret
+   */
   public double[] findTurretRelativePosition() {
     double distance = findDistance();
     return new double[] { Math.cos(Math.toRadians(90 - m_tx.getDouble(0))) * findDistance(),
         Constants.Vision.LIMELIGHT_POSITION_OFFSET + Math.sin(Math.toRadians(90 - m_tx.getDouble(0))) * distance };
   }
 
+  /**
+   * Finds the vector between the robot and the limelight target in a field
+   * relative coordinate system
+   * 
+   * @param turretAngle the angle of the turret in degrees
+   * @param robotAngle  the angle of the robot in degrees
+   * @return the components of the vector from the robot to the target in inches
+   *         relative to the field
+   */
+  public double[] findFieldRelativePosition(double robotAngle, double turretAngle) {
+    double[] position = findTurretRelativePosition();
+    double angle = 90 - (getAngleOffset() + turretAngle + robotAngle);
+    double magnitude = Math.sqrt(Math.pow(position[0], 2) + Math.pow(position[1], 2));
+    return new double[] { Math.cos(Math.toRadians(angle)) * magnitude, Math.sin(Math.toRadians(angle)) * magnitude };
+  }
+
+  /**
+   * Finds the vector between the robot and the inner goal in a turret relative
+   * coordinate system
+   * 
+   * @param robotAngle  the angle of the robot in degrees
+   * @param turretAngle the angle of the turret in degrees
+   * @return the components of the vector from the robot to the inner goal in
+   *         inches relative to the turret
+   */
+  public double[] findTurretRelativeInnerGoalPosition(double robotAngle, double turretAngle) {
+    double position[] = findFieldRelativeInnerGoalPosition(robotAngle, turretAngle);
+    double magnitude = Math.sqrt(Math.pow(position[0], 2) + Math.pow(position[1], 2));
+    double angle = (90 - (position[0] == 0 ? 90 : Math.toDegrees(Math.atan(position[1] / position[0])))) - robotAngle
+        - turretAngle;
+    if (position[1] < 0) { // Quadrant 2 or 3
+      angle += 180;
+    }
+    return new double[] { Math.cos(Math.toRadians(angle)) * magnitude, Math.sin(Math.toRadians(angle)) * magnitude };
+  }
+
+  /**
+   * Finds the vector between the robot and the inner goal in a field relative
+   * coordinate system
+   * 
+   * @param robotAngle  the angle of the robot in degrees
+   * @param turretAngle the of the turret in degrees
+   * @return the components of the vector from the robot to the inner goal in
+   *         inches relative to the field
+   */
+  public double[] findFieldRelativeInnerGoalPosition(double robotAngle, double turretAngle) {
+    double[] position = findFieldRelativePosition(robotAngle, turretAngle);
+    return new double[] { position[0] + position[1] + Constants.Vision.INNER_HOLE_OFFSET };
+  }
+
+  /**
+   * Gets the angle between the turret and the limelight target
+   * 
+   * @return the angle between the turret and the limelight target in degrees
+   */
   public double getAngleOffset() {
-    double angle = 90 - Math.toDegrees(Math.atan(findTurretRelativePosition()[0] == 0 ? 90
-        : (findTurretRelativePosition()[1] / findTurretRelativePosition()[0])));
+    double[] position = findTurretRelativePosition();
+    double angle = 90 - (position[0] == 0 ? 90 : Math.toDegrees(Math.atan((position[1] / position[0]))));
+
+    return ((Math.abs(angle) > Constants.Vision.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
+  }
+
+  /**
+   * Gets the angle between the turret and the calculated position of the inner
+   * goal in degrees
+   * 
+   * @param robotAngle  the angle of the robot in degrees
+   * @param turretAngle the angle of the turret in degrees
+   * @return the angle between the turret and the inner goal's calculated position
+   *         in degrees
+   */
+  public double getInnerGoalAngleOffset(double robotAngle, double turretAngle) {
+    double[] position = findTurretRelativeInnerGoalPosition(robotAngle, turretAngle);
+    double angle = 90 - (position[0] == 0 ? 90 : Math.toDegrees(Math.atan((position[1] / position[0]))));
 
     return ((Math.abs(angle) > Constants.Vision.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
   }

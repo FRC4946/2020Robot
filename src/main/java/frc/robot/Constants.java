@@ -113,7 +113,7 @@ public final class Constants {
 
     public static final double MIN_ANGLE = -90.0; // Full left
     public static final double MAX_ANGLE = 90.0; // Full right
-    public static final double HOME_ANGLE = 0.0; // Centre
+    public static final double HOME_ANGLE = 0.0; // Center
 
     public static final double POT_SCALE = 3600;
 
@@ -122,10 +122,11 @@ public final class Constants {
 
   public static final class Vision {
     public static final double TARGET_HEIGHT = 60.0; // Inches from ground
+    public static final double INNER_HOLE_OFFSET = 29.25; // Inches begind the high target
 
     public static final double LIMELIGHT_HEIGHT = 39.5; // Inches from ground
-    public static final double LIMELIGHT_PITCH = 0.0; // Degrees from horizontal
-    public static final double LIMELIGHT_POSITION_OFFSET = 3.75; // Inches forward from centre of turret
+    public static final double LIMELIGHT_PITCH = 29.8; // Degrees from horizontal
+    public static final double LIMELIGHT_POSITION_OFFSET = 7.82326; // Inches forward from center of turret
 
     public static final double LIMELIGHT_HORIZONTAL_FOV = 53.0;
   }
