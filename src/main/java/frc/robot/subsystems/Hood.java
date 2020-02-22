@@ -20,7 +20,7 @@ public class Hood extends PIDSubsystem {
   private final Servo m_servo;
   private final AnalogInput m_pot;
 
-  private double m_bottomValue;
+  private double m_minRawAngle;
 
   /**
    * Creates a new Hood.
@@ -60,8 +60,8 @@ public class Hood extends PIDSubsystem {
    * @return the angle of the hood in degrees
    */
   public double getAngle() {
-    return (getRawAngle() - m_bottomValue) * (Constants.Hood.MAX_ANGLE - Constants.Hood.MIN_ANGLE)
-        + Constants.Hood.MIN_ANGLE;
+    return ((getRawAngle() - m_minRawAngle) / Constants.Hood.POT_DEGREES_PER_HOOD_MOVE)
+        * (Constants.Hood.MAX_ANGLE - Constants.Hood.MIN_ANGLE) + Constants.Hood.MIN_ANGLE;
   }
 
   /**
@@ -97,8 +97,8 @@ public class Hood extends PIDSubsystem {
    * @param speed the speed to set the servo to as a percent from -1 to 1
    */
   public void set(double speed) {
-    if ((getRawAngle() < Constants.Hood.MIN_RAW_ANGLE && speed < 0)
-        || (getRawAngle() > Constants.Hood.MAX_RAW_ANGLE && speed > 0)) {
+    if (((getRawAngle() < Constants.Hood.MIN_RAW_ANGLE || getAngle() < Constants.Hood.MIN_ANGLE) && speed < 0)
+        || ((getRawAngle() > Constants.Hood.MAX_RAW_ANGLE || getAngle() > Constants.Hood.MAX_ANGLE) && speed > 0)) {
       stop();
     } else {
       m_servo.setSpeed(speed);
@@ -109,7 +109,7 @@ public class Hood extends PIDSubsystem {
    * Resets the bottom hood angle to the current raw angle from the pot
    */
   public void resetPot() {
-    m_bottomValue = getRawAngle();
+    m_minRawAngle = getRawAngle();
   }
 
   /**
