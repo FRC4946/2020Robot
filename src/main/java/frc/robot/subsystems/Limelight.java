@@ -256,9 +256,30 @@ public class Limelight extends SubsystemBase {
     return new double[] { Math.cos(Math.toRadians(angle)) * magnitude, Math.sin(Math.toRadians(angle)) * magnitude };
   }
 
+  /**
+   * Gets the angle between the turret and the limelight target
+   * 
+   * @return the angle between the turret and the limelight target in degrees
+   */
   public double getAngleOffset() {
-    double angle = 90 - (findTurretRelativePosition()[0] == 0 ? 90
-        : Math.toDegrees(Math.atan((findTurretRelativePosition()[1] / findTurretRelativePosition()[0]))));
+    double[] position = findTurretRelativePosition();
+    double angle = 90 - (position[0] == 0 ? 90 : Math.toDegrees(Math.atan((position[1] / position[0]))));
+
+    return ((Math.abs(angle) > Constants.Vision.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
+  }
+
+  /**
+   * Gets the angle between the turret and the calculated position of the inner
+   * goal in degrees
+   * 
+   * @param robotAngle  the angle of the robot in degrees
+   * @param turretAngle the angle of the turret in degrees
+   * @return the angle between the turret and the inner goal's calculated position
+   *         in degrees
+   */
+  public double getInnerGoalAngleOffset(double robotAngle, double turretAngle) {
+    double[] position = findTurretRelativeInnerGoalPosition(robotAngle, turretAngle);
+    double angle = 90 - (position[0] == 0 ? 90 : Math.toDegrees(Math.atan((position[1] / position[0]))));
 
     return ((Math.abs(angle) > Constants.Vision.LIMELIGHT_HORIZONTAL_FOV ? -(180 - angle) : angle));
   }
