@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -104,5 +105,12 @@ public class Shooter extends PIDSubsystem {
   @Override
   public double getMeasurement() {
     return getAverageSpeed();
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("shooter/speed", getAverageSpeed());
+    SmartDashboard.putNumber("shooter/setpoint", getSetpoint());
+    SmartDashboard.putNumber("shooter/percentSetpoint", getAverageSpeed()/getSetpoint());
   }
 }

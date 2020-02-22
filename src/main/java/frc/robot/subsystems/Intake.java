@@ -12,6 +12,7 @@ import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
@@ -39,5 +40,10 @@ public class Intake extends SubsystemBase {
 
   public void setExtended(Value value) {
     m_solenoid.set(value);
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putBoolean("intake/extended", m_solenoid.get() == Value.kForward);
   }
 }

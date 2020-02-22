@@ -11,6 +11,7 @@ import com.ctre.phoenix.motorcontrol.ControlMode;
 import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.can.TalonSRX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -102,5 +103,11 @@ public class Turret extends SubsystemBase {
    */
   private int degreesToSensorUnits(double degrees) {
     return (int) Math.round(degrees / (Constants.Turret.POT_SCALE * Constants.Turret.RATIO) * 1023d);
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("turret/angle", getAngle());
+    SmartDashboard.putNumber("turret/setpoint", getSetpoint());
   }
 }

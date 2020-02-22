@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import edu.wpi.first.wpilibj.AnalogInput;
 import edu.wpi.first.wpilibj.Servo;
 import edu.wpi.first.wpilibj.controller.PIDController;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.PIDSubsystem;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -117,5 +118,13 @@ public class Hood extends PIDSubsystem {
    */
   public void stop() {
     m_servo.setSpeed(0.0);
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("hood/angle", getAngle());
+    SmartDashboard.putNumber("hood/setpoint", getSetpoint());
+    //Not relevant until #67 is merged
+    //SmartDashboard.putNumber("hood/potOffset", m_bottomValue);
   }
 }

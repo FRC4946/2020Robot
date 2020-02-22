@@ -15,6 +15,7 @@ import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -75,5 +76,13 @@ public class ControlPanel extends SubsystemBase {
    */
   public ColorMatchResult getCurrentColor() {
     return m_matcher.matchClosestColor(m_sensor.getColor());
+  }
+
+  @Override
+  public void periodic() {
+    SmartDashboard.putNumber("colorWheel/distance", getDistance());
+    SmartDashboard.putNumber("colorWheel/color/red", getCurrentColor().color.red);
+    SmartDashboard.putNumber("colorWheel/color/green", getCurrentColor().color.green);
+    SmartDashboard.putNumber("colorWheel/color/blue", getCurrentColor().color.blue);
   }
 }
