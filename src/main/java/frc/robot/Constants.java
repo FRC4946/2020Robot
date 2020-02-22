@@ -40,7 +40,7 @@ public final class Constants {
 
     public static final double PANEL_CIRCUMFERENCE = 32 * Math.PI; // On-field mechanism. Inches
     public static final double WHEEL_CIRCUMFERENCE = 4 * Math.PI; // On-robot wheel. Inches
-    public static final double ENCODER_DEGREES_PER_TICK = 360.0 / 128.0;
+    public static final double ENCODER_DEGREES_PER_TICK = 360.0 / 128.0; // TODO: Check factor of 4
   }
 
   public static final class DriveTrain {
