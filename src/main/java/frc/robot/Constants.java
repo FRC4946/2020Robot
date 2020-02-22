@@ -125,7 +125,7 @@ public final class Constants {
 
     public static final double LIMELIGHT_HEIGHT = 39.5; // Inches from ground
     public static final double LIMELIGHT_PITCH = 29.8; // Degrees from horizontal
-    public static final double LIMELIGHT_POSITION_OFFSET = 7.82326; // Inches forward from centre of turret
+    public static final double LIMELIGHT_POSITION_OFFSET = 7.82326; // Inches forward from center of turret
 
     public static final double LIMELIGHT_INNER_HOLE_OFFSET = 29.25; // Inches begind the high target
 
