@@ -189,20 +189,6 @@ public class Limelight extends SubsystemBase {
   }
 
   /**
-   * Finds the vector between the robot and the inner goal in a field relative
-   * coordinate system
-   * 
-   * @param robotAngle  the angle of the robot in degrees
-   * @param turretAngle the of the turret in degrees
-   * @return the components of the vector from the robot to the inner goal in
-   *         inches relative to the field
-   */
-  public double[] findFieldRelativeInnerGoalPosition(double robotAngle, double turretAngle) {
-    double[] position = findFieldRelativePosition(robotAngle, turretAngle);
-    return new double[] { position[0] + position[1] + Constants.Vision.INNER_HOLE_OFFSET };
-  }
-
-  /**
    * Finds the vector between the robot and the inner goal in a turret relative
    * coordinate system
    * 
@@ -220,6 +206,20 @@ public class Limelight extends SubsystemBase {
       angle += 180;
     }
     return new double[] { Math.cos(Math.toRadians(angle)) * magnitude, Math.sin(Math.toRadians(angle)) * magnitude };
+  }
+
+  /**
+   * Finds the vector between the robot and the inner goal in a field relative
+   * coordinate system
+   * 
+   * @param robotAngle  the angle of the robot in degrees
+   * @param turretAngle the of the turret in degrees
+   * @return the components of the vector from the robot to the inner goal in
+   *         inches relative to the field
+   */
+  public double[] findFieldRelativeInnerGoalPosition(double robotAngle, double turretAngle) {
+    double[] position = findFieldRelativePosition(robotAngle, turretAngle);
+    return new double[] { position[0] + position[1] + Constants.Vision.INNER_HOLE_OFFSET };
   }
 
   /**
