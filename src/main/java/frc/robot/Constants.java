@@ -44,7 +44,7 @@ public final class Constants {
   }
 
   public static final class DriveTrain {
-    public static final double TRACK_WIDTH = 0.0; //Inches
+    public static final double TRACK_WIDTH = 0.0; // Inches
     public static final int ENCODER_RESOLUTION = 128;
     public static final double ENCODER_METERS_PER_TICK = 6d * Math.PI / (double) ENCODER_RESOLUTION;
 
@@ -63,11 +63,13 @@ public final class Constants {
     public static final double POSITION_D = 0.0;
     public static final double POSITION_TOLERANCE = 2.0; // Degrees
 
-    public static final double POT_SCALE = 5; // TODO: Dummy value
-    public static final double POT_OFFSET = 1; // TODO: Dummy value
+    public static final double POT_SCALE = 3600; // Degrees (360 * Number of pot rotations)
 
     public static final double MIN_ANGLE = 27.4; // Degrees
     public static final double MAX_ANGLE = 82.5; // Degrees
+
+    public static final double MAX_RAW_ANGLE = POT_SCALE - 180; // Degrees
+    public static final double MIN_RAW_ANGLE = 180; // Degrees
 
     public static final double PWM_MAX = 2.5;
     public static final double PWM_DEADBAND_MAX = 2.45;
