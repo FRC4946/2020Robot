@@ -102,6 +102,7 @@ public class RobotContainer {
         .whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
     spinUp.whileHeld(new RunCommand(() -> {
       m_shooter.enable();
+      m_shooter.setKey(m_shooter.atSetpoint());
     }, m_shooter));
 
     driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
