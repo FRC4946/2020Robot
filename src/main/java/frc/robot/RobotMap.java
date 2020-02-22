@@ -36,6 +36,7 @@ public final class RobotMap {
     // OPERATOR
 
     public static final int TURRET = 0;
+    public static final int HOOD = 1;
   }
 
   /**
@@ -53,7 +54,7 @@ public final class RobotMap {
     // OPERATOR
 
     public static final int OPERATOR_SHOOT = 3;
-
+    public static final int OPERATOR_SPIN_UP = 2;
   }
 
   /**

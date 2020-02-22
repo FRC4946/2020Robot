@@ -19,6 +19,7 @@ import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.revolver.Shoot;
+import frc.robot.commands.shooter.ManualShooter;
 import frc.robot.commands.shooter.SetShooterWithLimelight;
 import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
@@ -31,6 +32,7 @@ import frc.robot.subsystems.Limelight;
 import frc.robot.subsystems.Revolver;
 import frc.robot.subsystems.Shooter;
 import frc.robot.subsystems.Turret;
+import frc.robot.util.Utilities;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -94,11 +96,15 @@ public class RobotContainer {
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
+    JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
 
-    operatorShootButton.whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
+    operatorShootButton
+        .whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
+    spinUp.whileHeld(new RunCommand(() -> {
+      m_shooter.enable();
+    }, m_shooter));
 
-    driverShootButton.and(operatorShootButton)
-        .whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
+    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
 
     climbButton
         .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
@@ -130,25 +136,14 @@ public class RobotContainer {
     }, m_revolver));
 
     m_hood.setDefaultCommand(new ManualHood(() -> {
-      if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
-        return 0.6;
-      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135
-          || m_operatorJoystick.getPOV() == 225) {
-        return -0.6;
-      }
-      return 0.0;
+      return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
     }, m_hood));
 
     m_turret.setDefaultCommand(new ManualTurret(() -> {
-      if (m_operatorJoystick.getPOV() == 90 || m_operatorJoystick.getPOV() == 45
-          || m_operatorJoystick.getPOV() == 135) {
-        return 0.3;
-      } else if (m_operatorJoystick.getPOV() == 270 || m_operatorJoystick.getPOV() == 225
-          || m_operatorJoystick.getPOV() == 315) {
-        return -0.3;
-      }
-      return 0.0;
+      return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET));
     }, m_turret));
+
+    m_shooter.setDefaultCommand(new ManualShooter(m_operatorJoystick, m_shooter));
   }
 
   /**
@@ -181,16 +176,16 @@ public class RobotContainer {
 
   public static Color getFMSColor() {
     switch (DriverStation.getInstance().getGameSpecificMessage()) {
-      case "B":
-        return Constants.ControlPanel.COLOR_BLUE;
-      case "G":
-        return Constants.ControlPanel.COLOR_GREEN;
-      case "R":
-        return Constants.ControlPanel.COLOR_RED;
-      case "Y":
-        return Constants.ControlPanel.COLOR_YELLOW;
-      default:
-        return null;
+    case "B":
+      return Constants.ControlPanel.COLOR_BLUE;
+    case "G":
+      return Constants.ControlPanel.COLOR_GREEN;
+    case "R":
+      return Constants.ControlPanel.COLOR_RED;
+    case "Y":
+      return Constants.ControlPanel.COLOR_YELLOW;
+    default:
+      return null;
     }
   }
 }
