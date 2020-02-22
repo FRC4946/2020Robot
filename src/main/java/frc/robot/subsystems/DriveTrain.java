@@ -19,6 +19,7 @@ import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveKinematics;
 import edu.wpi.first.wpilibj.kinematics.DifferentialDriveOdometry;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Units;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -190,8 +191,8 @@ public class DriveTrain extends SubsystemBase {
   }
 
   /**
-   * Sets the velocity for the left side of the drivetrain, must be called once every
-   * scheduler cycle
+   * Sets the velocity for the left side of the drivetrain, must be called once
+   * every scheduler cycle
    * 
    * @param velocity the velocity to set the left side at in meters per second
    */
@@ -202,9 +203,9 @@ public class DriveTrain extends SubsystemBase {
     m_leftBack.set(output);
   }
 
-    /**
-   * Sets the velocity for the right side of the drivetrain, must be called once every
-   * scheduler cycle
+  /**
+   * Sets the velocity for the right side of the drivetrain, must be called once
+   * every scheduler cycle
    * 
    * @param velocity the velocity to set the right side at in meters per second
    */
@@ -242,5 +243,14 @@ public class DriveTrain extends SubsystemBase {
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
+
+    SmartDashboard.putNumberArray("drive/robotPosition",
+        new double[] { getPose().getTranslation().getX(), getPose().getTranslation().getY() });
+    SmartDashboard.putNumber("drive/angle", getPose().getRotation().getDegrees());
+    SmartDashboard.putNumber("drive/encoders/leftEncoder", getLeftDistance());
+    SmartDashboard.putNumber("drive/encoders/rightEncoder", getRightDistance());
+    SmartDashboard.putNumber("drive/gyroAngle", getGyroAngle());
+    SmartDashboard.putBoolean("drive/lowGear", !m_highGear.get());
+    SmartDashboard.putNumber("drive/speed", Math.abs((getLeftVelocity() + getRightVelocity()) / 2d));
   }
 }

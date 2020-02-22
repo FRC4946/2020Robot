@@ -10,6 +10,7 @@ package frc.robot.subsystems;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 import frc.robot.RobotMap;
@@ -19,6 +20,8 @@ public class Revolver extends SubsystemBase {
 
   private final CANSparkMax m_revolver;
   private int m_drumReps = 0;
+
+  private UnjamRevolver m_unjam = new UnjamRevolver(this);
 
   public Revolver() {
     m_revolver = new CANSparkMax(RobotMap.CAN.SPARKMAX_REVOLVER, MotorType.kBrushless);
@@ -50,7 +53,9 @@ public class Revolver extends SubsystemBase {
 
     if (m_drumReps > Constants.Revolver.STALL_REPS_THRESHOLD) {
       m_drumReps = 0;
-      new UnjamRevolver(this).schedule(false);
+      m_unjam.schedule(false);
     }
+
+    SmartDashboard.putBoolean("revolver/jammed", m_unjam.isScheduled());
   }
 }
