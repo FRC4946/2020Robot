@@ -84,10 +84,11 @@ public final class Constants {
     public static final double FORWARDS_SPEED = 0.075;
     public static final double BACKWARDS_SPEED = -0.075;
 
-    public static final double VELOCITY_THRESHOLD = 60;
+    public static final double VELOCITY_THRESHOLD = 60; // RPM
     public static final int STALL_REPS_THRESHOLD = 10;
 
     public static final double UNJAM_TIME = 0.5; // Time to unjam in seconds
+    public static final double UNJAM_COOLDOWN = 0.5; // Minimum time between unjams in seconds
   }
 
   public static final class Shooter {
@@ -97,7 +98,7 @@ public final class Constants {
     public static final double VELOCITY_P = 0.002;
     public static final double VELOCITY_I = 0.00001;
     public static final double VELOCITY_D = 0.0;
-    public static final double VELOCITY_FF = 0.000216350747274/2d;
+    public static final double VELOCITY_FF = 0.000216350747274 / 2d;
     public static final double VELOCITY_TOLERANCE = 50.0; // RPM
 
     public static final double IDLE_SPEED = 1500; // RPM

@@ -61,7 +61,7 @@ public class Revolver extends SubsystemBase {
       m_drumReps = 0;
     }
 
-    if (m_drumReps > Constants.Revolver.STALL_REPS_THRESHOLD && m_timer.get() > Constants.Revolver.UNJAM_TIME) {
+    if (m_drumReps > Constants.Revolver.STALL_REPS_THRESHOLD && m_timer.get() > Constants.Revolver.UNJAM_COOLDOWN) {
       m_drumReps = 0;
       m_unjam.schedule(false);
     }

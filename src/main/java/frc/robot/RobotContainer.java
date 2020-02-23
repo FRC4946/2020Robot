@@ -95,7 +95,7 @@ public class RobotContainer {
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
-        RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
+        RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
     JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);

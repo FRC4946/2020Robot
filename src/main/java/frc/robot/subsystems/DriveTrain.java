@@ -54,11 +54,6 @@ public class DriveTrain extends SubsystemBase {
 
     m_highGear = new Solenoid(RobotMap.PCM.DRIVE_SHIFTER);
 
-    m_rightFront.setInverted(true);
-    m_rightBack.setInverted(true);
-    m_leftFront.setInverted(false);
-    m_leftBack.setInverted(false);
-
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 
@@ -67,6 +62,11 @@ public class DriveTrain extends SubsystemBase {
 
     m_leftFront.follow(m_leftBack);
     m_rightFront.follow(m_rightBack);
+
+    m_rightFront.setInverted(true);
+    m_rightBack.setInverted(true);
+    m_leftFront.setInverted(false);
+    m_leftBack.setInverted(false);
 
     m_rightFront.burnFlash();
     m_rightBack.burnFlash();
