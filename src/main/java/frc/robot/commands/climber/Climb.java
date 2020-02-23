@@ -70,5 +70,6 @@ public class Climb extends CommandBase {
     // This means that if the robot is disabled after climbing, the climber will
     // stay up, but if the button is pressed again the climber will come down
     m_climber.setPiston(interrupted ? Value.kReverse : Value.kOff);
+    m_intake.setExtended(interrupted ? Value.kReverse : Value.kOff);
   }
 }
