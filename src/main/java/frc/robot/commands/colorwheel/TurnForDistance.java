@@ -29,6 +29,9 @@ public class TurnForDistance extends CommandBase {
 
   @Override
   public void initialize() {
+    if (!m_controlPanel.isExtended()) {
+      cancel();
+    }
     m_controlPanel.resetEncoder();
   }
 

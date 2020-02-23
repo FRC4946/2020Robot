@@ -55,6 +55,8 @@ public final class RobotMap {
 
     public static final int OPERATOR_SHOOT = 3;
     public static final int OPERATOR_SPIN_UP = 2;
+
+    public static final int EXTEND_CONTROL_PANEL = 4;
   }
 
   /**
@@ -99,8 +101,10 @@ public final class RobotMap {
 
     public static final int DRIVE_SHIFTER = 4;
 
-    public static final int CLIMBER_A = 5;
-    public static final int CLIMBER_B = 6;
+    public static final int CLIMBER_A = 0;
+    public static final int CLIMBER_B = 1;
+
+    public static final int CONTROL_PANEL = 5;
   }
 
   /**

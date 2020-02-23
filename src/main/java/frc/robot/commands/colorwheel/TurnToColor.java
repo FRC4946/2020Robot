@@ -29,6 +29,13 @@ public class TurnToColor extends CommandBase {
   }
 
   @Override
+  public void initialize() {
+    if (!m_controlPanel.isExtended()) {
+      cancel();
+    }
+  }
+
+  @Override
   public void execute() {
     m_controlPanel.set(m_speed);
   }

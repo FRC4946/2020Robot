@@ -13,6 +13,7 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
@@ -97,6 +98,8 @@ public class RobotContainer {
     JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.OPERATOR_SHOOT);
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
+    JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
+        RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
 
     operatorShootButton
         .whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
@@ -107,10 +110,17 @@ public class RobotContainer {
 
     driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
 
+    extendControlPanel.whenPressed(new InstantCommand(() -> {
+      m_controlPanel.setExtended(true);
+    }, m_controlPanel));
+    extendControlPanel.whenReleased(new InstantCommand(() -> {
+      m_controlPanel.setExtended(false);
+    }, m_controlPanel));
+
     climbButton
         .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
             + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
-            * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber));
+            * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
     intake.whenHeld(new RunRevolver(Constants.Revolver.FORWARDS_SPEED, m_revolver));
 

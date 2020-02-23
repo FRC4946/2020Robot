@@ -15,6 +15,7 @@ import com.revrobotics.ColorMatchResult;
 import com.revrobotics.ColorSensorV3;
 
 import edu.wpi.first.wpilibj.I2C.Port;
+import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
@@ -25,11 +26,13 @@ public class ControlPanel extends SubsystemBase {
   private final ColorSensorV3 m_sensor;
   private final TalonSRX m_wheel;
   private final ColorMatch m_matcher;
+  private final Solenoid m_solenoid;
 
   public ControlPanel() {
     m_sensor = new ColorSensorV3(Port.kOnboard);
     m_wheel = new TalonSRX(RobotMap.CAN.TALONSRX_CONTROL_PANEL);
     m_matcher = new ColorMatch();
+    m_solenoid = new Solenoid(RobotMap.PCM.CONTROL_PANEL);
 
     m_wheel.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
@@ -37,6 +40,22 @@ public class ControlPanel extends SubsystemBase {
     m_matcher.addColorMatch(Constants.ControlPanel.COLOR_GREEN);
     m_matcher.addColorMatch(Constants.ControlPanel.COLOR_RED);
     m_matcher.addColorMatch(Constants.ControlPanel.COLOR_YELLOW);
+  }
+
+  /**
+   * @return true if the control panel wheel is extended
+   */
+  public boolean isExtended() {
+    return m_solenoid.get();
+  }
+
+  /**
+   * Extends or retracts the control panel wheel
+   * 
+   * @param out true to extend the wheel, false to retract the wheel
+   */
+  public void setExtended(boolean out) {
+    m_solenoid.set(out);
   }
 
   /**
@@ -82,5 +101,6 @@ public class ControlPanel extends SubsystemBase {
     SmartDashboard.putNumber("colorWheel/color/red", getCurrentColor().color.red);
     SmartDashboard.putNumber("colorWheel/color/green", getCurrentColor().color.green);
     SmartDashboard.putNumber("colorWheel/color/blue", getCurrentColor().color.blue);
+    SmartDashboard.putBoolean("colorWheel/extended", m_solenoid.get());
   }
 }
