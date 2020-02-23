@@ -55,6 +55,8 @@ public final class RobotMap {
 
     public static final int OPERATOR_SHOOT = 3;
     public static final int OPERATOR_SPIN_UP = 2;
+
+    public static final int EXTEND_CONTROL_PANEL = 4;
   }
 
   /**
