@@ -29,12 +29,15 @@ public class TurnToColor extends CommandBase {
   }
 
   @Override
-  public void execute() {
-    if (m_controlPanel.isExtended()) {
-      m_controlPanel.set(m_speed);
-    } else {
-      m_controlPanel.stop();
+  public void initialize() {
+    if (!m_controlPanel.isExtended()) {
+      cancel();
     }
+  }
+
+  @Override
+  public void execute() {
+    m_controlPanel.set(m_speed);
   }
 
   @Override
@@ -44,6 +47,6 @@ public class TurnToColor extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_controlPanel.getCurrentColor().color.equals(m_color);
+    return m_controlPanel.getCurrentColor().color.equals(m_color) || !m_controlPanel.isExtended();
   }
 }

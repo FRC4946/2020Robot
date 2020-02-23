@@ -29,16 +29,15 @@ public class TurnForDistance extends CommandBase {
 
   @Override
   public void initialize() {
+    if (!m_controlPanel.isExtended()) {
+      cancel();
+    }
     m_controlPanel.resetEncoder();
   }
 
   @Override
   public void execute() {
-    if (m_controlPanel.isExtended()) {
-      m_controlPanel.set(m_speed);
-    } else {
-      m_controlPanel.stop();
-    }
+    m_controlPanel.set(m_speed);
   }
 
   @Override
@@ -48,6 +47,6 @@ public class TurnForDistance extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return Math.abs(m_controlPanel.getDistance()) > Math.abs(m_distance);
+    return Math.abs(m_controlPanel.getDistance()) > Math.abs(m_distance) || !m_controlPanel.isExtended();
   }
 }
