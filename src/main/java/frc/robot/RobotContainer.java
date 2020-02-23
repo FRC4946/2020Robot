@@ -100,6 +100,11 @@ public class RobotContainer {
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
     JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
+    JoystickButton shiftGear = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
+
+    shiftGear.whenPressed(new InstantCommand(() -> {
+      m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
+    }));
 
     operatorShootButton
         .whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));

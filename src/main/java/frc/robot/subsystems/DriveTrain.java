@@ -240,6 +240,10 @@ public class DriveTrain extends SubsystemBase {
     m_highGear.set(on);
   }
 
+  public boolean isHighGear() {
+    return m_highGear.get();
+  }
+
   @Override
   public void periodic() {
     m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());

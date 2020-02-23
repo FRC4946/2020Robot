@@ -46,17 +46,19 @@ public final class RobotMap {
 
     // DRIVER
 
-    public static final int CLIMB = 1; // A on X Box Controller
-    public static final int DRIVER_SHOOT = 3;
+    public static final int CLIMB = 1; // A
+    public static final int DRIVER_SHOOT = 3; // X
 
-    public static final int INTAKE = 5;
+    public static final int INTAKE = 5; // LB
+
+    public static final int SHIFT_GEAR = 9; // L3
 
     // OPERATOR
 
-    public static final int OPERATOR_SHOOT = 3;
-    public static final int OPERATOR_SPIN_UP = 2;
+    public static final int OPERATOR_SHOOT = 3; // X
+    public static final int OPERATOR_SPIN_UP = 2; // B
 
-    public static final int EXTEND_CONTROL_PANEL = 4;
+    public static final int EXTEND_CONTROL_PANEL = 4; // RB
   }
 
   /**
