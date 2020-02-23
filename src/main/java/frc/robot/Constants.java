@@ -123,7 +123,7 @@ public final class Constants {
 
     public static final double POT_SCALE = 3600;
 
-    public static final double RATIO = 24d / 265d;
+    public static final double RATIO = 18d / 265d;
   }
 
   public static final class Vision {

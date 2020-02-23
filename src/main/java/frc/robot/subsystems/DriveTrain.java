@@ -66,7 +66,7 @@ public class DriveTrain extends SubsystemBase {
     m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
     m_leftFront.follow(m_leftBack);
-    m_rightFront.follow(m_rightFront);
+    m_rightFront.follow(m_rightBack);
 
     m_rightFront.burnFlash();
     m_rightBack.burnFlash();
