@@ -74,9 +74,9 @@ public final class Constants {
     public static final double MIN_RAW_ANGLE = 180; // Degrees
 
     public static final double PWM_MAX = 2.5;
-    public static final double PWM_DEADBAND_MAX = 2.45;
+    public static final double PWM_DEADBAND_MAX = 1.55;
     public static final double PWM_CENTER = 1.5;
-    public static final double PWM_DEADBAND_MIN = 0.55;
+    public static final double PWM_DEADBAND_MIN = 1.45;
     public static final double PWM_MIN = 0.5;
   }
 
@@ -121,7 +121,7 @@ public final class Constants {
 
     public static final double POT_SCALE = 3600;
 
-    public static final double RATIO = 18d / 265d;
+    public static final double RATIO = 24d / 265d;
   }
 
   public static final class Vision {

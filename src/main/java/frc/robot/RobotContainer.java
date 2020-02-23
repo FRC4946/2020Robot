@@ -110,7 +110,7 @@ public class RobotContainer {
     climbButton
         .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
             + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
-            * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber));
+            * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
     intake.whenHeld(new RunRevolver(Constants.Revolver.FORWARDS_SPEED, m_revolver));
 
