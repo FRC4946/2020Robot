@@ -73,7 +73,7 @@ public class Turret extends SubsystemBase {
    * @return the current turret angle
    */
   public double getAngle() {
-    return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition() - 512);
+    return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition() - 512) - Constants.Turret.ANGLE_OFFSET;
   }
 
   /**

@@ -119,6 +119,8 @@ public final class Constants {
     public static final double MAX_ANGLE = 90.0; // Full right
     public static final double HOME_ANGLE = 0.0; // Center
 
+    public static final double ANGLE_OFFSET = 0;
+
     public static final double POT_SCALE = 3600;
 
     public static final double RATIO = 24d / 265d;
