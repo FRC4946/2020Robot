@@ -47,6 +47,6 @@ public class TurnToColor extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return m_controlPanel.getCurrentColor().color.equals(m_color) || !m_controlPanel.isExtended();
+    return m_controlPanel.getCurrentColor().color.equals(m_color);
   }
 }

@@ -47,6 +47,6 @@ public class TurnForDistance extends CommandBase {
 
   @Override
   public boolean isFinished() {
-    return Math.abs(m_controlPanel.getDistance()) > Math.abs(m_distance) || !m_controlPanel.isExtended();
+    return Math.abs(m_controlPanel.getDistance()) > Math.abs(m_distance);
   }
 }
