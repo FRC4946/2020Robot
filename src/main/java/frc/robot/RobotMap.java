@@ -99,8 +99,15 @@ public final class RobotMap {
 
     public static final int DRIVE_SHIFTER = 4;
 
+<<<<<<< HEAD
     public static final int CLIMBER_A = 5;
     public static final int CLIMBER_B = 6;
+=======
+    public static final int CLIMBER_A = 0;
+    public static final int CLIMBER_B = 1;
+
+    public static final int CONTROL_PANEL = 5;
+>>>>>>> ed6c30a... Add piston logic to colorWheel commands
   }
 
   /**

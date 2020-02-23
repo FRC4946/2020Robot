@@ -34,7 +34,11 @@ public class TurnForDistance extends CommandBase {
 
   @Override
   public void execute() {
-    m_controlPanel.set(m_speed);
+    if (m_controlPanel.isExtended()) {
+      m_controlPanel.set(m_speed);
+    } else {
+      m_controlPanel.stop();
+    }
   }
 
   @Override
