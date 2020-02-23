@@ -96,8 +96,8 @@ public final class RobotMap {
    * PCM Port Numbers
    */
   public static final class PCM {
-    public static final int INTAKE_A = 0;
-    public static final int INTAKE_B = 1;
+    public static final int INTAKE_A = 2;
+    public static final int INTAKE_B = 3;
 
     public static final int DRIVE_SHIFTER = 4;
 

@@ -51,8 +51,9 @@ public class Shooter extends PIDSubsystem {
     return getController().atSetpoint();
   }
 
+  @Override
   public void setSetpoint(double setpoint) {
-    getController().setSetpoint(Math.min(Constants.Shooter.MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
+    super.setSetpoint(Math.min(Constants.Shooter.MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
   }
 
   public double getSetpoint() {

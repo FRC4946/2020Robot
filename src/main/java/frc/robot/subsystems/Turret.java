@@ -80,7 +80,11 @@ public class Turret extends SubsystemBase {
    * @return the current turret angle setpoint
    */
   public double getSetpoint() {
-    return m_turretMotor.getClosedLoopTarget();
+    if (m_turretMotor.getControlMode() == ControlMode.PercentOutput) {
+      return 0.0;
+    } else {
+      return m_turretMotor.getClosedLoopTarget();
+    }
   }
 
   /**

@@ -84,10 +84,10 @@ public final class Constants {
     public static final double FORWARDS_SPEED = 0.075;
     public static final double BACKWARDS_SPEED = -0.075;
 
-    public static final double VELOCITY_THRESHOLD = 5; // Dummy value
-    public static final int STALL_REPS_THRESHOLD = 4;
+    public static final double VELOCITY_THRESHOLD = 60;
+    public static final int STALL_REPS_THRESHOLD = 10;
 
-    public static final double UNJAM_TIME = 1; // Time to unjam in seconds
+    public static final double UNJAM_TIME = 0.5; // Time to unjam in seconds
   }
 
   public static final class Shooter {

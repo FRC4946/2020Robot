@@ -108,7 +108,7 @@ public class RobotContainer {
       m_shooter.setKey(m_shooter.atSetpoint());
     }, m_shooter));
 
-    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_turret, m_hood, m_feedWheel));
+    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel));
 
     extendControlPanel.whenPressed(new InstantCommand(() -> {
       m_controlPanel.setExtended(true);
@@ -122,7 +122,20 @@ public class RobotContainer {
             + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
             * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
-    intake.whenHeld(new RunRevolver(Constants.Revolver.FORWARDS_SPEED, m_revolver));
+    intake.whenHeld(new RunCommand(() -> {
+      m_intake.setExtended(true);
+      m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+          - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
+    }, m_intake));
+
+    intake.whileHeld(new RunCommand(() -> {
+      if (Math.abs(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+          - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)) > Constants.DEFAULT_DEADZONE) {
+        m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+      } else {
+        m_revolver.stop();
+      }
+    }, m_revolver));
 
     // Default Commands
 
@@ -132,14 +145,9 @@ public class RobotContainer {
     }, m_driveTrain));
 
     m_intake.setDefaultCommand(new RunCommand(() -> {
-      if (intake.get()) {
-        m_intake.setExtended(true);
-        m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
-            - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
-      } else {
-        m_intake.set(0.0);
-        m_intake.setExtended(false);
-      }
+      m_intake.set(0.0);
+      m_intake.setExtended(false);
+      m_revolver.stop();
     }, m_intake));
 
     m_revolver.setDefaultCommand(new RunCommand(() -> {
@@ -195,16 +203,16 @@ public class RobotContainer {
 
   public static Color getFMSColor() {
     switch (DriverStation.getInstance().getGameSpecificMessage()) {
-    case "B":
-      return Constants.ControlPanel.COLOR_BLUE;
-    case "G":
-      return Constants.ControlPanel.COLOR_GREEN;
-    case "R":
-      return Constants.ControlPanel.COLOR_RED;
-    case "Y":
-      return Constants.ControlPanel.COLOR_YELLOW;
-    default:
-      return null;
+      case "B":
+        return Constants.ControlPanel.COLOR_BLUE;
+      case "G":
+        return Constants.ControlPanel.COLOR_GREEN;
+      case "R":
+        return Constants.ControlPanel.COLOR_RED;
+      case "Y":
+        return Constants.ControlPanel.COLOR_YELLOW;
+      default:
+        return null;
     }
   }
 }
