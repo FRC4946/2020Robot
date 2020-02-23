@@ -44,7 +44,7 @@ public class Shoot extends CommandBase {
 
   @Override
   public void execute() {
-    if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_shooter.atSetpoint() && m_turret.atSetpoint()) {
+    if (m_shooter.getKey()) {
       m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
       m_feedWheel.set(0.3);
     } else {

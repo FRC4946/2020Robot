@@ -20,6 +20,7 @@ import frc.robot.util.Utilities;
 public class Shooter extends PIDSubsystem {
 
   private final CANSparkMax m_left, m_right;
+  private boolean m_key = false;
 
   public Shooter() {
     super(new PIDController(Constants.Shooter.VELOCITY_P, Constants.Shooter.VELOCITY_I, Constants.Shooter.VELOCITY_D));
@@ -80,6 +81,14 @@ public class Shooter extends PIDSubsystem {
    */
   public double getAverageSpeed() {
     return (getLeftSpeed() + getRightSpeed()) / 2.0;
+  }
+
+  public void setKey(boolean key) {
+    m_key = key;
+  }
+
+  public boolean getKey() {
+    return m_key;
   }
 
   /**

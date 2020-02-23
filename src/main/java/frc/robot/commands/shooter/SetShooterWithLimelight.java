@@ -61,9 +61,11 @@ public class SetShooterWithLimelight extends CommandBase {
     if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_turret.atSetpoint()) {
       m_joystick.setRumble(RumbleType.kLeftRumble, 0.7);
       m_joystick.setRumble(RumbleType.kRightRumble, 0.7);
+      m_shooter.setKey(true);
     } else {
       m_joystick.setRumble(RumbleType.kLeftRumble, 0.0);
       m_joystick.setRumble(RumbleType.kRightRumble, 0.0);
+      m_shooter.setKey(false);
     }
   }
 }

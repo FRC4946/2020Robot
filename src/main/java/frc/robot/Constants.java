@@ -94,11 +94,11 @@ public final class Constants {
     public static final double MAX_PERCENT_OUTPUT = 0.9;
     public static final double MAX_VOLTAGE_RAMP_RATE = 0.2;
 
-    public static final double VELOCITY_P = 0.0;
-    public static final double VELOCITY_I = 0.0;
+    public static final double VELOCITY_P = 0.002;
+    public static final double VELOCITY_I = 0.00001;
     public static final double VELOCITY_D = 0.0;
-    public static final double VELOCITY_FF = 1d / 6000d;
-    public static final double VELOCITY_TOLERANCE = 10.0; // RPM
+    public static final double VELOCITY_FF = 0.000216350747274/2d;
+    public static final double VELOCITY_TOLERANCE = 50.0; // RPM
 
     public static final double IDLE_SPEED = 1500; // RPM
     public static final double MAX_SPEED = 6000; // RPM
