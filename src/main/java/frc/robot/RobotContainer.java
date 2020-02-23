@@ -18,7 +18,6 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
-import frc.robot.commands.revolver.RunRevolver;
 import frc.robot.commands.revolver.Shoot;
 import frc.robot.commands.shooter.ManualShooter;
 import frc.robot.commands.shooter.SetShooterWithLimelight;
@@ -128,7 +127,6 @@ public class RobotContainer {
             * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
     intake.whenHeld(new RunCommand(() -> {
-      m_intake.setExtended(true);
       m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
           - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
     }, m_intake));
@@ -142,18 +140,22 @@ public class RobotContainer {
       }
     }, m_revolver));
 
+    intake.whenPressed(new InstantCommand(() -> {
+      m_intake.setExtended(true);
+    }, m_intake));
+
+    intake.whenReleased(new InstantCommand(() -> {
+      m_intake.setExtended(false);
+      m_intake.stop();
+      m_revolver.stop();
+    }, m_intake, m_revolver));
+
     // Default Commands
 
     m_driveTrain.setDefaultCommand(new RunCommand(() -> {
       m_driveTrain.arcadeDrive(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.DRIVE),
           m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN));
     }, m_driveTrain));
-
-    m_intake.setDefaultCommand(new RunCommand(() -> {
-      m_intake.set(0.0);
-      m_intake.setExtended(false);
-      m_revolver.stop();
-    }, m_intake));
 
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       m_revolver.stop();
