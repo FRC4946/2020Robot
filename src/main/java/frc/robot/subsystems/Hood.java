@@ -81,6 +81,9 @@ public class Hood extends PIDSubsystem {
    */
   @Override
   public void setSetpoint(double setpoint) {
+    if (getController() != null) {
+      super.setSetpoint(Utilities.clip(setpoint, Constants.Hood.MIN_ANGLE, Constants.Hood.MAX_ANGLE));
+    }
     super.setSetpoint(Utilities.clip(setpoint, Constants.Hood.MIN_ANGLE, Constants.Hood.MAX_ANGLE));
   }
 
@@ -123,6 +126,7 @@ public class Hood extends PIDSubsystem {
 
   @Override
   public void periodic() {
+    super.periodic();
     SmartDashboard.putNumber("hood/angle", getAngle());
     SmartDashboard.putNumber("hood/setpoint", getSetpoint());
     SmartDashboard.putNumber("hood/potOffset", m_minRawAngle);

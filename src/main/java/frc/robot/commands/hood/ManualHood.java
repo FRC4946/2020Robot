@@ -11,6 +11,7 @@ import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hood;
+import frc.robot.util.Utilities;
 
 public class ManualHood extends CommandBase {
 
@@ -33,7 +34,8 @@ public class ManualHood extends CommandBase {
 
   @Override
   public void execute() {
-    m_hood.set(m_speedSupplier.getAsDouble());
+    //-0.9 to 0.9 to avoid PWM scaling errors
+    m_hood.set(Utilities.clip(m_speedSupplier.getAsDouble(), -0.9, 0.9));
   }
 
   @Override

@@ -38,11 +38,10 @@ public class Shoot extends CommandBase {
 
   @Override
   public void execute() {
+    m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
     if (m_shooter.getKey()) {
-      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
       m_feedWheel.set(0.3);
     } else {
-      m_revolver.stop();
       m_feedWheel.stop();
     }
   }

@@ -53,7 +53,10 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void setSetpoint(double setpoint) {
-    super.setSetpoint(Math.min(Constants.Shooter.MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
+    if (getController() != null) {
+      getController().setSetpoint(Utilities.clip(setpoint, -Constants.Shooter.MAX_SPEED, Constants.Shooter.MAX_SPEED));
+    }
+    super.setSetpoint(Utilities.clip(setpoint, -Constants.Shooter.MAX_SPEED, Constants.Shooter.MAX_SPEED));
   }
 
   public double getSetpoint() {
@@ -119,8 +122,9 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void periodic() {
+    super.periodic();
     SmartDashboard.putNumber("shooter/speed", getAverageSpeed());
     SmartDashboard.putNumber("shooter/setpoint", getSetpoint());
-    SmartDashboard.putNumber("shooter/percentSetpoint", getAverageSpeed()/getSetpoint());
+    SmartDashboard.putNumber("shooter/percentSetpoint", getAverageSpeed() / getSetpoint());
   }
 }

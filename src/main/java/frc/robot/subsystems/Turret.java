@@ -44,10 +44,10 @@ public class Turret extends SubsystemBase {
    * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
-    if ((getAngle() < Constants.Turret.MIN_ANGLE && speed > 0.0)
-        || (getAngle() > Constants.Turret.MAX_ANGLE && speed < 0.0)
+    if ((getAngle() < Constants.Turret.MIN_ANGLE && speed < 0.0)
+        || (getAngle() > Constants.Turret.MAX_ANGLE && speed > 0.0)
         || (getAngle() > Constants.Turret.MIN_ANGLE && getAngle() < Constants.Turret.MAX_ANGLE)) {
-      m_turretMotor.set(ControlMode.PercentOutput, speed);
+      m_turretMotor.set(ControlMode.PercentOutput, -speed);
     } else {
       m_turretMotor.set(ControlMode.PercentOutput, 0.0);
     }
@@ -73,7 +73,8 @@ public class Turret extends SubsystemBase {
    * @return the current turret angle
    */
   public double getAngle() {
-    return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition()) - Constants.Turret.ANGLE_OFFSET;
+    //return sensorUnitsToDegrees(m_turretMotor.getSelectedSensorPosition()) - Constants.Turret.ANGLE_OFFSET;
+    return 0;
   }
 
   /**
@@ -112,6 +113,7 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("turret/angle", getAngle());
+    SmartDashboard.putNumber("turret/rawAngle", m_turretMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("turret/setpoint", getSetpoint());
   }
 }

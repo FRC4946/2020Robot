@@ -94,8 +94,7 @@ public class RobotContainer {
     JoystickButton intake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.INTAKE);
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
-    JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick,
-        RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
+    JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
     JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
@@ -112,7 +111,7 @@ public class RobotContainer {
       m_shooter.setKey(m_shooter.atSetpoint());
     }, m_shooter));
 
-    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel));
+    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
 
     extendControlPanel.whenPressed(new InstantCommand(() -> {
       m_controlPanel.setExtended(true);
@@ -142,13 +141,13 @@ public class RobotContainer {
 
     intake.whenPressed(new InstantCommand(() -> {
       m_intake.setExtended(true);
-    }, m_intake));
+    }));
 
     intake.whenReleased(new InstantCommand(() -> {
       m_intake.setExtended(false);
       m_intake.stop();
       m_revolver.stop();
-    }, m_intake, m_revolver));
+    }));
 
     // Default Commands
 

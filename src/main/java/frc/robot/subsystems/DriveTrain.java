@@ -63,10 +63,13 @@ public class DriveTrain extends SubsystemBase {
     m_leftFront.follow(m_leftBack);
     m_rightFront.follow(m_rightBack);
 
+    /*
+     * Not sure why these all need to be inverted, but they do
+     */
     m_rightFront.setInverted(true);
     m_rightBack.setInverted(true);
-    m_leftFront.setInverted(false);
-    m_leftBack.setInverted(false);
+    m_leftFront.setInverted(true);
+    m_leftBack.setInverted(true);
 
     m_rightFront.burnFlash();
     m_rightBack.burnFlash();
@@ -115,8 +118,8 @@ public class DriveTrain extends SubsystemBase {
     drive = Math.copySign(Math.pow(drive, 2), drive);
     turn = Math.copySign(Math.pow(turn, 2), turn);
 
-    m_leftBack.set(drive + turn);
-    m_rightBack.set(drive - turn);
+    m_leftBack.set(drive - turn);
+    m_rightBack.set(drive + turn);
   }
 
   /**
