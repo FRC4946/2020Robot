@@ -21,6 +21,7 @@ public class Climb extends CommandBase {
   private final Intake m_intake;
   private final DoubleSupplier m_speed;
   private final Timer m_timer;
+  private boolean m_isIntakeExtended;
 
   /**
    * Creates a new Climb command.
@@ -35,13 +36,17 @@ public class Climb extends CommandBase {
 
   @Override
   public void initialize() {
-    m_timer.start();
-    m_intake.setExtended(true);
+    if (m_intake.isExtended()) {
+      m_isIntakeExtended = true;
+    } else {
+      m_timer.start();
+      m_intake.setExtended(true);
+    }
   }
 
   @Override
   public void execute() {
-    if (m_intake.isExtended()) {
+    if (m_isIntakeExtended) {
       m_climber.setPiston(true);
       m_climber.set(m_speed.getAsDouble());
     } else {
