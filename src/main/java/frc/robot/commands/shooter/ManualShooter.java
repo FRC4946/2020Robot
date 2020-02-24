@@ -22,8 +22,8 @@ public class ManualShooter extends CommandBase {
    * Sets the setpoint shooter speed manually, and runs the shooter at its resting
    * speed
    *
-   * @param joystick the joystick to use to set the setpoint
-   * @param shooter  the shooter to use for this command
+   * @param speedSuplier the speed to run the shooter
+   * @param shooter      the shooter to use for this command
    */
   public ManualShooter(DoubleSupplier speedSupplier, Shooter shooter) {
     m_shooter = shooter;
