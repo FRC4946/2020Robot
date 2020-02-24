@@ -35,16 +35,24 @@ public class Climb extends CommandBase {
 
   @Override
   public void initialize() {
+    m_timer.reset();
     m_timer.start();
-    m_intake.setExtended(true);
+
+    if (m_intake.isExtended()) {
+      m_climber.setPiston(true);
+    } else {
+      m_intake.setExtended(true);
+    }
   }
 
   @Override
   public void execute() {
-    if (m_timer.get() > 0.5) {
+    if (m_intake.isExtended()) {
+      m_climber.set(m_speed.getAsDouble());
+    } else if (m_timer.get() > 0.5) {
+      m_timer.stop();
       m_climber.setPiston(true);
       m_climber.set(m_speed.getAsDouble());
-      m_timer.stop();
     } else {
       m_climber.stop();
     }

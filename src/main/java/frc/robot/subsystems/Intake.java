@@ -42,6 +42,10 @@ public class Intake extends SubsystemBase {
     m_solenoid.set(value);
   }
 
+  public boolean isExtended() {
+    return m_solenoid.get() == Value.kForward ? true : false;
+  }
+
   @Override
   public void periodic() {
     SmartDashboard.putBoolean("intake/extended", m_solenoid.get() == Value.kForward);
