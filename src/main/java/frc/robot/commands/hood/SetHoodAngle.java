@@ -10,15 +10,15 @@ package frc.robot.commands.hood;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Hood;
 
-public class SetHoodSpeed extends CommandBase {
+public class SetHoodAngle extends CommandBase {
   private final Hood m_hood;
   private final double m_speed;
 
   /**
-   * Creates a new SetHoodSpeed.
+   * Creates a new SetHoodAngle command.
    */
 
-  public SetHoodSpeed(double speed, Hood hood) {
+  public SetHoodAngle(double speed, Hood hood) {
     m_speed = speed;
     m_hood = hood;
   }
@@ -26,6 +26,7 @@ public class SetHoodSpeed extends CommandBase {
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_hood.disable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.

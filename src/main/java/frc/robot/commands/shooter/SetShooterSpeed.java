@@ -15,16 +15,18 @@ public class SetShooterSpeed extends CommandBase {
   private final double m_speed;
 
   /**
-   * Creates a new SetShooterSpeed.
+   * Creates a new SetShooterSpeed command.
    */
   public SetShooterSpeed(Shooter shooter, double speed) {
     m_shooter = shooter;
     m_speed = speed;
+    addRequirements(m_shooter);
   }
 
   // Called when the command is initially scheduled.
   @Override
   public void initialize() {
+    m_shooter.enable();
   }
 
   // Called every time the scheduler runs while the command is scheduled.
