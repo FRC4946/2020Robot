@@ -94,12 +94,18 @@ public class RobotContainer {
     JoystickButton intake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.INTAKE);
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
+
     JoystickButton setLimelightButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
+
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
+
     JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
+
     JoystickButton shiftGear = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
+
     JoystickButton preset1 = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.PRESET_1);
+
     JoystickButton manualMode = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_MODE);
 
     // #region Operator
