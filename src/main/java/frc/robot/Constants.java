@@ -81,8 +81,8 @@ public final class Constants {
   }
 
   public static final class Revolver {
-    public static final double FORWARDS_SPEED = 0.075;
-    public static final double BACKWARDS_SPEED = -0.075;
+    public static final double FORWARDS_SPEED = 0.05;
+    public static final double BACKWARDS_SPEED = -0.05;
 
     public static final double VELOCITY_THRESHOLD = 60; // RPM
     public static final int STALL_REPS_THRESHOLD = 10;
@@ -120,11 +120,11 @@ public final class Constants {
     public static final double MAX_ANGLE = 90.0; // Full right
     public static final double HOME_ANGLE = 0.0; // Center
 
-    public static final double ANGLE_OFFSET = 0;
+    public static final double ANGLE_OFFSET = 121.6; // Center Offset
 
     public static final double POT_SCALE = 3600;
 
-    public static final double RATIO = 18d / 265d;
+    public static final double RATIO = 18d / 265d; // 18d / 265d;
   }
 
   public static final class Vision {

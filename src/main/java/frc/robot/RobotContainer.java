@@ -121,8 +121,8 @@ public class RobotContainer {
     }, m_controlPanel));
 
     climbButton
-        .toggleWhenPressed(new Climb(() -> (Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
-            + Math.pow(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
+        .toggleWhenPressed(new Climb(() -> Utilities.deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
+            + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
             * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
     intake.whenHeld(new RunCommand(() -> {
