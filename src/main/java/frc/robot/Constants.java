@@ -58,7 +58,7 @@ public final class Constants {
   }
 
   public static final class Hood {
-    public static final double POSITION_P = 0.0;
+    public static final double POSITION_P = 20.0;
     public static final double POSITION_I = 0.0;
     public static final double POSITION_D = 0.0;
     public static final double POSITION_TOLERANCE = 2.0; // Degrees
@@ -78,6 +78,8 @@ public final class Constants {
     public static final double PWM_CENTER = 1.5;
     public static final double PWM_DEADBAND_MIN = 1.45;
     public static final double PWM_MIN = 0.5;
+
+    public static final double PRESET_1_ANGLE = 63.23; // Degrees for 18 Foot shot
   }
 
   public static final class Revolver {
@@ -105,6 +107,8 @@ public final class Constants {
     public static final double MAX_SPEED = 6000; // RPM
 
     public static final double RATIO = 2d / 1d;
+
+    public static final double PRESET_1_SPEED = 3450; // RPM
   }
 
   public static final class Turret {

@@ -58,7 +58,9 @@ public final class RobotMap {
     public static final int USE_LIMELIGHT = 3; // X
     public static final int OPERATOR_SPIN_UP = 2; // B
 
-    public static final int EXTEND_CONTROL_PANEL = 4; // RB
+    public static final int EXTEND_CONTROL_PANEL = 6; // RB
+
+    public static final int PRESET_1 = 4; // Y
   }
 
   /**

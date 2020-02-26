@@ -99,15 +99,27 @@ public class RobotContainer {
     JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
     JoystickButton shiftGear = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
+    JoystickButton preset1 = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.PRESET_1);
 
     shiftGear.whenPressed(new InstantCommand(() -> {
       m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
     }));
 
+    preset1.whileHeld(new RunCommand(() -> {
+      m_shooter.setSetpoint(Constants.Shooter.PRESET_1_SPEED);
+      m_hood.setSetpoint(Constants.Hood.PRESET_1_ANGLE);
+      if (!m_shooter.isEnabled())
+        m_shooter.enable();
+      if (!m_hood.isEnabled())
+        m_hood.enable();
+      m_shooter.setKey(m_shooter.atSetpoint() && m_hood.atSetpoint());
+    }, m_shooter, m_hood));
+
     operatorShootButton
         .whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
     spinUp.whileHeld(new RunCommand(() -> {
-      m_shooter.enable();
+      if (!m_shooter.isEnabled())
+        m_shooter.enable();
       m_shooter.setKey(m_shooter.atSetpoint());
     }, m_shooter));
 
@@ -120,10 +132,10 @@ public class RobotContainer {
       m_controlPanel.setExtended(false);
     }, m_controlPanel));
 
-    climbButton
-        .toggleWhenPressed(new Climb(() -> Utilities.deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
+    climbButton.toggleWhenPressed(new Climb(() -> Utilities
+        .deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
             + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
-            * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
+        * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
     intake.whenHeld(new RunCommand(() -> {
       m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
