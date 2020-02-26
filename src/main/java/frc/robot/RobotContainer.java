@@ -94,20 +94,32 @@ public class RobotContainer {
     JoystickButton intake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.INTAKE);
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
-    JoystickButton operatorShootButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
+    JoystickButton setLimelightButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
     JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
     JoystickButton shiftGear = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
     JoystickButton preset1 = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.PRESET_1);
+    JoystickButton manualMode = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_MODE);
 
-    shiftGear.whenPressed(new InstantCommand(() -> {
-      m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
-    }));
+    // #region Operator
 
-    preset1.whileHeld(new RunCommand(() -> {
+    // MANUAL MODE
+
+    manualMode.whileHeld(new ManualHood(() -> {
+      return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
+    }, m_hood));
+
+    manualMode.whileHeld(new ManualTurret(() -> {
+      return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET));
+    }, m_turret));
+
+    manualMode.whileHeld(new ManualShooter(m_operatorJoystick, m_shooter));
+
+    preset1.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
       m_shooter.setSetpoint(Constants.Shooter.PRESET_1_SPEED);
       m_hood.setSetpoint(Constants.Hood.PRESET_1_ANGLE);
+      m_turret.holdPosition();
       if (!m_shooter.isEnabled())
         m_shooter.enable();
       if (!m_hood.isEnabled())
@@ -115,22 +127,32 @@ public class RobotContainer {
       m_shooter.setKey(m_shooter.atSetpoint() && m_hood.atSetpoint());
     }, m_shooter, m_hood));
 
-    operatorShootButton
-        .whenHeld(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
-    spinUp.whileHeld(new RunCommand(() -> {
+    // STANDARD OPERATION
+
+    setLimelightButton.and(manualMode.negate())
+        .whenActive(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
+    spinUp.and(manualMode.negate()).whileActiveContinuous(new RunCommand(() -> {
       if (!m_shooter.isEnabled())
         m_shooter.enable();
       m_shooter.setKey(m_shooter.atSetpoint());
     }, m_shooter));
 
-    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
-
-    extendControlPanel.whenPressed(new InstantCommand(() -> {
+    extendControlPanel.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
       m_controlPanel.setExtended(true);
     }, m_controlPanel));
-    extendControlPanel.whenReleased(new InstantCommand(() -> {
+    extendControlPanel.and(manualMode.negate()).whenInactive(new InstantCommand(() -> {
       m_controlPanel.setExtended(false);
     }, m_controlPanel));
+
+    // #endregion
+
+    // #region driver
+
+    shiftGear.whenPressed(new InstantCommand(() -> {
+      m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
+    }));
+
+    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
 
     climbButton.toggleWhenPressed(new Climb(() -> Utilities
         .deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
@@ -161,7 +183,9 @@ public class RobotContainer {
       m_revolver.stop();
     }));
 
-    // Default Commands
+    // #endregion
+
+    // #region Default Commands
 
     m_driveTrain.setDefaultCommand(new RunCommand(() -> {
       m_driveTrain.arcadeDrive(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.DRIVE),
@@ -172,23 +196,7 @@ public class RobotContainer {
       m_revolver.stop();
     }, m_revolver));
 
-    m_hood.setDefaultCommand(new ManualHood(() -> {
-      return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
-    }, m_hood));
-
-    m_turret.setDefaultCommand(new ManualTurret(() -> {
-      return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET));
-    }, m_turret));
-
-    m_shooter.setDefaultCommand(new ManualShooter(() -> {
-      if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
-        return (m_shooter.getSetpoint() + 50);
-      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135
-          || m_operatorJoystick.getPOV() == 225) {
-        return (m_shooter.getSetpoint() - 50);
-      }
-      return m_shooter.getSetpoint();
-    }, m_shooter));
+    // #endregion
   }
 
   /**

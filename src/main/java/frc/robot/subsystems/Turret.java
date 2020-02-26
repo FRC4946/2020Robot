@@ -62,6 +62,13 @@ public class Turret extends SubsystemBase {
   }
 
   /**
+   * Sets turret PID setpoint to current position
+   */
+  public void holdPosition() {
+    setSetpoint(getAngle());
+  }
+
+  /**
    * Stops the turret.
    */
   public void stop() {

@@ -61,6 +61,8 @@ public final class RobotMap {
     public static final int EXTEND_CONTROL_PANEL = 6; // RB
 
     public static final int PRESET_1 = 4; // Y
+
+    public static final int MANUAL_MODE = 5; // LB
   }
 
   /**
