@@ -122,7 +122,15 @@ public class RobotContainer {
       return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET));
     }, m_turret));
 
-    manualMode.whileHeld(new ManualShooter(m_operatorJoystick, m_shooter));
+    manualMode.whileHeld(new ManualShooter(() -> {
+      if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
+        return (m_shooter.getSetpoint() + 50);
+      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135
+          || m_operatorJoystick.getPOV() == 225) {
+        return (m_shooter.getSetpoint() - 50);
+      }
+      return m_shooter.getSetpoint();
+    }, m_shooter));
 
     preset1.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
       m_shooter.setSetpoint(Constants.Shooter.PRESET_1_SPEED);
