@@ -64,7 +64,7 @@ public final class Constants {
     public static final double POSITION_TOLERANCE = 2.0; // Degrees
 
     public static final double POT_SCALE = 3600; // Degrees (360 * Number of pot rotations)
-    // TODO : Fill In This Value
+  
     public static final double POT_DEGREES_PER_HOOD_MOVE = 1.22 * 360; // Degrees
 
     public static final double MIN_ANGLE = 27.4; // Degrees

@@ -72,7 +72,6 @@ public class Turret extends SubsystemBase {
    * Stops the turret.
    */
   public void stop() {
-    // TODO: Do we want to apply a 0-velocity PID to hold position?
     set(0.0);
   }
 
