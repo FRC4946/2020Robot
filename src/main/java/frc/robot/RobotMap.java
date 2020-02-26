@@ -48,6 +48,7 @@ public final class RobotMap {
 
     public static final int CLIMB = 1; // A
     public static final int DRIVER_SHOOT = 3; // X
+    public static final int EMERGENCY_SHOOT = 4; // Y
 
     public static final int INTAKE = 6; // RB
 

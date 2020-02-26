@@ -95,6 +95,8 @@ public class RobotContainer {
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
 
+    JoystickButton emergencyShoot = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
+
     JoystickButton setLimelightButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
 
     JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
@@ -159,6 +161,11 @@ public class RobotContainer {
     }));
 
     driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
+
+    emergencyShoot.whileActiveOnce(new RunCommand(() -> {
+      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+      m_feedWheel.set(0.6);
+    }, m_revolver, m_feedWheel));
 
     climbButton.toggleWhenPressed(new Climb(() -> Utilities
         .deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)

@@ -33,7 +33,7 @@ public class Shoot extends CommandBase {
     m_revolver = revolver;
     m_feedWheel = feedWheel;
     m_shooter = shooter;
-    addRequirements(m_revolver);
+    addRequirements(m_revolver, m_feedWheel);
   }
 
   @Override
