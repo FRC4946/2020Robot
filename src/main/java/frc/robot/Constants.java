@@ -61,7 +61,7 @@ public final class Constants {
     public static final double POSITION_P = 2.0;
     public static final double POSITION_I = 0.02;
     public static final double POSITION_D = 0.0;
-    public static final double POSITION_TOLERANCE = 2.0; // Degrees
+    public static final double POSITION_TOLERANCE = 0.5; // Degrees
 
     public static final double POT_SCALE = 3600; // Degrees (360 * Number of pot rotations)
   

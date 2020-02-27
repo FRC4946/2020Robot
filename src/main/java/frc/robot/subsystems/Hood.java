@@ -42,7 +42,13 @@ public class Hood extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    set(Utilities.clip(-output, -0.9, 0.9));
+    if (atSetpoint()) {
+      stop();
+    } else {
+      set(Utilities.clip(-output, -0.9, 0.9));
+    }
+    
+  
   }
 
   @Override

@@ -136,12 +136,12 @@ public class RobotContainer {
       m_shooter.setSetpoint(Constants.Shooter.PRESET_1_SPEED);
       m_hood.setSetpoint(Constants.Hood.PRESET_1_ANGLE);
       m_turret.holdPosition();
-      if (!m_shooter.isEnabled())
-        m_shooter.enable();
       if (!m_hood.isEnabled())
         m_hood.enable();
+      if (!m_shooter.isEnabled())
+        m_shooter.enable();
       m_shooter.setKey(m_shooter.atSetpoint() && m_hood.atSetpoint());
-    }, m_shooter, m_hood));
+    }, m_shooter, m_hood), false);
 
     // STANDARD OPERATION
 
