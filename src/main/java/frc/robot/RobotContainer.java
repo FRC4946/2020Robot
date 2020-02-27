@@ -180,28 +180,14 @@ public class RobotContainer {
             + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
         * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
 
-    intake.whenHeld(new RunCommand(() -> {
-      m_intake.set(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
-          - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE));
-    }, m_intake));
-
-    intake.whileHeld(new RunCommand(() -> {
-      if (Math.abs(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
-          - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)) > Constants.DEFAULT_DEADZONE) {
-        m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
-      } else {
-        m_revolver.stop();
-      }
-    }, m_revolver));
-
     intake.whenPressed(new InstantCommand(() -> {
-      m_intake.setExtended(true);
-    }));
-
-    intake.whenReleased(new InstantCommand(() -> {
-      m_intake.setExtended(false);
-      m_intake.stop();
-      m_revolver.stop();
+      if (m_intake.isExtended()) {
+        m_intake.setExtended(false);
+        m_intake.stop();
+        m_revolver.stop();
+      } else {
+        m_intake.setExtended(true);
+      }
     }));
 
     // #endregion
@@ -213,9 +199,37 @@ public class RobotContainer {
           m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN));
     }, m_driveTrain));
 
+    m_intake.setDefaultCommand(new RunCommand(() -> {
+      if (m_intake.isExtended()) {
+        m_intake.set(Utilities.deadzone(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+            - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)));
+      } else {
+        m_intake.stop();
+      }
+    }, m_intake));
+
     m_revolver.setDefaultCommand(new RunCommand(() -> {
-      m_revolver.stop();
+      if (m_intake.isExtended() && Math.abs(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+          - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)) > Constants.DEFAULT_DEADZONE) {
+        m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+      } else {
+        m_revolver.stop();
+      }
     }, m_revolver));
+
+    m_shooter.setDefaultCommand(new RunCommand(() -> {
+      if (m_shooter.isEnabled()) {
+        m_shooter.disable();
+      }
+      m_shooter.set(Constants.Shooter.IDLE_SPEED * Constants.Shooter.VELOCITY_FF); // Run at resting speed
+    }, m_shooter));
+
+    m_hood.setDefaultCommand(new RunCommand(() -> {
+      if (m_hood.isEnabled()) {
+        m_hood.disable();
+      }
+      m_hood.stop();
+    }, m_hood));
 
     // #endregion
   }
@@ -250,16 +264,16 @@ public class RobotContainer {
 
   public static Color getFMSColor() {
     switch (DriverStation.getInstance().getGameSpecificMessage()) {
-      case "B":
-        return Constants.ControlPanel.COLOR_BLUE;
-      case "G":
-        return Constants.ControlPanel.COLOR_GREEN;
-      case "R":
-        return Constants.ControlPanel.COLOR_RED;
-      case "Y":
-        return Constants.ControlPanel.COLOR_YELLOW;
-      default:
-        return null;
+    case "B":
+      return Constants.ControlPanel.COLOR_BLUE;
+    case "G":
+      return Constants.ControlPanel.COLOR_GREEN;
+    case "R":
+      return Constants.ControlPanel.COLOR_RED;
+    case "Y":
+      return Constants.ControlPanel.COLOR_YELLOW;
+    default:
+      return null;
     }
   }
 }

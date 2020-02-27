@@ -26,7 +26,6 @@ public class Climber extends SubsystemBase {
     m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.SPARKMAX_CLIMBER_RIGHT, MotorType.kBrushless);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
 
-    setPiston(false);
     m_rightClimberMotor.setInverted(false);
     m_leftClimberMotor.setInverted(false);
     m_rightClimberMotor.burnFlash();

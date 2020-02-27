@@ -38,7 +38,6 @@ public class ManualShooter extends CommandBase {
 
   @Override
   public void execute() {
-    m_shooter.set(Constants.Shooter.IDLE_SPEED * Constants.Shooter.VELOCITY_FF); // Run at resting speed
     m_shooter.setSetpoint(m_speedSupplier.getAsDouble());
   }
 }
