@@ -178,7 +178,7 @@ public class RobotContainer {
     climbButton.toggleWhenPressed(new Climb(() -> Utilities
         .deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
             + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
-        * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake), false);
+        * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake, m_shooter), false);
 
     intake.whenPressed(new InstantCommand(() -> {
       if (m_intake.isExtended()) {
