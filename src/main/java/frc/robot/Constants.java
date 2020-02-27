@@ -94,7 +94,7 @@ public final class Constants {
   }
 
   public static final class Shooter {
-    public static final double MAX_PERCENT_OUTPUT = 0.9;
+    public static final double MAX_PERCENT_OUTPUT = 0.9; //Ratchet Up Red
     public static final double MAX_VOLTAGE_RAMP_RATE = 0.2;
 
     public static final double VELOCITY_P = 0.00075;
