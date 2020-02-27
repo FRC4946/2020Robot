@@ -10,6 +10,7 @@ package frc.robot.commands.hood;
 import java.util.function.DoubleSupplier;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants;
 import frc.robot.subsystems.Hood;
 import frc.robot.util.Utilities;
 
@@ -34,8 +35,15 @@ public class ManualHood extends CommandBase {
 
   @Override
   public void execute() {
-    //-0.9 to 0.9 to avoid PWM scaling errors
-    m_hood.set(Utilities.clip(m_speedSupplier.getAsDouble(), -0.9, 0.9));
+    double speed = Utilities.clip(m_speedSupplier.getAsDouble(), -0.9, 0.9);
+    // -0.9 to 0.9 to avoid PWM scaling errors
+
+    if (((m_hood.getAngle() < Constants.Hood.MIN_ANGLE || Math.abs(Constants.Hood.MIN_ANGLE - m_hood.getAngle()) < 0.3)
+        && speed < 0) || (m_hood.getAngle() > Constants.Hood.MAX_ANGLE && speed > 0)) {
+      m_hood.stop();
+    } else {
+      m_hood.set(speed);
+    }
   }
 
   @Override

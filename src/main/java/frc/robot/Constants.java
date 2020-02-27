@@ -58,8 +58,8 @@ public final class Constants {
   }
 
   public static final class Hood {
-    public static final double POSITION_P = 20.0;
-    public static final double POSITION_I = 0.0;
+    public static final double POSITION_P = 2.0;
+    public static final double POSITION_I = 0.02;
     public static final double POSITION_D = 0.0;
     public static final double POSITION_TOLERANCE = 2.0; // Degrees
 
@@ -97,13 +97,13 @@ public final class Constants {
     public static final double MAX_PERCENT_OUTPUT = 0.9;
     public static final double MAX_VOLTAGE_RAMP_RATE = 0.2;
 
-    public static final double VELOCITY_P = 0.002;
-    public static final double VELOCITY_I = 0.00001;
+    public static final double VELOCITY_P = 0.00075;
+    public static final double VELOCITY_I = 0.000005;
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.000216350747274 / 2d;
     public static final double VELOCITY_TOLERANCE = 50.0; // RPM
 
-    public static final double IDLE_SPEED = 1500; // RPM
+    public static final double IDLE_SPEED = 2500; // RPM
     public static final double MAX_SPEED = 6000; // RPM
 
     public static final double RATIO = 2d / 1d;
@@ -132,10 +132,10 @@ public final class Constants {
   }
 
   public static final class Vision {
-    public static final double TARGET_HEIGHT = 60.0; // Inches from ground
-    public static final double INNER_HOLE_OFFSET = 29.25; // Inches begind the high target
+    public static final double TARGET_HEIGHT = 98.25; // Inches from ground
+    public static final double INNER_HOLE_OFFSET = 29.25; // Inches behind the high target
 
-    public static final double LIMELIGHT_HEIGHT = 39.5; // Inches from ground
+    public static final double LIMELIGHT_HEIGHT = 27.5; // Inches from ground
     public static final double LIMELIGHT_PITCH = 29.8; // Degrees from horizontal
     public static final double LIMELIGHT_POSITION_OFFSET = 7.82326; // Inches forward from center of turret
 
