@@ -58,9 +58,8 @@ public class Turret extends SubsystemBase {
    */
   public void setSetpoint(double setpoint) {
     m_turretMotor.set(ControlMode.Position,
-        degreesToSensorUnits(Utilities.clip(setpoint + Constants.Turret.ANGLE_OFFSET,
-            Constants.Turret.MIN_ANGLE + Constants.Turret.ANGLE_OFFSET,
-            Constants.Turret.MAX_ANGLE + Constants.Turret.ANGLE_OFFSET)));
+        degreesToSensorUnits(Utilities.clip(setpoint, Constants.Turret.MIN_ANGLE, Constants.Turret.MAX_ANGLE)
+            + Constants.Turret.ANGLE_OFFSET));
   }
 
   /**
