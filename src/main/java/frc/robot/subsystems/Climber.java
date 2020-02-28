@@ -7,32 +7,26 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.DoubleSolenoid.Value;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class Climber extends SubsystemBase {
 
-  private final CANSparkMax m_leftClimberMotor, m_rightClimberMotor;
+  private final TalonFX m_leftClimberMotor, m_rightClimberMotor;
   private final DoubleSolenoid m_climberSolenoid;
 
   public Climber() {
-    m_leftClimberMotor = new CANSparkMax(RobotMap.CAN.SPARKMAX_CLIMBER_LEFT, MotorType.kBrushless);
-    m_rightClimberMotor = new CANSparkMax(RobotMap.CAN.SPARKMAX_CLIMBER_RIGHT, MotorType.kBrushless);
+    m_leftClimberMotor = new TalonFX(RobotMap.CAN.TALONFX_CLIMBER_LEFT);
+    m_rightClimberMotor = new TalonFX(RobotMap.CAN.TALONFX_CLIMBER_RIGHT);
     m_climberSolenoid = new DoubleSolenoid(RobotMap.PCM.CLIMBER_A, RobotMap.PCM.CLIMBER_B);
 
     m_rightClimberMotor.setInverted(false);
     m_leftClimberMotor.setInverted(false);
-    m_rightClimberMotor.burnFlash();
-    m_leftClimberMotor.burnFlash();
-
-    m_leftClimberMotor.getEncoder().setPositionConversionFactor(Constants.Climber.ENCODER_INCHES_PER_TICK);
-    m_rightClimberMotor.getEncoder().setPositionConversionFactor(Constants.Climber.ENCODER_INCHES_PER_TICK);
   }
 
   /**
@@ -41,16 +35,16 @@ public class Climber extends SubsystemBase {
    * @param speed the speed that the motors will run at
    */
   public void set(double speed) {
-    m_leftClimberMotor.set(speed);
-    m_rightClimberMotor.set(speed);
+    m_leftClimberMotor.set(ControlMode.PercentOutput, speed);
+    m_rightClimberMotor.set(ControlMode.PercentOutput, speed);
   }
 
   /**
    * Stops both motors
    */
   public void stop() {
-    m_leftClimberMotor.set(0.0);
-    m_rightClimberMotor.set(0.0);
+    m_leftClimberMotor.set(ControlMode.PercentOutput, 0.0);
+    m_rightClimberMotor.set(ControlMode.PercentOutput, 0.0);
   }
 
   /**
@@ -76,34 +70,5 @@ public class Climber extends SubsystemBase {
    */
   public void togglePiston() {
     setPiston(m_climberSolenoid.get() == Value.kReverse);
-  }
-
-  /**
-   * @return how far extended the left climber is
-   */
-  public double getLeftDistance() {
-    return m_leftClimberMotor.getEncoder().getPosition();
-  }
-
-  /**
-   * @return how far extended the right climber is
-   */
-  public double getRightDistance() {
-    return m_rightClimberMotor.getEncoder().getPosition();
-  }
-
-  /**
-   * @return the avrage of the left and right encoder output
-   */
-  public double getAverageDistance() {
-    return (getLeftDistance() + getRightDistance()) / 2;
-  }
-
-  /**
-   * resets the encoder
-   */
-  public void resetEncoders() {
-    m_leftClimberMotor.getEncoder().setPosition(0.0);
-    m_rightClimberMotor.getEncoder().setPosition(0.0);
   }
 }

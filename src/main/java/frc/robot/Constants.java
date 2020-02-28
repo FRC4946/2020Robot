@@ -27,9 +27,7 @@ public final class Constants {
   public static final double DEFAULT_DEADZONE = 0.1;
 
   public static final class Climber {
-    public static final double MAX_PERCENT_OUTPUT = -1.0; //Ratchet Up Red
-
-    public static final double ENCODER_INCHES_PER_TICK = 1;
+    public static final double MAX_PERCENT_OUTPUT = -1.0; //Ratchet Up Negative
   }
 
   public static final class ControlPanel {
@@ -95,9 +93,9 @@ public final class Constants {
 
   public static final class Shooter {
     public static final double MAX_PERCENT_OUTPUT = 0.9;
-    public static final double MAX_VOLTAGE_RAMP_RATE = 0.2;
+    public static final double MAX_VOLTAGE_RAMP_RATE = 0.0;
 
-    public static final double VELOCITY_P = 0.00075;
+    public static final double VELOCITY_P = 0.003;
     public static final double VELOCITY_I = 0.000005;
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.000216350747274 / 2d;
@@ -112,13 +110,16 @@ public final class Constants {
   }
 
   public static final class Turret {
-    public static final double MAX_PERCENT_OUTPUT = 0.9;
+    public static final double MAX_PERCENT_OUTPUT = 0.45;
 
-    public static final double POSITION_P = 0.014;
-    public static final double POSITION_I = 0.0105;
-    public static final double POSITION_D = 0.0002;
-    public static final double POSITION_TOLERANCE = 1.0; // Degrees
+    public static final double POSITION_P = 13;
+    public static final double POSITION_I = 0.075;
+    public static final double POSITION_D = 0.0;
+    public static final double POSITION_PID_TOLERANCE = 0.2; // Degrees
+    public static final double POSITION_SETPOINT_TOLERANCE = 1.0; // Degrees
     public static final double VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
+
+    public static final double INTEGRAL_RANGE = 7.0;
 
     public static final double MIN_ANGLE = -90.0; // Full left
     public static final double MAX_ANGLE = 90.0; // Full right

@@ -16,6 +16,8 @@ public class AutoAlignTurret extends MoveTurret {
    * Creates a new AutoAlignTurret command.
    */
   public AutoAlignTurret(Turret turret, Limelight limelight) {
-    super(() -> turret.getAngle() + limelight.getAngleOffset(), turret);
+    super(() -> {
+      return turret.getAngle() - limelight.getAngleOffset();
+    }, turret);
   }
 }

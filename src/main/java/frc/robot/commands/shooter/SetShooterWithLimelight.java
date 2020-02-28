@@ -56,7 +56,7 @@ public class SetShooterWithLimelight extends CommandBase {
   public void execute() {
     m_shooter.setSetpoint(m_limelight.getShooterSpeed());
     m_hood.setSetpoint(m_limelight.getHoodAngle());
-    m_turret.setSetpoint(m_turret.getAngle() + m_limelight.getAngleOffset());
+    m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
 
     if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_turret.atSetpoint()) {
       m_joystick.setRumble(RumbleType.kLeftRumble, 0.7);

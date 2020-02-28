@@ -30,12 +30,14 @@ public class Turret extends SubsystemBase {
     m_turretMotor.configPeakOutputReverse(Constants.Turret.MAX_PERCENT_OUTPUT);
     m_turretMotor.configPeakOutputReverse(-Constants.Turret.MAX_PERCENT_OUTPUT);
 
-    m_turretMotor.configAllowableClosedloopError(0, degreesToSensorUnits(Constants.Turret.POSITION_TOLERANCE));
+    m_turretMotor.configAllowableClosedloopError(0, degreesToSensorUnits(Constants.Turret.POSITION_PID_TOLERANCE));
 
     m_turretMotor.config_kP(0, Constants.Turret.POSITION_P);
     m_turretMotor.config_kI(0, Constants.Turret.POSITION_I);
     m_turretMotor.config_kD(0, Constants.Turret.POSITION_D);
     m_turretMotor.config_kF(0, 0.0);
+
+    m_turretMotor.config_IntegralZone(0, degreesToSensorUnits(Constants.Turret.INTEGRAL_RANGE));
   }
 
   /**
@@ -98,7 +100,7 @@ public class Turret extends SubsystemBase {
    * @return the current turret angle setpoint
    */
   public boolean atSetpoint() {
-    return sensorUnitsToDegrees(m_turretMotor.getClosedLoopError()) < Constants.Turret.POSITION_TOLERANCE && Math
+    return sensorUnitsToDegrees(m_turretMotor.getClosedLoopError()) < Constants.Turret.POSITION_SETPOINT_TOLERANCE && Math
         .abs(sensorUnitsToDegrees(m_turretMotor.getSelectedSensorVelocity())) < Constants.Turret.VELOCITY_TOLERANCE;
   }
 

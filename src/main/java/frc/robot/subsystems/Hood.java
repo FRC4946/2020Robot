@@ -108,8 +108,8 @@ public class Hood extends PIDSubsystem {
    * @param speed the speed to set the servo to as a percent from -1 to 1
    */
   public void set(double speed) {
-    if ((getRawAngle() < Constants.Hood.MIN_RAW_ANGLE && speed < 0)
-        || (getRawAngle() > Constants.Hood.MAX_RAW_ANGLE && speed > 0)) {
+    if ((getRawAngle() < Constants.Hood.MIN_RAW_ANGLE && speed > 0)
+        || (getRawAngle() > Constants.Hood.MAX_RAW_ANGLE && speed < 0)) {
       stop();
     } else {
       m_servo.setSpeed(speed);

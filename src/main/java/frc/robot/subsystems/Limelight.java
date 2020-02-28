@@ -13,6 +13,7 @@ import edu.wpi.first.networktables.NetworkTableInstance;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
+import frc.robot.util.Utilities;
 
 /**
  * Limelight Object
@@ -257,7 +258,7 @@ public class Limelight extends SubsystemBase {
    * @return the desired hood angle in degrees
    */
   public double getHoodAngle() {
-    return 0;
+    return Utilities.clip(0.21356 * findDistance() + 32.2392, Constants.Hood.MIN_ANGLE, 74);
   }
 
   /**
@@ -266,7 +267,7 @@ public class Limelight extends SubsystemBase {
    * @return the desired wheel speed in rpm
    */
   public double getShooterSpeed() {
-    return 0;
+    return 4600;
   }
 
   @Override

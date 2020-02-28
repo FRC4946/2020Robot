@@ -22,6 +22,7 @@ import frc.robot.commands.revolver.Shoot;
 import frc.robot.commands.shooter.ManualShooter;
 import frc.robot.commands.shooter.SetShooterWithLimelight;
 import frc.robot.commands.turret.ManualTurret;
+import frc.robot.commands.turret.MoveTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
@@ -132,26 +133,27 @@ public class RobotContainer {
       return m_shooter.getSetpoint();
     }, m_shooter));
 
+    spinUp.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
+      if (!m_shooter.isEnabled())
+        m_shooter.enable();
+      m_shooter.setKey(m_shooter.atSetpoint());
+    }, m_shooter), false);
+
     preset1.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
+      m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
       m_shooter.setSetpoint(Constants.Shooter.PRESET_1_SPEED);
       m_hood.setSetpoint(Constants.Hood.PRESET_1_ANGLE);
-      m_turret.holdPosition();
       if (!m_hood.isEnabled())
         m_hood.enable();
       if (!m_shooter.isEnabled())
         m_shooter.enable();
       m_shooter.setKey(m_shooter.atSetpoint() && m_hood.atSetpoint());
-    }, m_shooter, m_hood), false);
+    }, m_shooter, m_hood, m_turret), false);
 
     // STANDARD OPERATION
 
     setLimelightButton.and(manualMode.negate())
-        .whenActive(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight));
-    spinUp.and(manualMode.negate()).whileActiveContinuous(new RunCommand(() -> {
-      if (!m_shooter.isEnabled())
-        m_shooter.enable();
-      m_shooter.setKey(m_shooter.atSetpoint());
-    }, m_shooter));
+        .whileActiveOnce(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight), false);
 
     extendControlPanel.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
       m_controlPanel.setExtended(true);
@@ -225,11 +227,15 @@ public class RobotContainer {
     }, m_shooter));
 
     m_hood.setDefaultCommand(new RunCommand(() -> {
-      if (m_hood.isEnabled()) {
-        m_hood.disable();
+      if (!m_hood.isEnabled()) {
+        m_hood.enable();
       }
-      m_hood.stop();
+      m_hood.setSetpoint(Constants.Hood.MIN_ANGLE);
     }, m_hood));
+
+    m_turret.setDefaultCommand(new RunCommand(() -> {
+      m_turret.holdPosition();
+    }, m_turret));
 
     // #endregion
   }

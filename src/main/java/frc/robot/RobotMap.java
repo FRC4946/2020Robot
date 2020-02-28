@@ -90,8 +90,9 @@ public final class RobotMap {
     public static final int SPARKMAX_SHOOTER_LEFT = 6;
     public static final int SPARKMAX_REVOLVER = 7;
     public static final int SPARKMAX_FEED_WHEEL = 8;
-    public static final int SPARKMAX_CLIMBER_RIGHT = 9;
-    public static final int SPARKMAX_CLIMBER_LEFT = 10;
+
+    public static final int TALONFX_CLIMBER_LEFT = 2;
+    public static final int TALONFX_CLIMBER_RIGHT = 3;
 
     public static final int TALONSRX_TURRET = 0;
     public static final int TALONSRX_CONTROL_PANEL = 1;
