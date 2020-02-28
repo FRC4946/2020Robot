@@ -111,6 +111,10 @@ public class RobotContainer {
 
     JoystickButton manualMode = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_MODE);
 
+    JoystickButton resetPot = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.HOOD_BUTTON);
+
+    JoystickButton revolver = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.REVOLVER);
+
     // #region Operator
 
     // MANUAL MODE
@@ -132,6 +136,10 @@ public class RobotContainer {
       }
       return m_shooter.getSetpoint();
     }, m_shooter));
+
+    resetPot.and(manualMode).whenActive(new InstantCommand(() -> {
+      m_hood.resetPot();
+    }));
 
     spinUp.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
       if (!m_shooter.isEnabled())
@@ -191,6 +199,10 @@ public class RobotContainer {
         m_intake.setExtended(true);
       }
     }));
+
+    revolver.whenHeld(new RunCommand(() -> {
+      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+    }, m_revolver));
 
     // #endregion
 

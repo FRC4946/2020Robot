@@ -37,12 +37,7 @@ public class ManualHood extends CommandBase {
   public void execute() {
     double speed = Utilities.clip(m_speedSupplier.getAsDouble(), -0.9, 0.9);
     // -0.9 to 0.9 to avoid PWM scaling errors
-    if (((m_hood.getAngle() < Constants.Hood.MIN_ANGLE || Math.abs(Constants.Hood.MIN_ANGLE - m_hood.getAngle()) < 0.3)
-        && speed > 0) || (m_hood.getAngle() > Constants.Hood.MAX_ANGLE && speed < 0)) {
-      m_hood.stop();
-    } else {
-      m_hood.set(speed);
-    }
+    m_hood.set(speed);
   }
 
   @Override

@@ -32,12 +32,9 @@ public class ManualShooter extends CommandBase {
   }
 
   @Override
-  public void initialize() {
-    m_shooter.disable();
-  }
-
-  @Override
   public void execute() {
+    if (m_shooter.isEnabled())
+      m_shooter.disable();
     m_shooter.set(Constants.Shooter.IDLE_SPEED * Constants.Shooter.VELOCITY_FF); // Run at resting speed
     m_shooter.setSetpoint(m_speedSupplier.getAsDouble());
   }

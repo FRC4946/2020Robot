@@ -52,7 +52,9 @@ public final class RobotMap {
 
     public static final int INTAKE = 6; // RB
 
-    public static final int SHIFT_GEAR = 2; // 2
+    public static final int SHIFT_GEAR = 2; // B
+
+    public static final int REVOLVER = 5; // LB
 
     // OPERATOR
 
@@ -64,6 +66,8 @@ public final class RobotMap {
     public static final int PRESET_1 = 4; // Y
 
     public static final int MANUAL_MODE = 5; // LB
+
+    public static final int HOOD_BUTTON = 8; // Start
   }
 
   /**

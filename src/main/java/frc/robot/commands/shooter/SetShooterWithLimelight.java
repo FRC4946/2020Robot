@@ -54,6 +54,12 @@ public class SetShooterWithLimelight extends CommandBase {
 
   @Override
   public void execute() {
+    if (!m_hood.isEnabled())
+      m_hood.enable();
+
+    if (!m_shooter.isEnabled())
+      m_shooter.enable();
+
     m_shooter.setSetpoint(m_limelight.getShooterSpeed());
     m_hood.setSetpoint(m_limelight.getHoodAngle());
     m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
