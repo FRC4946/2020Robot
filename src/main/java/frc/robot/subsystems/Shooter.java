@@ -99,14 +99,14 @@ public class Shooter extends PIDSubsystem {
    * Gets the speed that the right motor is running at
    */
   public double getRightSpeed() {
-    return (m_right.getSelectedSensorVelocity() / 2048 * 10 * 60) * Constants.Shooter.RATIO;
+    return (m_right.getSelectedSensorVelocity() / 2048d * 10d * 60d) * Constants.Shooter.RATIO;
   }
 
   /**
    * Gets the speed that the left motor is running at
    */
   public double getLeftSpeed() {
-    return (m_left.getSelectedSensorVelocity() / 2048 * 10 * 60) * Constants.Shooter.RATIO;
+    return (m_left.getSelectedSensorVelocity() / 2048d * 10d * 60d) * Constants.Shooter.RATIO;
   }
 
   @Override
