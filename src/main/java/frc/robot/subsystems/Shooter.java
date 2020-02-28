@@ -29,8 +29,8 @@ public class Shooter extends PIDSubsystem {
 
     setSetpoint(0.0);
 
-    m_left = new TalonFX(RobotMap.CAN.SPARKMAX_SHOOTER_LEFT);
-    m_right = new TalonFX(RobotMap.CAN.SPARKMAX_SHOOTER_RIGHT);
+    m_left = new TalonFX(RobotMap.CAN.TALONFX_SHOOTER_LEFT);
+    m_right = new TalonFX(RobotMap.CAN.TALONFX_SHOOTER_RIGHT);
     m_right.setInverted(true);
     m_left.setInverted(false);
 
