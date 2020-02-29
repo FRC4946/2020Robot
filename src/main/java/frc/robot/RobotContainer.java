@@ -10,19 +10,22 @@ package frc.robot;
 import edu.wpi.first.wpilibj.DriverStation;
 import edu.wpi.first.wpilibj.GenericHID;
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.Preferences;
 import edu.wpi.first.wpilibj.XboxController;
+import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj.util.Color;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.Constants.AutoScript;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.Shoot;
 import frc.robot.commands.shooter.ManualShooter;
 import frc.robot.commands.shooter.SetShooterWithLimelight;
 import frc.robot.commands.turret.ManualTurret;
-import frc.robot.commands.turret.MoveTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
 import frc.robot.subsystems.DriveTrain;
@@ -59,10 +62,22 @@ public class RobotContainer {
 
   private Command m_autonomousCommand = null;
 
+  private Preferences m_prefs;
+  private SendableChooser<AutoScript> m_autoScript;
+
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
    */
   public RobotContainer() {
+    m_prefs = Preferences.getInstance();
+    m_autoScript = new SendableChooser<>();
+    m_autoScript.setDefaultOption("Disabled", AutoScript.DISABLED);
+    m_autoScript.addOption("Drive Forwards", AutoScript.DRIVE_FORWARDS);
+    m_autoScript.addOption("Drive And Shoot", AutoScript.DRIVE_AND_SHOOT);
+    m_autoScript.addOption("Intake And Shoot", AutoScript.INTAKE_AND_SHOOT);
+
+    SmartDashboard.putData(m_autoScript);
+
     m_driveJoystick = new Joystick(RobotMap.JOYSTICK.DRIVER);
     m_operatorJoystick = new Joystick(RobotMap.JOYSTICK.OPERATOR);
 
@@ -249,6 +264,10 @@ public class RobotContainer {
       m_turret.holdPosition();
     }, m_turret));
 
+    m_controlPanel.setDefaultCommand(new RunCommand(() -> {
+      m_controlPanel.stop();
+    }, m_controlPanel));
+
     // #endregion
   }
 
@@ -256,7 +275,13 @@ public class RobotContainer {
    * Resets sensors, should be called in Robot.robotInit
    */
   public void robotInit() {
-    m_driveTrain.resetDriveTrain();
+    m_prefs.putDouble("drive/startX", m_prefs.getDouble("drive/startX", 0.0));
+    m_prefs.putDouble("drive/startY", m_prefs.getDouble("drive/startY", 0.0));
+    m_prefs.putDouble("drive/startAngle", m_prefs.getDouble("drive/startAngle", 0.0));
+
+    m_driveTrain.setHighGear(false);
+    m_driveTrain.resetDriveTrain(m_prefs.getDouble("drive/startX", 0.0), m_prefs.getDouble("drive/startY", 0.0),
+        m_prefs.getDouble("drive/startAngle", 0.0));
     m_hood.resetPot();
   }
 
@@ -265,6 +290,23 @@ public class RobotContainer {
    */
   public void setupAuto() {
     robotInit();
+
+    AutoScript script = m_autoScript.getSelected();
+
+    switch (script) {
+    case DRIVE_AND_SHOOT:
+
+      break;
+    case DRIVE_FORWARDS:
+
+      break;
+    case INTAKE_AND_SHOOT:
+
+      break;
+    case DISABLED:
+    default:
+      m_autonomousCommand = null;
+    }
 
     if (m_autonomousCommand != null) {
       m_autonomousCommand.schedule();

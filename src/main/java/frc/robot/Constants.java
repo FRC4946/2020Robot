@@ -27,7 +27,7 @@ public final class Constants {
   public static final double DEFAULT_DEADZONE = 0.1;
 
   public static final class Climber {
-    public static final double MAX_PERCENT_OUTPUT = -1.0; //Ratchet Up Negative
+    public static final double MAX_PERCENT_OUTPUT = -1.0; // Ratchet Up Negative
   }
 
   public static final class ControlPanel {
@@ -53,6 +53,18 @@ public final class Constants {
     public static final double VELOCITY_I = 0.0;
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.0;
+
+    public static final double TURN_P = 0.0;
+    public static final double TURN_I = 0.0;
+    public static final double TURN_D = 0.0;
+
+    public static final double TURN_TOLERANCE = 0.5;
+
+    public static final double DRIVE_P = 0.0;
+    public static final double DRIVE_I = 0.0;
+    public static final double DRIVE_D = 0.0;
+
+    public static final double DRIVE_TOLERANCE = 2.0;
   }
 
   public static final class Hood {
@@ -62,7 +74,7 @@ public final class Constants {
     public static final double POSITION_TOLERANCE = 0.5; // Degrees
 
     public static final double POT_SCALE = 3600; // Degrees (360 * Number of pot rotations)
-  
+
     public static final double POT_DEGREES_PER_HOOD_MOVE = 1.22 * 360; // Degrees
 
     public static final double MIN_ANGLE = 27.4; // Degrees
@@ -95,10 +107,10 @@ public final class Constants {
     public static final double MAX_PERCENT_OUTPUT = 0.9;
     public static final double MAX_VOLTAGE_RAMP_RATE = 0.0;
 
-    public static final double VELOCITY_P = 0.0;
-    public static final double VELOCITY_I = 0.0;
+    public static final double VELOCITY_P = 0.0005;
+    public static final double VELOCITY_I = 0.00005;
     public static final double VELOCITY_D = 0.0;
-    public static final double VELOCITY_FF = 0.0000953578 / 2d;
+    public static final double VELOCITY_FF = 0.000116;
     public static final double VELOCITY_TOLERANCE = 50.0; // RPM
 
     public static final double IDLE_SPEED = 2500; // RPM
@@ -141,5 +153,9 @@ public final class Constants {
     public static final double LIMELIGHT_POSITION_OFFSET = 7.82326; // Inches forward from center of turret
 
     public static final double LIMELIGHT_HORIZONTAL_FOV = 53.0;
+  }
+
+  public enum AutoScript {
+    DISABLED, DRIVE_FORWARDS, DRIVE_AND_SHOOT, INTAKE_AND_SHOOT;
   }
 }
