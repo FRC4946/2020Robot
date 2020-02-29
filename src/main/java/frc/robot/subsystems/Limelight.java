@@ -20,12 +20,18 @@ import frc.robot.util.Utilities;
  */
 public class Limelight extends SubsystemBase {
 
-  private NetworkTable m_networkTable;
-  private NetworkTableEntry m_tx;
-  private NetworkTableEntry m_ty;
-  private NetworkTableEntry m_ta;
-  private NetworkTableEntry m_tv;
-  private NetworkTableEntry m_ts;
+  private final NetworkTable m_networkTable;
+  private final NetworkTableEntry m_tx;
+  private final NetworkTableEntry m_ty;
+  private final NetworkTableEntry m_ta;
+  private final NetworkTableEntry m_tv;
+  private final NetworkTableEntry m_ts;
+
+  private double m_cached_tx;
+  private double m_cached_ty;
+  private double m_cached_ta;
+  private double m_cached_tv;
+  private double m_cached_ts;
 
   /**
    * Initializes all network table entries, and creates object Turns on vision and
@@ -50,7 +56,7 @@ public class Limelight extends SubsystemBase {
    * @return true if the limelight detects a valid target
    */
   public boolean getHasTarget() {
-    return (m_tv.getDouble(0) == 1);
+    return (m_cached_tv == 1);
   }
 
   /**
@@ -60,7 +66,7 @@ public class Limelight extends SubsystemBase {
    *         yOffset}
    */
   public double[] getOffset() {
-    return new double[] { m_tx.getDouble(0), m_ty.getDouble(0) };
+    return new double[] { m_cached_tx, m_cached_ty };
   }
 
   /**
@@ -69,7 +75,7 @@ public class Limelight extends SubsystemBase {
    * @return A double containing the x-offset
    */
   public double getOffsetX() {
-    return m_tx.getDouble(0);
+    return m_cached_tx;
   }
 
   /**
@@ -79,7 +85,7 @@ public class Limelight extends SubsystemBase {
    * @return the area of the target
    */
   public double getTargetArea() {
-    return m_ta.getDouble(0);
+    return m_cached_ta;
   }
 
   /**
@@ -88,7 +94,7 @@ public class Limelight extends SubsystemBase {
    * @return the skew of the targeting box
    */
   public double getTargetSkew() {
-    return m_ts.getDouble(0);
+    return m_cached_ts;
   }
 
   /**
@@ -162,8 +168,8 @@ public class Limelight extends SubsystemBase {
     }
 
     return (Constants.Vision.TARGET_HEIGHT - Constants.Vision.LIMELIGHT_HEIGHT)
-        * Math.sin(Math.toRadians(90 - (m_ty.getDouble(0) + Constants.Vision.LIMELIGHT_PITCH)))
-        / Math.sin(Math.toRadians((m_ty.getDouble(0) + Constants.Vision.LIMELIGHT_PITCH)));
+        * Math.sin(Math.toRadians(90 - (m_cached_ty + Constants.Vision.LIMELIGHT_PITCH)))
+        / Math.sin(Math.toRadians((m_cached_ty + Constants.Vision.LIMELIGHT_PITCH)));
   }
 
   /**
@@ -180,8 +186,8 @@ public class Limelight extends SubsystemBase {
     }
 
     double distance = findDistance();
-    return new double[] { Math.cos(Math.toRadians(90 - m_tx.getDouble(0))) * findDistance(),
-        Constants.Vision.LIMELIGHT_POSITION_OFFSET + Math.sin(Math.toRadians(90 - m_tx.getDouble(0))) * distance };
+    return new double[] { Math.cos(Math.toRadians(90 - m_cached_tx)) * findDistance(),
+        Constants.Vision.LIMELIGHT_POSITION_OFFSET + Math.sin(Math.toRadians(90 - m_cached_tx)) * distance };
   }
 
   /**
@@ -312,8 +318,15 @@ public class Limelight extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumberArray("vision/targetPosition", findTurretRelativePosition());
-    SmartDashboard.putNumber("vision/targetDistance", findDistance());
+    
+    m_cached_tx = m_tx.getDouble(0);
+    m_cached_ty = m_ty.getDouble(0);
+    m_cached_ta = m_ta.getDouble(0);
+    m_cached_tv = m_tv.getDouble(0);
+    m_cached_ts = m_ts.getDouble(0);
+
+    // SmartDashboard.putNumberArray("vision/targetPosition", findTurretRelativePosition());
+    // SmartDashboard.putNumber("vision/targetDistance", findDistance());
     SmartDashboard.putNumber("vision/targetAngle", getAngleOffset());
   }
 }

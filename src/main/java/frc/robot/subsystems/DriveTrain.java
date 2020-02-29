@@ -66,8 +66,8 @@ public class DriveTrain extends SubsystemBase {
     /*
      * Not sure why these all need to be inverted, but they do
      */
-    m_rightFront.setInverted(true);
-    m_rightBack.setInverted(true);
+    m_rightFront.setInverted(false);
+    m_rightBack.setInverted(false);
     m_leftFront.setInverted(true);
     m_leftBack.setInverted(true);
 
@@ -249,11 +249,11 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
+    // m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
 
-    SmartDashboard.putNumberArray("drive/robotPosition",
-        new double[] { getPose().getTranslation().getX(), getPose().getTranslation().getY() });
-    SmartDashboard.putNumber("drive/angle", getPose().getRotation().getDegrees());
+    // SmartDashboard.putNumberArray("drive/robotPosition",
+    //     new double[] { getPose().getTranslation().getX(), getPose().getTranslation().getY() });
+    // SmartDashboard.putNumber("drive/angle", getPose().getRotation().getDegrees());
     SmartDashboard.putNumber("drive/encoders/leftEncoder", getLeftDistance());
     SmartDashboard.putNumber("drive/encoders/rightEncoder", getRightDistance());
     SmartDashboard.putNumber("drive/gyroAngle", getGyroAngle());

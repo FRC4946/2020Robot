@@ -20,6 +20,7 @@ import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoScript;
+import frc.robot.commands.auto.DriveAndShoot;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.Shoot;
@@ -111,7 +112,7 @@ public class RobotContainer {
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
 
-    JoystickButton emergencyShoot = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
+    JoystickButton emergencyShoot = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.EMERGENCY_SHOOT);
 
     JoystickButton setLimelightButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
 
@@ -129,6 +130,8 @@ public class RobotContainer {
     JoystickButton resetPot = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.HOOD_BUTTON);
 
     JoystickButton revolver = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.REVOLVER);
+
+    JoystickButton manualUnjam = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_UNJAM);
 
     // #region Operator
 
@@ -195,6 +198,11 @@ public class RobotContainer {
       m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
     }));
 
+    manualUnjam.whileHeld(new RunCommand(() -> {
+      m_revolver.set(Constants.Revolver.BACKWARDS_SPEED);
+      m_feedWheel.set(-0.6);
+    }, m_revolver, m_feedWheel));
+
     driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
 
     emergencyShoot.whileActiveOnce(new RunCommand(() -> {
@@ -218,7 +226,7 @@ public class RobotContainer {
     }));
 
     revolver.whenHeld(new RunCommand(() -> {
-      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+      m_revolver.set(4 * Constants.Revolver.FORWARDS_SPEED);
     }, m_revolver));
 
     // #endregion
@@ -226,8 +234,8 @@ public class RobotContainer {
     // #region Default Commands
 
     m_driveTrain.setDefaultCommand(new RunCommand(() -> {
-      m_driveTrain.arcadeDrive(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.DRIVE),
-          m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN));
+      m_driveTrain.arcadeDrive(-m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.DRIVE),
+          -m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN));
     }, m_driveTrain));
 
     m_intake.setDefaultCommand(new RunCommand(() -> {
@@ -242,7 +250,7 @@ public class RobotContainer {
     m_revolver.setDefaultCommand(new RunCommand(() -> {
       if (m_intake.isExtended() && Math.abs(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
           - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)) > Constants.DEFAULT_DEADZONE) {
-        m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+        m_revolver.set(2 * Constants.Revolver.FORWARDS_SPEED);
       } else {
         m_revolver.stop();
       }
@@ -263,12 +271,17 @@ public class RobotContainer {
     }, m_hood));
 
     m_turret.setDefaultCommand(new RunCommand(() -> {
-      m_turret.holdPosition();
+      //m_turret.holdPosition();
+      m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
     }, m_turret));
 
     m_controlPanel.setDefaultCommand(new RunCommand(() -> {
       m_controlPanel.stop();
     }, m_controlPanel));
+
+    m_feedWheel.setDefaultCommand(new RunCommand(() -> {
+      m_feedWheel.stop();
+    }, m_feedWheel));
 
     // #endregion
   }
@@ -297,10 +310,14 @@ public class RobotContainer {
 
     switch (script) {
     case DRIVE_AND_SHOOT:
-
+      m_autonomousCommand = new DriveAndShoot(m_driveTrain, m_feedWheel, m_hood, m_limelight, m_revolver, m_shooter,
+          m_turret);
       break;
     case DRIVE_FORWARDS:
-
+      m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5, 0.0), m_driveTrain).withTimeout(2)
+          .andThen(new RunCommand(() -> {
+            m_driveTrain.arcadeDrive(-0.1, 0.0);
+          }, m_driveTrain).withTimeout(0.1));
       break;
     case INTAKE_AND_SHOOT:
 

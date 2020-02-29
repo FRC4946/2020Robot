@@ -24,8 +24,8 @@ public final class RobotMap {
 
     // DRIVER
 
-    public static final int DRIVE = 0;
-    public static final int TURN = 1;
+    public static final int DRIVE = 1;
+    public static final int TURN = 0;
 
     public static final int CLIMB_1 = 4;
     public static final int CLIMB_2 = 5;
@@ -46,9 +46,10 @@ public final class RobotMap {
 
     // DRIVER
 
-    public static final int CLIMB = 1; // A
+    public static final int CLIMB = 8; // Start
     public static final int DRIVER_SHOOT = 3; // X
     public static final int EMERGENCY_SHOOT = 4; // Y
+    public static final int MANUAL_UNJAM = 1; // A
 
     public static final int INTAKE = 6; // RB
 
@@ -98,8 +99,8 @@ public final class RobotMap {
     public static final int TALONFX_SHOOTER_RIGHT = 4;
     public static final int TALONFX_SHOOTER_LEFT = 5;
 
-    public static final int TALONSRX_TURRET = 0;
-    public static final int TALONSRX_CONTROL_PANEL = 1;
+    public static final int TALONSRX_TURRET = 1;
+    public static final int TALONSRX_CONTROL_PANEL = 0;
 
     public static final int VICTORSPX_INTAKE = 0;
   }

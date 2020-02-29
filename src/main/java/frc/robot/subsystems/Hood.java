@@ -133,7 +133,7 @@ public class Hood extends PIDSubsystem {
   @Override
   public void periodic() {
     super.periodic();
-    SmartDashboard.putNumber("hood/rawAngle", getRawAngle());
+    // SmartDashboard.putNumber("hood/rawAngle", getRawAngle());
     SmartDashboard.putNumber("hood/angle", getAngle());
     SmartDashboard.putNumber("hood/setpoint", getSetpoint());
     SmartDashboard.putNumber("hood/potOffset", m_minRawAngle);

@@ -28,6 +28,9 @@ public class Revolver extends SubsystemBase {
 
   public Revolver() {
     m_revolver = new CANSparkMax(RobotMap.CAN.SPARKMAX_REVOLVER, MotorType.kBrushless);
+    m_revolver.setOpenLoopRampRate(0.05);
+    m_revolver.setClosedLoopRampRate(0.05);
+    m_revolver.burnFlash();
     m_unjam = new UnjamRevolver(this);
     m_timer = new Timer();
     m_timer.start();

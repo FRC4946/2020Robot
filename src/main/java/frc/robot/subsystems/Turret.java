@@ -121,7 +121,7 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("turret/angle", getAngle());
-    SmartDashboard.putNumber("turret/rawAngle", m_turretMotor.getSelectedSensorPosition());
+    // SmartDashboard.putNumber("turret/rawAngle", m_turretMotor.getSelectedSensorPosition());
     SmartDashboard.putNumber("turret/setpoint", getSetpoint());
   }
 }

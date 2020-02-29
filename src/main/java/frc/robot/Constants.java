@@ -111,7 +111,7 @@ public final class Constants {
     public static final double VELOCITY_I = 0.00005;
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.000116;
-    public static final double VELOCITY_TOLERANCE = 50.0; // RPM
+    public static final double VELOCITY_TOLERANCE = 125.0; // RPM (Should Be 50.0 or Some Shit)
 
     public static final double IDLE_SPEED = 2500; // RPM
     public static final double MAX_SPEED = 6000; // RPM
@@ -128,7 +128,8 @@ public final class Constants {
     public static final double POSITION_I = 0.075;
     public static final double POSITION_D = 0.0;
     public static final double POSITION_PID_TOLERANCE = 0.2; // Degrees
-    public static final double POSITION_SETPOINT_TOLERANCE = 1.0; // Degrees
+    public static final double POSITION_SETPOINT_TOLERANCE = 1.5
+    ; // Degrees
     public static final double VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
 
     public static final double INTEGRAL_RANGE = 7.0;

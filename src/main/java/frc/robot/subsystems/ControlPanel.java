@@ -98,10 +98,10 @@ public class ControlPanel extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("colorWheel/distance", getDistance());
-    SmartDashboard.putNumber("colorWheel/color/red", getCurrentColor().color.red);
-    SmartDashboard.putNumber("colorWheel/color/green", getCurrentColor().color.green);
-    SmartDashboard.putNumber("colorWheel/color/blue", getCurrentColor().color.blue);
-    SmartDashboard.putBoolean("colorWheel/extended", m_solenoid.get());
+    // SmartDashboard.putNumber("colorWheel/distance", getDistance());
+    // SmartDashboard.putNumber("colorWheel/color/red", getCurrentColor().color.red);
+    // SmartDashboard.putNumber("colorWheel/color/green", getCurrentColor().color.green);
+    // SmartDashboard.putNumber("colorWheel/color/blue", getCurrentColor().color.blue);
+    // SmartDashboard.putBoolean("colorWheel/extended", m_solenoid.get());
   }
 }

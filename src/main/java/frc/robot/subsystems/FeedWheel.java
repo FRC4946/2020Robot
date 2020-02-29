@@ -22,6 +22,10 @@ public class FeedWheel extends SubsystemBase {
    */
   public FeedWheel() {
     m_feedWheel = new CANSparkMax(RobotMap.CAN.SPARKMAX_FEED_WHEEL, MotorType.kBrushless);
+    m_feedWheel.setOpenLoopRampRate(0.05);
+    m_feedWheel.setClosedLoopRampRate(0.05);
+    m_feedWheel.setSmartCurrentLimit(20);
+    m_feedWheel.burnFlash();
   }
 
   /**
