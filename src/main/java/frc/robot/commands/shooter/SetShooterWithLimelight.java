@@ -7,6 +7,8 @@
 
 package frc.robot.commands.shooter;
 
+import java.util.function.DoubleSupplier;
+
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
@@ -24,7 +26,9 @@ public class SetShooterWithLimelight extends CommandBase {
   private final Turret m_turret;
   private final Hood m_hood;
   private final Limelight m_limelight;
+
   private final Joystick m_joystick;
+  private final DoubleSupplier m_manualTurretSupplier;
 
   /**
    * Uses the limelight to calculate shooter speed, hood angle, and turret angle,
@@ -36,12 +40,17 @@ public class SetShooterWithLimelight extends CommandBase {
    * @param hood      the hood to use for this command
    * @param limelight the limelight to use for this command
    */
-  public SetShooterWithLimelight(Joystick joystick, Shooter shooter, Turret turret, Hood hood, Limelight limelight) {
+  public SetShooterWithLimelight(Shooter shooter, Turret turret, Hood hood, Limelight limelight) {
+    this(shooter, turret, hood, limelight, null, null);
+  }
+
+  public SetShooterWithLimelight(Shooter shooter, Turret turret, Hood hood, Limelight limelight, Joystick joystick, DoubleSupplier manualTurretSupplier) {
     m_shooter = shooter;
     m_turret = turret;
     m_hood = hood;
     m_limelight = limelight;
     m_joystick = joystick;
+    m_manualTurretSupplier = manualTurretSupplier;
 
     addRequirements(m_shooter, m_turret, m_hood);
   }
@@ -60,17 +69,26 @@ public class SetShooterWithLimelight extends CommandBase {
     if (!m_shooter.isEnabled())
       m_shooter.enable();
 
+    if (!m_limelight.getHasTarget() && m_manualTurretSupplier != null) {
+      m_turret.set(m_manualTurretSupplier.getAsDouble());
+    } else {
+      m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
+    }
+
     m_shooter.setSetpoint(m_limelight.getShooterSpeed());
     m_hood.setSetpoint(m_limelight.getHoodAngle());
-    m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
 
     if (m_shooter.atSetpoint() && m_hood.atSetpoint() && m_turret.atSetpoint()) {
-      m_joystick.setRumble(RumbleType.kLeftRumble, 0.7);
-      m_joystick.setRumble(RumbleType.kRightRumble, 0.7);
+      if (m_joystick != null) {
+        m_joystick.setRumble(RumbleType.kLeftRumble, 0.7);
+        m_joystick.setRumble(RumbleType.kRightRumble, 0.7);
+      }
       m_shooter.setKey(true);
     } else {
-      m_joystick.setRumble(RumbleType.kLeftRumble, 0.0);
-      m_joystick.setRumble(RumbleType.kRightRumble, 0.0);
+      if (m_joystick != null) {
+        m_joystick.setRumble(RumbleType.kLeftRumble, 0.0);
+        m_joystick.setRumble(RumbleType.kRightRumble, 0.0);
+      }
       m_shooter.setKey(false);
     }
   }

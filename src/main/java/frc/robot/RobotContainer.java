@@ -161,7 +161,9 @@ public class RobotContainer {
     // STANDARD OPERATION
 
     setLimelightButton.and(manualMode.negate())
-        .whileActiveOnce(new SetShooterWithLimelight(m_driveJoystick, m_shooter, m_turret, m_hood, m_limelight), false);
+        .whileActiveOnce(new SetShooterWithLimelight(m_shooter, m_turret, m_hood, m_limelight, m_driveJoystick, () -> {
+          return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
+        }), false);
 
     extendControlPanel.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
       m_controlPanel.setExtended(true);
