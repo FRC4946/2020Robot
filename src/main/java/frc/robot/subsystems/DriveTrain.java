@@ -259,7 +259,7 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("drive/encoders/leftEncoder", getLeftDistance());
     SmartDashboard.putNumber("drive/encoders/rightEncoder", getRightDistance());
     SmartDashboard.putNumber("drive/gyroAngle", getGyroAngle());
-    SmartDashboard.putBoolean("drive/lowGear", m_highGear.get());
+    SmartDashboard.putBoolean("drive/lowGear", !isHighGear());
     SmartDashboard.putNumber("drive/speed", Math.abs((getLeftVelocity() + getRightVelocity()) / 2d));
   }
 }
