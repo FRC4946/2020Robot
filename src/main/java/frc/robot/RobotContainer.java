@@ -21,6 +21,8 @@ import edu.wpi.first.wpilibj2.command.RunCommand;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoScript;
 import frc.robot.commands.auto.DriveAndShoot;
+import frc.robot.commands.auto.MiddlePickupAndShoot;
+import frc.robot.commands.auto.PIDDrive;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.Shoot;
@@ -75,7 +77,7 @@ public class RobotContainer {
     m_autoScript.setDefaultOption("Disabled", AutoScript.DISABLED);
     m_autoScript.addOption("Drive Forwards", AutoScript.DRIVE_FORWARDS);
     m_autoScript.addOption("Drive And Shoot", AutoScript.DRIVE_AND_SHOOT);
-    m_autoScript.addOption("Intake And Shoot", AutoScript.INTAKE_AND_SHOOT);
+    m_autoScript.addOption("Middle - Pickup and shoot", AutoScript.MIDDLE_PICKUP_AND_SHOOT);
 
     SmartDashboard.putData(m_autoScript);
 
@@ -313,14 +315,16 @@ public class RobotContainer {
       m_autonomousCommand = new DriveAndShoot(m_driveTrain, m_feedWheel, m_hood, m_limelight, m_revolver, m_shooter,
           m_turret);
       break;
+    case MIDDLE_PICKUP_AND_SHOOT:
+      m_autonomousCommand = new MiddlePickupAndShoot(m_driveTrain, m_feedWheel, m_hood, m_intake, m_limelight,
+          m_revolver, m_shooter, m_turret);
+      break;
     case DRIVE_FORWARDS:
-      m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5, 0.0), m_driveTrain).withTimeout(2)
+      /*m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5, 0.0), m_driveTrain).withTimeout(2)
           .andThen(new RunCommand(() -> {
             m_driveTrain.arcadeDrive(-0.1, 0.0);
-          }, m_driveTrain).withTimeout(0.1));
-      break;
-    case INTAKE_AND_SHOOT:
-
+          }, m_driveTrain).withTimeout(0.1));*/
+      m_autonomousCommand = new PIDDrive(1.0, m_driveTrain);
       break;
     case DISABLED:
     default:

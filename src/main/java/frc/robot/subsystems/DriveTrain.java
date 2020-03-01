@@ -57,6 +57,8 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 
+    m_leftEncoder.setReverseDirection(true);
+    m_rightEncoder.setReverseDirection(false);
     m_leftEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
@@ -177,7 +179,7 @@ public class DriveTrain extends SubsystemBase {
 
   /**
    * Gets the speed of the right side of the drivetrain
-   * 
+   *
    * @return the speed of the right side of the drivetrain in meters/second
    */
   public double getRightVelocity() {
@@ -186,7 +188,7 @@ public class DriveTrain extends SubsystemBase {
 
   /**
    * Gets the speed of the left side of the drivetrain
-   * 
+   *
    * @return the speed of the left side of the drivetrain in meters/second
    */
   public double getLeftVelocity() {
@@ -196,7 +198,7 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Sets the velocity for the left side of the drivetrain, must be called once
    * every scheduler cycle
-   * 
+   *
    * @param velocity the velocity to set the left side at in meters per second
    */
   public void setLeftVelocity(double velocity) {
@@ -209,7 +211,7 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Sets the velocity for the right side of the drivetrain, must be called once
    * every scheduler cycle
-   * 
+   *
    * @param velocity the velocity to set the right side at in meters per second
    */
   public void setRightVelocity(double velocity) {
@@ -240,11 +242,11 @@ public class DriveTrain extends SubsystemBase {
   }
 
   public void setHighGear(boolean on) {
-    m_highGear.set(!on);
+    m_highGear.set(on);
   }
 
   public boolean isHighGear() {
-    return !m_highGear.get();
+    return m_highGear.get();
   }
 
   @Override
