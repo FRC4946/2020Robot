@@ -40,11 +40,11 @@ public class MiddlePickupAndShoot extends SequentialCommandGroup {
                   revolver.set(2 * Constants.Revolver.FORWARDS_SPEED);
                   intake.set(1.0);
                 }, revolver, intake), // intake
-                new PIDDrive(1.75, driveTrain)
+                new PIDDrive(2.6416, driveTrain)
               ),
-              new PIDDrive(-0.5, driveTrain),
-              new PIDTurn(-120, driveTrain),
-              new PIDDrive(2, driveTrain)
+              new PIDDrive(-1.016, driveTrain),
+              new PIDTurn(-100, driveTrain),
+              new PIDDrive(3.556, driveTrain)
           )
         ),
         parallel(
