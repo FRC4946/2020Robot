@@ -44,7 +44,7 @@ public final class Constants {
   public static final class DriveTrain {
     public static final double TRACK_WIDTH = 0.0; // Inches
     public static final int ENCODER_RESOLUTION = 128;
-    public static final double ENCODER_METERS_PER_TICK = 6d * Math.PI / (double) ENCODER_RESOLUTION;
+    public static final double ENCODER_METERS_PER_TICK = (0.0254 * 6d) * Math.PI / (double) ENCODER_RESOLUTION;
 
     public static final double RAMSETE_B = 2.0;
     public static final double RAMSETE_ZETA = 0.7;
@@ -60,11 +60,11 @@ public final class Constants {
 
     public static final double TURN_TOLERANCE = 0.5;
 
-    public static final double DRIVE_P = 0.0;
-    public static final double DRIVE_I = 0.0;
+    public static final double DRIVE_P = 1.2;
+    public static final double DRIVE_I = 0.15;
     public static final double DRIVE_D = 0.0;
 
-    public static final double DRIVE_TOLERANCE = 2.0;
+    public static final double DRIVE_TOLERANCE = 0.025;
   }
 
   public static final class Hood {
@@ -157,6 +157,6 @@ public final class Constants {
   }
 
   public enum AutoScript {
-    DISABLED, DRIVE_FORWARDS, DRIVE_AND_SHOOT, INTAKE_AND_SHOOT;
+    DISABLED, DRIVE_FORWARDS, DRIVE_AND_SHOOT, MIDDLE_PICKUP_AND_SHOOT;
   }
 }
