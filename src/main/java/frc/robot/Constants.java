@@ -107,13 +107,13 @@ public final class Constants {
     public static final double MAX_PERCENT_OUTPUT = 0.9;
     public static final double MAX_VOLTAGE_RAMP_RATE = 0.0;
 
-    public static final double VELOCITY_P = 0.0005;
-    public static final double VELOCITY_I = 0.00005;
-    public static final double VELOCITY_D = 0.0;
-    public static final double VELOCITY_FF = 0.000116;
-    public static final double VELOCITY_TOLERANCE = 125.0; // RPM (Should Be 50.0 or Some Shit)
+    public static final double VELOCITY_P = 0.00055;
+    public static final double VELOCITY_I = 0.000001; // 0.00005;
+    public static final double VELOCITY_D = 0.00001; // 0.000005;
+    public static final double VELOCITY_FF = 0.0001; // 0.000116;
+    public static final double VELOCITY_TOLERANCE = 80.0; // RPM (Should Be 50.0 or Some Shit)
 
-    public static final double IDLE_SPEED = 2500; // RPM
+    public static final double IDLE_SPEED = 3000; // RPM
     public static final double MAX_SPEED = 6000; // RPM
 
     public static final double RATIO = 2d / 1d;
@@ -128,8 +128,7 @@ public final class Constants {
     public static final double POSITION_I = 0.075;
     public static final double POSITION_D = 0.0;
     public static final double POSITION_PID_TOLERANCE = 0.2; // Degrees
-    public static final double POSITION_SETPOINT_TOLERANCE = 1.5
-    ; // Degrees
+    public static final double POSITION_SETPOINT_TOLERANCE = 1.5; // Degrees
     public static final double VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
 
     public static final double INTEGRAL_RANGE = 7.0;
