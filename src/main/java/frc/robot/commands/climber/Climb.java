@@ -14,11 +14,13 @@ import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.Intake;
+import frc.robot.subsystems.Shooter;
 
 public class Climb extends CommandBase {
 
   private final Climber m_climber;
   private final Intake m_intake;
+  private final Shooter m_shooter;
   private final DoubleSupplier m_speed;
   private final Timer m_timer;
   private boolean m_isIntakeExtended = false;
@@ -26,18 +28,23 @@ public class Climb extends CommandBase {
   /**
    * Creates a new Climb command.
    */
-  public Climb(DoubleSupplier speed, Climber climber, Intake intake) {
+  public Climb(DoubleSupplier speed, Climber climber, Intake intake, Shooter shooter) {
     m_climber = climber;
     m_intake = intake;
+    m_shooter = shooter;
     m_speed = speed;
     m_timer = new Timer();
-    addRequirements(m_climber, m_intake);
+    addRequirements(m_climber, m_intake, m_shooter);
   }
 
   @Override
   public void initialize() {
     m_timer.reset();
     m_timer.start();
+    if (m_shooter.isEnabled()) {
+      m_shooter.disable();
+    }
+    m_shooter.stop();
     m_isIntakeExtended = m_intake.isExtended();
     if (m_isIntakeExtended) {
       m_climber.setPiston(true);

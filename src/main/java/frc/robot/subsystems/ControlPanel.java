@@ -24,17 +24,17 @@ import frc.robot.RobotMap;
 public class ControlPanel extends SubsystemBase {
 
   private final ColorSensorV3 m_sensor;
-  private final TalonSRX m_wheel;
+  // private final TalonSRX m_wheel;
   private final ColorMatch m_matcher;
   private final Solenoid m_solenoid;
 
   public ControlPanel() {
     m_sensor = new ColorSensorV3(Port.kOnboard);
-    m_wheel = new TalonSRX(RobotMap.CAN.TALONSRX_CONTROL_PANEL);
+    // m_wheel = new TalonSRX(RobotMap.CAN.TALONSRX_CONTROL_PANEL);
     m_matcher = new ColorMatch();
     m_solenoid = new Solenoid(RobotMap.PCM.CONTROL_PANEL);
 
-    m_wheel.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
+    // m_wheel.configSelectedFeedbackSensor(FeedbackDevice.QuadEncoder);
 
     m_matcher.addColorMatch(Constants.ControlPanel.COLOR_BLUE);
     m_matcher.addColorMatch(Constants.ControlPanel.COLOR_GREEN);
@@ -64,7 +64,7 @@ public class ControlPanel extends SubsystemBase {
    * @param speed the speed of the wheel motor
    */
   public void set(double speed) {
-    m_wheel.set(ControlMode.PercentOutput, speed);
+    // m_wheel.set(ControlMode.PercentOutput, speed);
   }
 
   /**
@@ -78,14 +78,15 @@ public class ControlPanel extends SubsystemBase {
    * Gets the encoder position, in degrees.
    */
   public double getDistance() {
-    return m_wheel.getSelectedSensorPosition() * Constants.ControlPanel.ENCODER_DEGREES_PER_TICK;
+    return 0;
+    // return m_wheel.getSelectedSensorPosition() * Constants.ControlPanel.ENCODER_DEGREES_PER_TICK;
   }
 
   /**
    * Resets the encoder position to 0.
    */
   public void resetEncoder() {
-    m_wheel.setSelectedSensorPosition(0);
+    // m_wheel.setSelectedSensorPosition(0);
   }
 
   /**
@@ -97,10 +98,10 @@ public class ControlPanel extends SubsystemBase {
 
   @Override
   public void periodic() {
-    SmartDashboard.putNumber("colorWheel/distance", getDistance());
-    SmartDashboard.putNumber("colorWheel/color/red", getCurrentColor().color.red);
-    SmartDashboard.putNumber("colorWheel/color/green", getCurrentColor().color.green);
-    SmartDashboard.putNumber("colorWheel/color/blue", getCurrentColor().color.blue);
-    SmartDashboard.putBoolean("colorWheel/extended", m_solenoid.get());
+    // SmartDashboard.putNumber("colorWheel/distance", getDistance());
+    // SmartDashboard.putNumber("colorWheel/color/red", getCurrentColor().color.red);
+    // SmartDashboard.putNumber("colorWheel/color/green", getCurrentColor().color.green);
+    // SmartDashboard.putNumber("colorWheel/color/blue", getCurrentColor().color.blue);
+    // SmartDashboard.putBoolean("colorWheel/extended", m_solenoid.get());
   }
 }

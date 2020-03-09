@@ -27,9 +27,7 @@ public final class Constants {
   public static final double DEFAULT_DEADZONE = 0.1;
 
   public static final class Climber {
-    public static final double MAX_PERCENT_OUTPUT = 0.5;
-
-    public static final double ENCODER_INCHES_PER_TICK = 1;
+    public static final double MAX_PERCENT_OUTPUT = -1.0; // Ratchet Up Negative
   }
 
   public static final class ControlPanel {
@@ -46,7 +44,7 @@ public final class Constants {
   public static final class DriveTrain {
     public static final double TRACK_WIDTH = 0.0; // Inches
     public static final int ENCODER_RESOLUTION = 128;
-    public static final double ENCODER_METERS_PER_TICK = 6d * Math.PI / (double) ENCODER_RESOLUTION;
+    public static final double ENCODER_METERS_PER_TICK = (0.0254 * 6d) * Math.PI / (double) ENCODER_RESOLUTION;
 
     public static final double RAMSETE_B = 2.0;
     public static final double RAMSETE_ZETA = 0.7;
@@ -55,16 +53,28 @@ public final class Constants {
     public static final double VELOCITY_I = 0.0;
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.0;
+
+    public static final double TURN_P = 0.0;
+    public static final double TURN_I = 0.0;
+    public static final double TURN_D = 0.0;
+
+    public static final double TURN_TOLERANCE = 0.5;
+
+    public static final double DRIVE_P = 1.2;
+    public static final double DRIVE_I = 0.15;
+    public static final double DRIVE_D = 0.0;
+
+    public static final double DRIVE_TOLERANCE = 0.025;
   }
 
   public static final class Hood {
-    public static final double POSITION_P = 0.0;
-    public static final double POSITION_I = 0.0;
+    public static final double POSITION_P = 2.0;
+    public static final double POSITION_I = 0.02;
     public static final double POSITION_D = 0.0;
-    public static final double POSITION_TOLERANCE = 2.0; // Degrees
+    public static final double POSITION_TOLERANCE = 0.5; // Degrees
 
     public static final double POT_SCALE = 3600; // Degrees (360 * Number of pot rotations)
-    // TODO : Fill In This Value
+
     public static final double POT_DEGREES_PER_HOOD_MOVE = 1.22 * 360; // Degrees
 
     public static final double MIN_ANGLE = 27.4; // Degrees
@@ -78,60 +88,74 @@ public final class Constants {
     public static final double PWM_CENTER = 1.5;
     public static final double PWM_DEADBAND_MIN = 1.45;
     public static final double PWM_MIN = 0.5;
+
+    public static final double PRESET_1_ANGLE = 63.23; // Degrees for 18 Foot shot
   }
 
   public static final class Revolver {
-    public static final double FORWARDS_SPEED = 0.075;
-    public static final double BACKWARDS_SPEED = -0.075;
+    public static final double FORWARDS_SPEED = 0.05;
+    public static final double BACKWARDS_SPEED = -0.05;
 
-    public static final double VELOCITY_THRESHOLD = 5; // Dummy value
-    public static final int STALL_REPS_THRESHOLD = 4;
+    public static final double VELOCITY_THRESHOLD = 60; // RPM
+    public static final int STALL_REPS_THRESHOLD = 10;
 
-    public static final double UNJAM_TIME = 1; // Time to unjam in seconds
+    public static final double UNJAM_TIME = 0.5; // Time to unjam in seconds
+    public static final double UNJAM_COOLDOWN = 0.5; // Minimum time between unjams in seconds
   }
 
   public static final class Shooter {
     public static final double MAX_PERCENT_OUTPUT = 0.9;
-    public static final double MAX_VOLTAGE_RAMP_RATE = 0.2;
+    public static final double MAX_VOLTAGE_RAMP_RATE = 0.0;
 
-    public static final double VELOCITY_P = 0.002;
-    public static final double VELOCITY_I = 0.00001;
-    public static final double VELOCITY_D = 0.0;
-    public static final double VELOCITY_FF = 0.000216350747274/2d;
-    public static final double VELOCITY_TOLERANCE = 50.0; // RPM
+    public static final double VELOCITY_P = 0.00055;
+    public static final double VELOCITY_I = 0.000001; // 0.00005;
+    public static final double VELOCITY_D = 0.00001; // 0.000005;
+    public static final double VELOCITY_FF = 0.0001; // 0.000116;
+    public static final double VELOCITY_TOLERANCE = 80.0; // RPM (Should Be 50.0 or Some Shit)
 
-    public static final double IDLE_SPEED = 1500; // RPM
+    public static final double IDLE_SPEED = 3000; // RPM
     public static final double MAX_SPEED = 6000; // RPM
 
     public static final double RATIO = 2d / 1d;
+
+    public static final double PRESET_1_SPEED = 3450; // RPM
   }
 
   public static final class Turret {
-    public static final double MAX_PERCENT_OUTPUT = 0.9;
+    public static final double MAX_PERCENT_OUTPUT = 0.45;
 
-    public static final double POSITION_P = 0.014;
-    public static final double POSITION_I = 0.0105;
-    public static final double POSITION_D = 0.0002;
-    public static final double POSITION_TOLERANCE = 1.0; // Degrees
+    public static final double POSITION_P = 13;
+    public static final double POSITION_I = 0.075;
+    public static final double POSITION_D = 0.0;
+    public static final double POSITION_PID_TOLERANCE = 0.2; // Degrees
+    public static final double POSITION_SETPOINT_TOLERANCE = 1.5; // Degrees
     public static final double VELOCITY_TOLERANCE = 0.1; // Degrees per 100ms
+
+    public static final double INTEGRAL_RANGE = 7.0;
 
     public static final double MIN_ANGLE = -90.0; // Full left
     public static final double MAX_ANGLE = 90.0; // Full right
     public static final double HOME_ANGLE = 0.0; // Center
 
+    public static final double ANGLE_OFFSET = 121.6; // Center Offset
+
     public static final double POT_SCALE = 3600;
 
-    public static final double RATIO = 24d / 265d;
+    public static final double RATIO = 18d / 265d;
   }
 
   public static final class Vision {
-    public static final double TARGET_HEIGHT = 60.0; // Inches from ground
-    public static final double INNER_HOLE_OFFSET = 29.25; // Inches begind the high target
+    public static final double TARGET_HEIGHT = 98.25; // Inches from ground
+    public static final double INNER_HOLE_OFFSET = 29.25; // Inches behind the high target
 
-    public static final double LIMELIGHT_HEIGHT = 39.5; // Inches from ground
+    public static final double LIMELIGHT_HEIGHT = 27.5; // Inches from ground
     public static final double LIMELIGHT_PITCH = 29.8; // Degrees from horizontal
     public static final double LIMELIGHT_POSITION_OFFSET = 7.82326; // Inches forward from center of turret
 
     public static final double LIMELIGHT_HORIZONTAL_FOV = 53.0;
+  }
+
+  public enum AutoScript {
+    DISABLED, DRIVE_FORWARDS, DRIVE_AND_SHOOT, MIDDLE_PICKUP_AND_SHOOT;
   }
 }

@@ -24,8 +24,8 @@ public final class RobotMap {
 
     // DRIVER
 
-    public static final int DRIVE = 0;
-    public static final int TURN = 1;
+    public static final int DRIVE = 1;
+    public static final int TURN = 0;
 
     public static final int CLIMB_1 = 4;
     public static final int CLIMB_2 = 5;
@@ -46,17 +46,29 @@ public final class RobotMap {
 
     // DRIVER
 
-    public static final int CLIMB = 1; // A on X Box Controller
-    public static final int DRIVER_SHOOT = 3;
+    public static final int CLIMB = 8; // Start
+    public static final int DRIVER_SHOOT = 3; // X
+    public static final int EMERGENCY_SHOOT = 4; // Y
+    public static final int MANUAL_UNJAM = 1; // A
 
-    public static final int INTAKE = 5;
+    public static final int INTAKE = 6; // RB
+
+    public static final int SHIFT_GEAR = 2; // B
+
+    public static final int REVOLVER = 5; // LB
 
     // OPERATOR
 
-    public static final int OPERATOR_SHOOT = 3;
-    public static final int OPERATOR_SPIN_UP = 2;
+    public static final int USE_LIMELIGHT = 3; // X
+    public static final int OPERATOR_SPIN_UP = 2; // B
 
-    public static final int EXTEND_CONTROL_PANEL = 4;
+    public static final int EXTEND_CONTROL_PANEL = 6; // RB
+
+    public static final int PRESET_1 = 4; // Y
+
+    public static final int MANUAL_MODE = 5; // LB
+
+    public static final int HOOD_BUTTON = 8; // Start
   }
 
   /**
@@ -79,15 +91,16 @@ public final class RobotMap {
     public static final int SPARKMAX_DRIVE_RIGHT_BACK = 2;
     public static final int SPARKMAX_DRIVE_LEFT_FRONT = 3;
     public static final int SPARKMAX_DRIVE_LEFT_BACK = 4;
-    public static final int SPARKMAX_SHOOTER_RIGHT = 5;
-    public static final int SPARKMAX_SHOOTER_LEFT = 6;
     public static final int SPARKMAX_REVOLVER = 7;
     public static final int SPARKMAX_FEED_WHEEL = 8;
-    public static final int SPARKMAX_CLIMBER_RIGHT = 9;
-    public static final int SPARKMAX_CLIMBER_LEFT = 10;
 
-    public static final int TALONSRX_TURRET = 0;
-    public static final int TALONSRX_CONTROL_PANEL = 1;
+    public static final int TALONFX_CLIMBER_LEFT = 2;
+    public static final int TALONFX_CLIMBER_RIGHT = 3;
+    public static final int TALONFX_SHOOTER_RIGHT = 4;
+    public static final int TALONFX_SHOOTER_LEFT = 5;
+
+    public static final int TALONSRX_TURRET = 1;
+    public static final int TALONSRX_CONTROL_PANEL = 0;
 
     public static final int VICTORSPX_INTAKE = 0;
   }
@@ -101,8 +114,8 @@ public final class RobotMap {
 
     public static final int DRIVE_SHIFTER = 4;
 
-    public static final int CLIMBER_A = 0;
-    public static final int CLIMBER_B = 1;
+    public static final int CLIMBER_A = 2;
+    public static final int CLIMBER_B = 3;
 
     public static final int CONTROL_PANEL = 5;
   }

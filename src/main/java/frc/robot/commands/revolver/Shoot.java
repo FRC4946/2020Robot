@@ -19,8 +19,6 @@ public class Shoot extends CommandBase {
 
   private final Revolver m_revolver;
   private final Shooter m_shooter;
-  private final Hood m_hood;
-  private final Turret m_turret;
   private final FeedWheel m_feedWheel;
 
   /**
@@ -29,27 +27,25 @@ public class Shoot extends CommandBase {
    *
    * @param revolver  the revolver to use for this command
    * @param shooter   the shooter to use for this command
-   * @param turret    the turret to use for this command
-   * @param hood      the hood to use for this command
    * @param feedWheel the feedwheel to use for this command
    */
-  public Shoot(Revolver revolver, Shooter shooter, Turret turret, Hood hood, FeedWheel feedWheel) {
+  public Shoot(Revolver revolver, Shooter shooter, FeedWheel feedWheel) {
     m_revolver = revolver;
     m_feedWheel = feedWheel;
     m_shooter = shooter;
-    m_turret = turret;
-    m_hood = hood;
-    addRequirements(m_revolver);
+    addRequirements(m_revolver, m_feedWheel);
   }
 
   @Override
   public void execute() {
+    // m_feedWheel.set(0.6);
+    // m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
     if (m_shooter.getKey()) {
+      m_feedWheel.set(0.6);
       m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
-      m_feedWheel.set(0.3);
     } else {
-      m_revolver.stop();
       m_feedWheel.stop();
+      m_revolver.stop();
     }
   }
 

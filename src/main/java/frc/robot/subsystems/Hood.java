@@ -42,7 +42,13 @@ public class Hood extends PIDSubsystem {
 
   @Override
   public void useOutput(double output, double setpoint) {
-    set(output);
+    if (atSetpoint()) {
+      stop();
+    } else {
+      set(Utilities.clip(-output, -0.9, 0.9));
+    }
+    
+  
   }
 
   @Override
@@ -79,8 +85,12 @@ public class Hood extends PIDSubsystem {
    *
    * @param setpoint the desired angle for the hood in degrees
    */
+  @Override
   public void setSetpoint(double setpoint) {
-    getController().setSetpoint(Utilities.clip(setpoint, Constants.Hood.MIN_ANGLE, Constants.Hood.MAX_ANGLE));
+    if (getController() != null) {
+      getController().setSetpoint(Utilities.clip(setpoint, Constants.Hood.MIN_ANGLE, Constants.Hood.MAX_ANGLE));
+    }
+    super.setSetpoint(Utilities.clip(setpoint, Constants.Hood.MIN_ANGLE, Constants.Hood.MAX_ANGLE));
   }
 
   /**
@@ -98,8 +108,8 @@ public class Hood extends PIDSubsystem {
    * @param speed the speed to set the servo to as a percent from -1 to 1
    */
   public void set(double speed) {
-    if (((getRawAngle() < Constants.Hood.MIN_RAW_ANGLE || getAngle() < Constants.Hood.MIN_ANGLE) && speed < 0)
-        || ((getRawAngle() > Constants.Hood.MAX_RAW_ANGLE || getAngle() > Constants.Hood.MAX_ANGLE) && speed > 0)) {
+    if ((getRawAngle() < Constants.Hood.MIN_RAW_ANGLE && speed > 0)
+        || (getRawAngle() > Constants.Hood.MAX_RAW_ANGLE && speed < 0)) {
       stop();
     } else {
       m_servo.setSpeed(speed);
@@ -122,9 +132,10 @@ public class Hood extends PIDSubsystem {
 
   @Override
   public void periodic() {
+    super.periodic();
+    // SmartDashboard.putNumber("hood/rawAngle", getRawAngle());
     SmartDashboard.putNumber("hood/angle", getAngle());
     SmartDashboard.putNumber("hood/setpoint", getSetpoint());
-    //Not relevant until #67 is merged
-    //SmartDashboard.putNumber("hood/potOffset", m_bottomValue);
+    SmartDashboard.putNumber("hood/potOffset", m_minRawAngle);
   }
 }

@@ -54,19 +54,24 @@ public class DriveTrain extends SubsystemBase {
 
     m_highGear = new Solenoid(RobotMap.PCM.DRIVE_SHIFTER);
 
-    m_rightFront.setInverted(true);
-    m_rightBack.setInverted(true);
-    m_leftFront.setInverted(false);
-    m_leftBack.setInverted(false);
-
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 
+    m_leftEncoder.setReverseDirection(true);
+    m_rightEncoder.setReverseDirection(false);
     m_leftEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
 
     m_leftFront.follow(m_leftBack);
-    m_rightFront.follow(m_rightFront);
+    m_rightFront.follow(m_rightBack);
+
+    /*
+     * Not sure why these all need to be inverted, but they do
+     */
+    m_rightFront.setInverted(false);
+    m_rightBack.setInverted(false);
+    m_leftFront.setInverted(true);
+    m_leftBack.setInverted(true);
 
     m_rightFront.burnFlash();
     m_rightBack.burnFlash();
@@ -115,8 +120,8 @@ public class DriveTrain extends SubsystemBase {
     drive = Math.copySign(Math.pow(drive, 2), drive);
     turn = Math.copySign(Math.pow(turn, 2), turn);
 
-    m_leftBack.set(drive + turn);
-    m_rightBack.set(drive - turn);
+    m_leftBack.set(drive - turn);
+    m_rightBack.set(drive + turn);
   }
 
   /**
@@ -174,7 +179,7 @@ public class DriveTrain extends SubsystemBase {
 
   /**
    * Gets the speed of the right side of the drivetrain
-   * 
+   *
    * @return the speed of the right side of the drivetrain in meters/second
    */
   public double getRightVelocity() {
@@ -183,7 +188,7 @@ public class DriveTrain extends SubsystemBase {
 
   /**
    * Gets the speed of the left side of the drivetrain
-   * 
+   *
    * @return the speed of the left side of the drivetrain in meters/second
    */
   public double getLeftVelocity() {
@@ -193,7 +198,7 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Sets the velocity for the left side of the drivetrain, must be called once
    * every scheduler cycle
-   * 
+   *
    * @param velocity the velocity to set the left side at in meters per second
    */
   public void setLeftVelocity(double velocity) {
@@ -206,7 +211,7 @@ public class DriveTrain extends SubsystemBase {
   /**
    * Sets the velocity for the right side of the drivetrain, must be called once
    * every scheduler cycle
-   * 
+   *
    * @param velocity the velocity to set the right side at in meters per second
    */
   public void setRightVelocity(double velocity) {
@@ -240,17 +245,21 @@ public class DriveTrain extends SubsystemBase {
     m_highGear.set(on);
   }
 
+  public boolean isHighGear() {
+    return m_highGear.get();
+  }
+
   @Override
   public void periodic() {
-    m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
+    // m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
 
-    SmartDashboard.putNumberArray("drive/robotPosition",
-        new double[] { getPose().getTranslation().getX(), getPose().getTranslation().getY() });
-    SmartDashboard.putNumber("drive/angle", getPose().getRotation().getDegrees());
+    // SmartDashboard.putNumberArray("drive/robotPosition",
+    //     new double[] { getPose().getTranslation().getX(), getPose().getTranslation().getY() });
+    // SmartDashboard.putNumber("drive/angle", getPose().getRotation().getDegrees());
     SmartDashboard.putNumber("drive/encoders/leftEncoder", getLeftDistance());
     SmartDashboard.putNumber("drive/encoders/rightEncoder", getRightDistance());
     SmartDashboard.putNumber("drive/gyroAngle", getGyroAngle());
-    SmartDashboard.putBoolean("drive/lowGear", !m_highGear.get());
+    SmartDashboard.putBoolean("drive/lowGear", !isHighGear());
     SmartDashboard.putNumber("drive/speed", Math.abs((getLeftVelocity() + getRightVelocity()) / 2d));
   }
 }

@@ -34,6 +34,10 @@ public class Intake extends SubsystemBase {
     set(0.0);
   }
 
+  public boolean isExtended() {
+    return m_solenoid.get() == Value.kForward;
+  }
+
   public void setExtended(boolean extended) {
     m_solenoid.set(extended ? Value.kForward : Value.kReverse);
   }
@@ -42,12 +46,8 @@ public class Intake extends SubsystemBase {
     m_solenoid.set(value);
   }
 
-  public boolean isExtended() {
-    return m_solenoid.get() == Value.kForward ? true : false;
-  }
-
   @Override
   public void periodic() {
-    SmartDashboard.putBoolean("intake/extended", m_solenoid.get() == Value.kForward);
+    // SmartDashboard.putBoolean("intake/extended", m_solenoid.get() == Value.kForward);
   }
 }

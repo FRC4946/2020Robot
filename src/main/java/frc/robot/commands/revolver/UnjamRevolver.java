@@ -41,6 +41,7 @@ public class UnjamRevolver extends CommandBase {
   public void end(boolean interrupted) {
     m_timer.stop();
     m_revolver.stop();
+    m_revolver.resetUnjamTimer();
   }
 
   @Override

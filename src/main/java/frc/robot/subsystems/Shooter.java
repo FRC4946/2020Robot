@@ -7,8 +7,8 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -19,7 +19,7 @@ import frc.robot.util.Utilities;
 
 public class Shooter extends PIDSubsystem {
 
-  private final CANSparkMax m_left, m_right;
+  private final TalonFX m_left, m_right;
   private boolean m_key = false;
 
   public Shooter() {
@@ -29,15 +29,15 @@ public class Shooter extends PIDSubsystem {
 
     setSetpoint(0.0);
 
-    m_left = new CANSparkMax(RobotMap.CAN.SPARKMAX_SHOOTER_LEFT, MotorType.kBrushless);
-    m_right = new CANSparkMax(RobotMap.CAN.SPARKMAX_SHOOTER_RIGHT, MotorType.kBrushless);
+    m_left = new TalonFX(RobotMap.CAN.TALONFX_SHOOTER_LEFT);
+    m_right = new TalonFX(RobotMap.CAN.TALONFX_SHOOTER_RIGHT);
     m_right.setInverted(true);
     m_left.setInverted(false);
-    m_left.setOpenLoopRampRate(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);
-    m_right.setOpenLoopRampRate(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);
 
-    m_left.burnFlash();
-    m_right.burnFlash();
+    m_right.configClosedloopRamp(0.0);
+    m_left.configClosedloopRamp(0.0);
+    m_right.configOpenloopRamp(0.0);
+    m_left.configOpenloopRamp(0.0);
 
     enable();
   }
@@ -51,8 +51,12 @@ public class Shooter extends PIDSubsystem {
     return getController().atSetpoint();
   }
 
+  @Override
   public void setSetpoint(double setpoint) {
-    getController().setSetpoint(Math.min(Constants.Shooter.MAX_SPEED, Math.abs(setpoint)) * (setpoint < 0 ? -1 : 1));
+    if (getController() != null) {
+      getController().setSetpoint(Utilities.clip(setpoint, -Constants.Shooter.MAX_SPEED, Constants.Shooter.MAX_SPEED));
+    }
+    super.setSetpoint(Utilities.clip(setpoint, -Constants.Shooter.MAX_SPEED, Constants.Shooter.MAX_SPEED));
   }
 
   public double getSetpoint() {
@@ -65,8 +69,8 @@ public class Shooter extends PIDSubsystem {
    * @param speed The speed that the motor runs at
    */
   public void set(double speed) {
-    m_left.set(speed);
-    m_right.set(speed);
+    m_left.set(ControlMode.PercentOutput, speed);
+    m_right.set(ControlMode.PercentOutput, speed);
   }
 
   /**
@@ -95,14 +99,14 @@ public class Shooter extends PIDSubsystem {
    * Gets the speed that the right motor is running at
    */
   public double getRightSpeed() {
-    return m_right.getEncoder().getVelocity() * Constants.Shooter.RATIO;
+    return (m_right.getSelectedSensorVelocity() / 2048d * 10d * 60d) * Constants.Shooter.RATIO;
   }
 
   /**
    * Gets the speed that the left motor is running at
    */
   public double getLeftSpeed() {
-    return m_left.getEncoder().getVelocity() * Constants.Shooter.RATIO;
+    return (m_left.getSelectedSensorVelocity() / 2048d * 10d * 60d) * Constants.Shooter.RATIO;
   }
 
   @Override
@@ -118,8 +122,9 @@ public class Shooter extends PIDSubsystem {
 
   @Override
   public void periodic() {
+    super.periodic();
     SmartDashboard.putNumber("shooter/speed", getAverageSpeed());
     SmartDashboard.putNumber("shooter/setpoint", getSetpoint());
-    SmartDashboard.putNumber("shooter/percentSetpoint", getAverageSpeed()/getSetpoint());
+    SmartDashboard.putNumber("shooter/percentSetpoint", getAverageSpeed() / getSetpoint());
   }
 }
