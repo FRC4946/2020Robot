@@ -110,17 +110,17 @@ public class RobotContainer {
 
     JoystickButton climbButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.CLIMB);
 
-    JoystickButton intake = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.INTAKE);
+    JoystickButton intakeButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.INTAKE);
 
     JoystickButton driverShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.DRIVER_SHOOT);
 
-    JoystickButton emergencyShoot = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.EMERGENCY_SHOOT);
+    JoystickButton emergencyShootButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.EMERGENCY_SHOOT);
 
     JoystickButton setLimelightButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.USE_LIMELIGHT);
 
-    JoystickButton spinUp = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
+    JoystickButton spinUpButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.OPERATOR_SPIN_UP);
 
-    JoystickButton extendControlPanel = new JoystickButton(m_operatorJoystick,
+    JoystickButton extendControlPanelButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
 
     JoystickButton shiftGear = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
@@ -129,11 +129,11 @@ public class RobotContainer {
 
     JoystickButton manualMode = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_MODE);
 
-    JoystickButton resetPot = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.HOOD_BUTTON);
+    JoystickButton resetPotButton = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.HOOD_BUTTON);
 
-    JoystickButton revolver = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.REVOLVER);
+    JoystickButton revolverButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.REVOLVER);
 
-    JoystickButton manualUnjam = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_UNJAM);
+    JoystickButton manualUnjamButton = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_UNJAM);
 
     // #region Operator
 
@@ -157,11 +157,11 @@ public class RobotContainer {
       return m_shooter.getSetpoint();
     }, m_shooter));
 
-    resetPot.and(manualMode).whenActive(new InstantCommand(() -> {
+    resetPotButton.and(manualMode).whenActive(new InstantCommand(() -> {
       m_hood.resetPot();
     }));
 
-    spinUp.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
+    spinUpButton.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
       if (!m_shooter.isEnabled())
         m_shooter.enable();
       m_shooter.setKey(m_shooter.atSetpoint());
@@ -185,10 +185,9 @@ public class RobotContainer {
           return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
         }), false);
 
-    extendControlPanel.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
+    extendControlPanelButton.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
       m_controlPanel.setExtended(true);
-    }, m_controlPanel));
-    extendControlPanel.and(manualMode.negate()).whenInactive(new InstantCommand(() -> {
+    }, m_controlPanel)).whenInactive(new InstantCommand(() -> {
       m_controlPanel.setExtended(false);
     }, m_controlPanel));
 
@@ -200,14 +199,14 @@ public class RobotContainer {
       m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
     }));
 
-    manualUnjam.whileHeld(new RunCommand(() -> {
+    manualUnjamButton.whileHeld(new RunCommand(() -> {
       m_revolver.set(Constants.Revolver.BACKWARDS_SPEED);
       m_feedWheel.set(-0.6);
     }, m_revolver, m_feedWheel));
 
     driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
 
-    emergencyShoot.whileActiveOnce(new RunCommand(() -> {
+    emergencyShootButton.whileActiveOnce(new RunCommand(() -> {
       m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
       m_feedWheel.set(0.6);
     }, m_revolver, m_feedWheel));
@@ -217,7 +216,7 @@ public class RobotContainer {
             + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
         * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake, m_shooter), false);
 
-    intake.whenPressed(new InstantCommand(() -> {
+    intakeButton.whenPressed(new InstantCommand(() -> {
       if (m_intake.isExtended()) {
         m_intake.setExtended(false);
         m_intake.stop();
@@ -227,7 +226,7 @@ public class RobotContainer {
       }
     }));
 
-    revolver.whenHeld(new RunCommand(() -> {
+    revolverButton.whenHeld(new RunCommand(() -> {
       m_revolver.set(4 * Constants.Revolver.FORWARDS_SPEED);
     }, m_revolver));
 
