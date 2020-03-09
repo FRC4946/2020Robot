@@ -7,9 +7,9 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.kauailabs.navx.frc.AHRS;
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
@@ -32,7 +32,7 @@ import frc.robot.util.Utilities;
  * Subsystem for moving and tracking the movement of the robot
  */
 public class DriveTrain extends SubsystemBase {
-  private final CANSparkMax m_leftFront, m_leftBack, m_rightFront, m_rightBack;
+  private final TalonFX m_leftFront, m_leftBack, m_rightFront, m_rightBack;
 
   private final Encoder m_leftEncoder, m_rightEncoder;
 
@@ -47,10 +47,10 @@ public class DriveTrain extends SubsystemBase {
   private final PIDController m_leftController, m_rightController;
 
   public DriveTrain() {
-    m_leftFront = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_LEFT_FRONT, MotorType.kBrushless);
-    m_leftBack = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_LEFT_BACK, MotorType.kBrushless);
-    m_rightFront = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_RIGHT_FRONT, MotorType.kBrushless);
-    m_rightBack = new CANSparkMax(RobotMap.CAN.SPARKMAX_DRIVE_RIGHT_BACK, MotorType.kBrushless);
+    m_leftFront = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_LEFT_FRONT);
+    m_leftBack = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_LEFT_BACK);
+    m_rightFront = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_RIGHT_FRONT);
+    m_rightBack = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_RIGHT_BACK);
 
     m_highGear = new Solenoid(RobotMap.PCM.DRIVE_SHIFTER);
 
@@ -72,11 +72,6 @@ public class DriveTrain extends SubsystemBase {
     m_rightBack.setInverted(false);
     m_leftFront.setInverted(true);
     m_leftBack.setInverted(true);
-
-    m_rightFront.burnFlash();
-    m_rightBack.burnFlash();
-    m_leftFront.burnFlash();
-    m_leftBack.burnFlash();
 
     m_kinematics = new DifferentialDriveKinematics(Units.inchesToMeters(Constants.DriveTrain.TRACK_WIDTH));
 
@@ -104,8 +99,8 @@ public class DriveTrain extends SubsystemBase {
    * Stops the robot
    */
   public void stop() {
-    m_leftBack.set(0.0);
-    m_rightBack.set(0.0);
+    m_leftBack.set(ControlMode.PercentOutput, 0.0);
+    m_rightBack.set(ControlMode.PercentOutput, 0.0);
   }
 
   /**
@@ -120,8 +115,8 @@ public class DriveTrain extends SubsystemBase {
     drive = Math.copySign(Math.pow(drive, 2), drive);
     turn = Math.copySign(Math.pow(turn, 2), turn);
 
-    m_leftBack.set(drive - turn);
-    m_rightBack.set(drive + turn);
+    m_leftBack.set(ControlMode.PercentOutput, drive - turn);
+    m_rightBack.set(ControlMode.PercentOutput, drive + turn);
   }
 
   /**
@@ -205,7 +200,7 @@ public class DriveTrain extends SubsystemBase {
     double output = m_leftController.calculate(getLeftVelocity(), velocity);
     output += Constants.DriveTrain.VELOCITY_FF * velocity;
 
-    m_leftBack.set(output);
+    m_leftBack.set(ControlMode.PercentOutput, output);
   }
 
   /**
@@ -218,7 +213,7 @@ public class DriveTrain extends SubsystemBase {
     double output = m_rightController.calculate(getRightVelocity(), velocity);
     output += Constants.DriveTrain.VELOCITY_FF * velocity;
 
-    m_rightBack.set(output);
+    m_rightBack.set(ControlMode.PercentOutput, output);
   }
 
   /**
@@ -251,11 +246,14 @@ public class DriveTrain extends SubsystemBase {
 
   @Override
   public void periodic() {
-    // m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(), getRightDistance());
+    // m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(),
+    // getRightDistance());
 
     // SmartDashboard.putNumberArray("drive/robotPosition",
-    //     new double[] { getPose().getTranslation().getX(), getPose().getTranslation().getY() });
-    // SmartDashboard.putNumber("drive/angle", getPose().getRotation().getDegrees());
+    // new double[] { getPose().getTranslation().getX(),
+    // getPose().getTranslation().getY() });
+    // SmartDashboard.putNumber("drive/angle",
+    // getPose().getRotation().getDegrees());
     SmartDashboard.putNumber("drive/encoders/leftEncoder", getLeftDistance());
     SmartDashboard.putNumber("drive/encoders/rightEncoder", getRightDistance());
     SmartDashboard.putNumber("drive/gyroAngle", getGyroAngle());
