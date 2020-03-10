@@ -67,6 +67,10 @@ public final class Constants {
     public static final double DRIVE_TOLERANCE = 0.025;
   }
 
+  public static final class FeedWheel {
+    public static final double MAX_VOLTAGE_RAMP_RATE = 0.05;
+  }
+
   public static final class Hood {
     public static final double POSITION_P = 2.0;
     public static final double POSITION_I = 0.02;
@@ -101,6 +105,8 @@ public final class Constants {
 
     public static final double UNJAM_TIME = 0.5; // Time to unjam in seconds
     public static final double UNJAM_COOLDOWN = 0.5; // Minimum time between unjams in seconds
+
+    public static final double MAX_VOLTAGE_RAMP_RATE = 0.05;
   }
 
   public static final class Shooter {

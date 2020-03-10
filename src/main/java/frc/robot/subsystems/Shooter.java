@@ -34,10 +34,10 @@ public class Shooter extends PIDSubsystem {
     m_right.setInverted(true);
     m_left.setInverted(false);
 
-    m_right.configClosedloopRamp(0.0);
-    m_left.configClosedloopRamp(0.0);
-    m_right.configOpenloopRamp(0.0);
-    m_left.configOpenloopRamp(0.0);
+    m_right.configClosedloopRamp(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);
+    m_left.configClosedloopRamp(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);
+    m_right.configOpenloopRamp(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);
+    m_left.configOpenloopRamp(Constants.Shooter.MAX_VOLTAGE_RAMP_RATE);
 
     enable();
   }
