@@ -59,7 +59,7 @@ public class Revolver extends SubsystemBase {
   }
 
   /**
-   * Gets the velocity of the revolver using its inegrated sensor
+   * Gets the velocity of the revolver using its inegrated sensor in RPM
    *
    * @return the velocity of the revolver
    */
