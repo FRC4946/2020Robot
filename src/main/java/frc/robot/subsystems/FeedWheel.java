@@ -11,6 +11,7 @@ import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
 import frc.robot.RobotMap;
 
 public class FeedWheel extends SubsystemBase {
@@ -22,8 +23,8 @@ public class FeedWheel extends SubsystemBase {
    */
   public FeedWheel() {
     m_feedWheel = new CANSparkMax(RobotMap.CAN.SPARKMAX_FEED_WHEEL, MotorType.kBrushless);
-    m_feedWheel.setOpenLoopRampRate(0.05);
-    m_feedWheel.setClosedLoopRampRate(0.05);
+    m_feedWheel.setOpenLoopRampRate(Constants.FeedWheel.MAX_VOLTAGE_RAMP_RATE);
+    m_feedWheel.setClosedLoopRampRate(Constants.FeedWheel.MAX_VOLTAGE_RAMP_RATE);
     m_feedWheel.setSmartCurrentLimit(20);
     m_feedWheel.burnFlash();
   }
