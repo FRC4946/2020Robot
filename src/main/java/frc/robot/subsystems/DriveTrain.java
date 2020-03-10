@@ -65,9 +65,6 @@ public class DriveTrain extends SubsystemBase {
     m_leftFront.follow(m_leftBack);
     m_rightFront.follow(m_rightBack);
 
-    /*
-     * Not sure why these all need to be inverted, but they do
-     */
     m_rightFront.setInverted(false);
     m_rightBack.setInverted(false);
     m_leftFront.setInverted(true);
