@@ -51,10 +51,18 @@ public class Revolver extends SubsystemBase {
     set(0.0);
   }
 
+  /**
+   * Resets the timer on the unjaming process
+   */
   public void resetUnjamTimer() {
     m_timer.reset();
   }
 
+  /**
+   * Gets the velocity of the revolver using its inegrated sensor
+   *
+   * @return the velocity of the revolver
+   */
   public double getVelocity() {
     return m_revolver.getSelectedSensorVelocity() / 2048d * 10d * 60d;
   }
