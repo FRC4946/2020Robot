@@ -87,13 +87,12 @@ public final class RobotMap {
    * CAN IDs
    */
   public static final class CAN {
-    public static final int SPARKMAX_DRIVE_RIGHT_FRONT = 1;
-    public static final int SPARKMAX_DRIVE_RIGHT_BACK = 2;
-    public static final int SPARKMAX_DRIVE_LEFT_FRONT = 3;
-    public static final int SPARKMAX_DRIVE_LEFT_BACK = 4;
-    public static final int SPARKMAX_REVOLVER = 7;
-    public static final int SPARKMAX_FEED_WHEEL = 8;
-
+    public static final int TALONFX_DRIVE_RIGHT_FRONT = 1;
+    public static final int TALONFX_DRIVE_RIGHT_BACK = 2;
+    public static final int TALONFX_DRIVE_LEFT_FRONT = 3;
+    public static final int TALONFX_DRIVE_LEFT_BACK = 4;
+    public static final int TALONFX_REVOLVER = 7;
+    public static final int TALONFX_FEED_WHEEL = 8;
     public static final int TALONFX_CLIMBER_LEFT = 2;
     public static final int TALONFX_CLIMBER_RIGHT = 3;
     public static final int TALONFX_SHOOTER_RIGHT = 4;
