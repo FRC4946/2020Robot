@@ -267,7 +267,7 @@ public class RobotContainer {
     }, m_hood));
 
     m_turret.setDefaultCommand(new RunCommand(() -> {
-      // m_turret.holdPosition();
+      //m_turret.holdPosition();
       m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
     }, m_turret));
 
@@ -313,11 +313,10 @@ public class RobotContainer {
           m_revolver, m_shooter, m_turret);
       break;
     case DRIVE_FORWARDS:
-      /*
-       * m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5,
-       * 0.0), m_driveTrain).withTimeout(2) .andThen(new RunCommand(() -> {
-       * m_driveTrain.arcadeDrive(-0.1, 0.0); }, m_driveTrain).withTimeout(0.1));
-       */
+      /*m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5,0.0), m_driveTrain).withTimeout(2)
+          .andThen(new RunCommand(() -> {
+            m_driveTrain.arcadeDrive(-0.1, 0.0);
+          }, m_driveTrain).withTimeout(0.1));*/
       m_autonomousCommand = new PIDDrive(1.0, m_driveTrain);
       break;
     case DISABLED:
