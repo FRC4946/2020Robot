@@ -123,8 +123,6 @@ public class RobotContainer {
     JoystickButton extendControlPanelButton = new JoystickButton(m_operatorJoystick,
         RobotMap.JOYSTICK_BUTTON.EXTEND_CONTROL_PANEL);
 
-    JoystickButton shiftGear = new JoystickButton(m_driveJoystick, RobotMap.JOYSTICK_BUTTON.SHIFT_GEAR);
-
     JoystickButton preset1 = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.PRESET_1);
 
     JoystickButton manualMode = new JoystickButton(m_operatorJoystick, RobotMap.JOYSTICK_BUTTON.MANUAL_MODE);
@@ -194,10 +192,6 @@ public class RobotContainer {
     // #endregion
 
     // #region driver
-
-    shiftGear.whenPressed(new InstantCommand(() -> {
-      m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
-    }));
 
     manualUnjamButton.whileHeld(new RunCommand(() -> {
       m_revolver.set(Constants.Revolver.BACKWARDS_SPEED);
@@ -295,7 +289,6 @@ public class RobotContainer {
     m_prefs.putDouble("drive/startY", m_prefs.getDouble("drive/startY", 0.0));
     m_prefs.putDouble("drive/startAngle", m_prefs.getDouble("drive/startAngle", 0.0));
 
-    m_driveTrain.setHighGear(false);
     m_driveTrain.resetDriveTrain(m_prefs.getDouble("drive/startX", 0.0), m_prefs.getDouble("drive/startY", 0.0),
         m_prefs.getDouble("drive/startAngle", 0.0));
     m_hood.resetPot();

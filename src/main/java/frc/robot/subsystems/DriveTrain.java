@@ -13,7 +13,6 @@ import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.Encoder;
 import edu.wpi.first.wpilibj.SPI;
-import edu.wpi.first.wpilibj.Solenoid;
 import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj.geometry.Pose2d;
 import edu.wpi.first.wpilibj.geometry.Rotation2d;
@@ -36,8 +35,6 @@ public class DriveTrain extends SubsystemBase {
 
   private final Encoder m_leftEncoder, m_rightEncoder;
 
-  private final Solenoid m_highGear;
-
   private final AHRS m_gyro;
 
   private final DifferentialDriveKinematics m_kinematics;
@@ -51,8 +48,6 @@ public class DriveTrain extends SubsystemBase {
     m_leftBack = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_LEFT_BACK);
     m_rightFront = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_RIGHT_FRONT);
     m_rightBack = new TalonFX(RobotMap.CAN.TALONFX_DRIVE_RIGHT_BACK);
-
-    m_highGear = new Solenoid(RobotMap.PCM.DRIVE_SHIFTER);
 
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
@@ -233,14 +228,6 @@ public class DriveTrain extends SubsystemBase {
     return m_odometry.getPoseMeters();
   }
 
-  public void setHighGear(boolean on) {
-    m_highGear.set(on);
-  }
-
-  public boolean isHighGear() {
-    return m_highGear.get();
-  }
-
   @Override
   public void periodic() {
     // m_odometry.update(Rotation2d.fromDegrees(-getGyroAngle()), getLeftDistance(),
@@ -254,7 +241,6 @@ public class DriveTrain extends SubsystemBase {
     SmartDashboard.putNumber("drive/encoders/leftEncoder", getLeftDistance());
     SmartDashboard.putNumber("drive/encoders/rightEncoder", getRightDistance());
     SmartDashboard.putNumber("drive/gyroAngle", getGyroAngle());
-    SmartDashboard.putBoolean("drive/lowGear", !isHighGear());
     SmartDashboard.putNumber("drive/speed", Math.abs((getLeftVelocity() + getRightVelocity()) / 2d));
   }
 }

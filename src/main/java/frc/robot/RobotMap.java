@@ -111,8 +111,6 @@ public final class RobotMap {
     public static final int INTAKE_A = 0;
     public static final int INTAKE_B = 1;
 
-    public static final int DRIVE_SHIFTER = 4;
-
     public static final int CLIMBER_A = 2;
     public static final int CLIMBER_B = 3;
 
