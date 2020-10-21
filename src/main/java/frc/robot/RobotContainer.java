@@ -22,7 +22,7 @@ import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import frc.robot.Constants.AutoScript;
 import frc.robot.commands.auto.DriveAndShoot;
 import frc.robot.commands.auto.MiddlePickupAndShoot;
-import frc.robot.commands.auto.PIDDrive;
+import frc.robot.commands.auto.TrenchAuto;
 import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.Shoot;
@@ -77,7 +77,8 @@ public class RobotContainer {
     m_autoScript.setDefaultOption("Disabled", AutoScript.DISABLED);
     m_autoScript.addOption("Drive Forwards", AutoScript.DRIVE_FORWARDS);
     m_autoScript.addOption("Drive And Shoot", AutoScript.DRIVE_AND_SHOOT);
-    m_autoScript.addOption("Middle - Pickup and shoot", AutoScript.MIDDLE_PICKUP_AND_SHOOT);
+    m_autoScript.addOption("Pickup And Shoot", AutoScript.MIDDLE_PICKUP_AND_SHOOT);
+    m_autoScript.addOption("Trench Run", AutoScript.TRENCH_RUN);
 
     SmartDashboard.putData(m_autoScript);
 
@@ -273,7 +274,7 @@ public class RobotContainer {
     }, m_hood));
 
     m_turret.setDefaultCommand(new RunCommand(() -> {
-      //m_turret.holdPosition();
+      // m_turret.holdPosition();
       m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
     }, m_turret));
 
@@ -320,11 +321,14 @@ public class RobotContainer {
           m_revolver, m_shooter, m_turret);
       break;
     case DRIVE_FORWARDS:
-      /*m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5, 0.0), m_driveTrain).withTimeout(2)
+      m_autonomousCommand = new RunCommand(() -> m_driveTrain.arcadeDrive(0.5, 0.0), m_driveTrain).withTimeout(1)
           .andThen(new RunCommand(() -> {
             m_driveTrain.arcadeDrive(-0.1, 0.0);
-          }, m_driveTrain).withTimeout(0.1));*/
-      m_autonomousCommand = new PIDDrive(1.0, m_driveTrain);
+          }, m_driveTrain).withTimeout(0.1));
+      break;
+    case TRENCH_RUN:
+      m_autonomousCommand = new TrenchAuto(m_driveTrain, m_revolver, m_intake, m_shooter, m_turret, m_hood, m_limelight,
+          m_feedWheel);
       break;
     case DISABLED:
     default:

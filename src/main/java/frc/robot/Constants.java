@@ -54,14 +54,14 @@ public final class Constants {
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.0;
 
-    public static final double TURN_P = 0.0;
+    public static final double TURN_P = 0.05;
     public static final double TURN_I = 0.0;
     public static final double TURN_D = 0.0;
 
-    public static final double TURN_TOLERANCE = 0.5;
+    public static final double TURN_TOLERANCE = 1.0;
 
-    public static final double DRIVE_P = 1.2;
-    public static final double DRIVE_I = 0.15;
+    public static final double DRIVE_P = 0.4;
+    public static final double DRIVE_I = 0.09;
     public static final double DRIVE_D = 0.0;
 
     public static final double DRIVE_TOLERANCE = 0.025;
@@ -89,7 +89,7 @@ public final class Constants {
     public static final double PWM_DEADBAND_MIN = 1.45;
     public static final double PWM_MIN = 0.5;
 
-    public static final double PRESET_1_ANGLE = 63.23; // Degrees for 18 Foot shot
+    public static final double PRESET_1_ANGLE = 71.0; // Degrees for 18 Foot shot
   }
 
   public static final class Revolver {
@@ -113,12 +113,12 @@ public final class Constants {
     public static final double VELOCITY_FF = 0.0001; // 0.000116;
     public static final double VELOCITY_TOLERANCE = 80.0; // RPM (Should Be 50.0 or Some Shit)
 
-    public static final double IDLE_SPEED = 3000; // RPM
+    public static final double IDLE_SPEED = 3500; // RPM
     public static final double MAX_SPEED = 6000; // RPM
 
     public static final double RATIO = 2d / 1d;
 
-    public static final double PRESET_1_SPEED = 3450; // RPM
+    public static final double PRESET_1_SPEED = 5000; // RPM
   }
 
   public static final class Turret {
@@ -156,6 +156,6 @@ public final class Constants {
   }
 
   public enum AutoScript {
-    DISABLED, DRIVE_FORWARDS, DRIVE_AND_SHOOT, MIDDLE_PICKUP_AND_SHOOT;
+    DISABLED, DRIVE_FORWARDS, DRIVE_AND_SHOOT, MIDDLE_PICKUP_AND_SHOOT, TRENCH_RUN;
   }
 }

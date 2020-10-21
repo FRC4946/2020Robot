@@ -42,14 +42,19 @@ public class MiddlePickupAndShoot extends SequentialCommandGroup {
                 }, revolver, intake), // intake
                 new PIDDrive(2.6416, driveTrain).withTimeout(3)
               ),
-              new PIDDrive(-1.016, driveTrain).withTimeout(2),
+              //new PIDDrive(-1.016, driveTrain).withTimeout(2)
+              new RunCommand(() -> driveTrain.arcadeDrive(-0.5, 0.0), driveTrain).withTimeout(1)
+                .andThen(new RunCommand(() -> {
+                    driveTrain.arcadeDrive(0.1, 0.0);
+                }, driveTrain).withTimeout(0.1)),
               new PIDTurn(-100, driveTrain).withTimeout(1.5)
           )
         ),
         parallel(
           new SetShooterWithLimelightToSpeed(3000, shooter, turret, hood, limelight),
           sequence(
-            new PIDDrive(3.556, driveTrain).withTimeout(5),
+            //3.556
+            new PIDDrive(3.356, driveTrain).withTimeout(5),
             new RunCommand(() -> {
               revolver.set(Constants.Revolver.FORWARDS_SPEED);
               feedWheel.set(0.6);

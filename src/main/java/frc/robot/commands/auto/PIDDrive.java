@@ -11,20 +11,26 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.util.Utilities;
 
 public class PIDDrive extends PIDCommand {
+
+  double m_distance;
+  double m_startDistance;
+  DriveTrain m_driveTrain;
+
   /**
    * Creates a new PIDDrive.
    */
   public PIDDrive(double distance, double startDistance, DriveTrain driveTrain) {
-    super(
-      new PIDController(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D),
-        () -> driveTrain.getAverageDistance() - startDistance, 
-        () -> distance, 
-        output -> {
-          driveTrain.arcadeDrive(output, 0.0);
+    super(new PIDController(Constants.DriveTrain.DRIVE_P, Constants.DriveTrain.DRIVE_I, Constants.DriveTrain.DRIVE_D),
+        () -> driveTrain.getAverageDistance() - startDistance, () -> distance, output -> {
+          driveTrain.arcadeDrive(Utilities.clip(output, -0.6, 0.6), 0.0);
         });
     getController().setTolerance(Constants.DriveTrain.DRIVE_TOLERANCE);
+    m_driveTrain = driveTrain;
+    m_startDistance = startDistance;
+    m_distance = distance;
     addRequirements(driveTrain);
   }
 
@@ -35,6 +41,8 @@ public class PIDDrive extends PIDCommand {
   // Returns true when the command should end.
   @Override
   public boolean isFinished() {
-    return getController().atSetpoint();
+    // return getController().atSetpoint();
+    return (m_distance > 0 ? m_driveTrain.getAverageDistance() > m_startDistance + m_distance
+        : m_driveTrain.getAverageDistance() < m_startDistance + m_distance);
   }
 }

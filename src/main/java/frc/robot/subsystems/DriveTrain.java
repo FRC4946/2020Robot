@@ -57,7 +57,7 @@ public class DriveTrain extends SubsystemBase {
     m_leftEncoder = new Encoder(RobotMap.DIO.DRIVE_LEFT_ENCODER_A, RobotMap.DIO.DRIVE_LEFT_ENCODER_B);
     m_rightEncoder = new Encoder(RobotMap.DIO.DRIVE_RIGHT_ENCODER_A, RobotMap.DIO.DRIVE_RIGHT_ENCODER_B);
 
-    m_leftEncoder.setReverseDirection(true);
+    m_leftEncoder.setReverseDirection(false);
     m_rightEncoder.setReverseDirection(false);
     m_leftEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);
     m_rightEncoder.setDistancePerPulse(Constants.DriveTrain.ENCODER_METERS_PER_TICK);

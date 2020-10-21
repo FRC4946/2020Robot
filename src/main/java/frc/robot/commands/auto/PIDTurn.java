@@ -11,25 +11,33 @@ import edu.wpi.first.wpilibj.controller.PIDController;
 import edu.wpi.first.wpilibj2.command.PIDCommand;
 import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
+import frc.robot.util.Utilities;
 
 public class PIDTurn extends PIDCommand {
+
+  DriveTrain m_driveTrain;
+
   /**
    * Creates a new PIDTurn.
    */
-  public PIDTurn(double setpoint, double startAngle, DriveTrain driveTrain) {
+  public PIDTurn(double setpoint, DriveTrain driveTrain) {
     super(
         new PIDController(Constants.DriveTrain.TURN_P, Constants.DriveTrain.TURN_I, Constants.DriveTrain.TURN_D),
-        () -> driveTrain.getGyroAngle() - startAngle,
+        () -> driveTrain.getGyroAngle(),
         () -> setpoint,
         output -> {
-          driveTrain.arcadeDrive(0.0, output);
+          driveTrain.arcadeDrive(0.0, Utilities.clip(-output, -0.6, 0.6));
         });
     getController().setTolerance(Constants.DriveTrain.TURN_TOLERANCE);
     addRequirements(driveTrain);
+    m_driveTrain = driveTrain;
   }
 
-  public PIDTurn(double setpoint, DriveTrain driveTrain) {
-    this(setpoint, 0.0, driveTrain);
+  @Override
+  public void initialize() {
+    super.initialize();
+    //TODO : Make this no longer require a complete reset of the drivetrain
+    m_driveTrain.resetDriveTrain();
   }
 
   // Returns true when the command should end.

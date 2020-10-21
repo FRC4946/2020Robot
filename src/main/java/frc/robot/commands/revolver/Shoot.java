@@ -20,6 +20,7 @@ public class Shoot extends CommandBase {
   private final Revolver m_revolver;
   private final Shooter m_shooter;
   private final FeedWheel m_feedWheel;
+  private boolean m_wasAtSpeed = false;
 
   /**
    * Starts the revolver and feedwheel if the shooter speed, turret angle, and
@@ -37,10 +38,16 @@ public class Shoot extends CommandBase {
   }
 
   @Override
+  public void initialize() {
+    m_wasAtSpeed = false;
+  }
+
+  @Override
   public void execute() {
+    m_wasAtSpeed = (m_shooter.getKey() ? true : m_wasAtSpeed);
     // m_feedWheel.set(0.6);
     // m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
-    if (m_shooter.getKey()) {
+    if (m_wasAtSpeed) {
       m_feedWheel.set(0.6);
       m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
     } else {
