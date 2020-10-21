@@ -7,6 +7,8 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -19,7 +21,7 @@ import frc.robot.commands.revolver.UnjamRevolver;
 
 public class Revolver extends SubsystemBase {
 
-  private final CANSparkMax m_revolver;
+  private final TalonFX m_revolver;
   private int m_drumReps = 0;
 
   private final UnjamRevolver m_unjam;
@@ -27,10 +29,9 @@ public class Revolver extends SubsystemBase {
   private final Timer m_timer;
 
   public Revolver() {
-    m_revolver = new CANSparkMax(RobotMap.CAN.SPARKMAX_REVOLVER, MotorType.kBrushless);
-    m_revolver.setOpenLoopRampRate(0.05);
-    m_revolver.setClosedLoopRampRate(0.05);
-    m_revolver.burnFlash();
+    m_revolver = new TalonFX(RobotMap.CAN.TALONFX_REVOLVER);
+    m_revolver.configClosedloopRamp(0.05);
+    m_revolver.configOpenloopRamp(0.05);
     m_unjam = new UnjamRevolver(this);
     m_timer = new Timer();
     m_timer.start();
@@ -42,7 +43,7 @@ public class Revolver extends SubsystemBase {
    * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
-    m_revolver.set(speed);
+    m_revolver.set(ControlMode.PercentOutput, speed);
   }
 
   /**
@@ -52,13 +53,21 @@ public class Revolver extends SubsystemBase {
     set(0.0);
   }
 
+  /**
+   * 
+   * @return the speed of the revolver in rpm
+   */
+  public double getSpeed() {
+    return (m_revolver.getSelectedSensorVelocity() / 2048d * 10d * 60d);
+  }
+
   public void resetUnjamTimer() {
     m_timer.reset();
   }
 
   @Override
   public void periodic() {
-    if (m_revolver.get() > 0.0 && m_revolver.getEncoder().getVelocity() < Constants.Revolver.VELOCITY_THRESHOLD) {
+    if (m_revolver.getMotorOutputPercent() > 0.0 && getSpeed() < Constants.Revolver.VELOCITY_THRESHOLD) {
       m_drumReps++;
     } else {
       m_drumReps = 0;

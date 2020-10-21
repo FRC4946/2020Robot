@@ -38,7 +38,7 @@ public class Shooter extends PIDSubsystem {
     m_left.configClosedloopRamp(0.0);
     m_right.configOpenloopRamp(0.0);
     m_left.configOpenloopRamp(0.0);
-
+    
     enable();
   }
 

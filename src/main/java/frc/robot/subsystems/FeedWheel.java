@@ -7,25 +7,23 @@
 
 package frc.robot.subsystems;
 
-import com.revrobotics.CANSparkMax;
-import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.RobotMap;
 
 public class FeedWheel extends SubsystemBase {
 
-  private final CANSparkMax m_feedWheel;
+  private final TalonFX m_feedWheel;
 
   /**
    * Creates a new FeedWheel.
    */
   public FeedWheel() {
-    m_feedWheel = new CANSparkMax(RobotMap.CAN.SPARKMAX_FEED_WHEEL, MotorType.kBrushless);
-    m_feedWheel.setOpenLoopRampRate(0.05);
-    m_feedWheel.setClosedLoopRampRate(0.05);
-    m_feedWheel.setSmartCurrentLimit(20);
-    m_feedWheel.burnFlash();
+    m_feedWheel = new TalonFX(RobotMap.CAN.TALONFX_FEED_WHEEL);
+    m_feedWheel.configClosedloopRamp(0.05);
+    m_feedWheel.configOpenloopRamp(0.05);
   }
 
   /**
@@ -34,7 +32,7 @@ public class FeedWheel extends SubsystemBase {
    * @param speed the voltage to apply to the motor as a percentage from -1 to 1
    */
   public void set(double speed) {
-    m_feedWheel.set(speed);
+    m_feedWheel.set(ControlMode.PercentOutput, speed);
   }
 
   /**
