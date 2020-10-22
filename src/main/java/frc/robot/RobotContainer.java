@@ -208,8 +208,8 @@ public class RobotContainer {
 
     driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
 
-    emergencyShoot.whileActiveOnce(new RunCommand(() -> {
-      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+    emergencyShoot.whileHeld(new RunCommand(() -> {
+      m_revolver.set(2 * Constants.Revolver.FORWARDS_SPEED);
       m_feedWheel.set(0.6);
     }, m_revolver, m_feedWheel));
 
