@@ -143,10 +143,11 @@ public class RobotContainer {
       return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
     }, m_hood));
 
+    /*
     manualMode.whileHeld(new ManualTurret(() -> {
       return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET));
     }, m_turret));
-
+    */
     manualMode.whileHeld(new ManualShooter(() -> {
       if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
         return (m_shooter.getSetpoint() + 50);
@@ -167,6 +168,7 @@ public class RobotContainer {
       m_shooter.setKey(m_shooter.atSetpoint());
     }, m_shooter), false);
 
+    /*
     preset1.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
       m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
       m_shooter.setSetpoint(Constants.Shooter.PRESET_1_SPEED);
@@ -177,7 +179,7 @@ public class RobotContainer {
         m_shooter.enable();
       m_shooter.setKey(m_shooter.atSetpoint() && m_hood.atSetpoint());
     }, m_shooter, m_hood, m_turret), false);
-
+    */
     // STANDARD OPERATION
 
     setLimelightButton.and(manualMode.negate())
@@ -185,50 +187,50 @@ public class RobotContainer {
           return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
         }), false);
 
-    extendControlPanelButton.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
-      m_controlPanel.setExtended(true);
-    }, m_controlPanel)).whenInactive(new InstantCommand(() -> {
-      m_controlPanel.setExtended(false);
-    }, m_controlPanel));
+    // extendControlPanelButton.and(manualMode.negate()).whenActive(new InstantCommand(() -> {
+    //   m_controlPanel.setExtended(true);
+    // }, m_controlPanel)).whenInactive(new InstantCommand(() -> {
+    //   m_controlPanel.setExtended(false);
+    // }, m_controlPanel));
 
     // #endregion
 
     // #region driver
 
-    shiftGear.whenPressed(new InstantCommand(() -> {
-      m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
-    }));
+    // shiftGear.whenPressed(new InstantCommand(() -> {
+    //   m_driveTrain.setHighGear(!m_driveTrain.isHighGear());
+    // }));
 
-    manualUnjamButton.whileHeld(new RunCommand(() -> {
-      m_revolver.set(Constants.Revolver.BACKWARDS_SPEED);
-      m_feedWheel.set(-0.6);
-    }, m_revolver, m_feedWheel));
+    // manualUnjamButton.whileHeld(new RunCommand(() -> {
+    //   m_revolver.set(Constants.Revolver.BACKWARDS_SPEED);
+    //   m_feedWheel.set(-0.6);
+    // }, m_revolver, m_feedWheel));
 
-    driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
+    // driverShootButton.whileActiveOnce(new Shoot(m_revolver, m_shooter, m_feedWheel), false);
 
-    emergencyShootButton.whileActiveOnce(new RunCommand(() -> {
-      m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
-      m_feedWheel.set(0.6);
-    }, m_revolver, m_feedWheel));
+    // emergencyShootButton.whileActiveOnce(new RunCommand(() -> {
+    //   m_revolver.set(Constants.Revolver.FORWARDS_SPEED);
+    //   m_feedWheel.set(0.6);
+    // }, m_revolver, m_feedWheel));
 
-    climbButton.toggleWhenPressed(new Climb(() -> Utilities
-        .deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
-            + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
-        * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake, m_shooter), false);
+    // climbButton.toggleWhenPressed(new Climb(() -> Utilities
+    //     .deadzone(Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_1), 2)
+    //         + Math.pow(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.CLIMB_2), 2))
+    //     * Constants.Climber.MAX_PERCENT_OUTPUT, m_climber, m_intake, m_shooter), false);
 
-    intakeButton.whenPressed(new InstantCommand(() -> {
-      if (m_intake.isExtended()) {
-        m_intake.setExtended(false);
-        m_intake.stop();
-        m_revolver.stop();
-      } else {
-        m_intake.setExtended(true);
-      }
-    }));
+    // intakeButton.whenPressed(new InstantCommand(() -> {
+    //   if (m_intake.isExtended()) {
+    //     m_intake.setExtended(false);
+    //     m_intake.stop();
+    //     m_revolver.stop();
+    //   } else {
+    //     m_intake.setExtended(true);
+    //   }
+    // }));
 
-    revolverButton.whenHeld(new RunCommand(() -> {
-      m_revolver.set(4 * Constants.Revolver.FORWARDS_SPEED);
-    }, m_revolver));
+    // revolverButton.whenHeld(new RunCommand(() -> {
+    //   m_revolver.set(4 * Constants.Revolver.FORWARDS_SPEED);
+    // }, m_revolver));
 
     // #endregion
 
@@ -239,23 +241,23 @@ public class RobotContainer {
           -m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURN));
     }, m_driveTrain));
 
-    m_intake.setDefaultCommand(new RunCommand(() -> {
-      if (m_intake.isExtended()) {
-        m_intake.set(Utilities.deadzone(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
-            - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)));
-      } else {
-        m_intake.stop();
-      }
-    }, m_intake));
+    // m_intake.setDefaultCommand(new RunCommand(() -> {
+    //   if (m_intake.isExtended()) {
+    //     m_intake.set(Utilities.deadzone(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+    //         - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)));
+    //   } else {
+    //     m_intake.stop();
+    //   }
+    // }, m_intake));
 
-    m_revolver.setDefaultCommand(new RunCommand(() -> {
-      if (m_intake.isExtended() && Math.abs(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
-          - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)) > Constants.DEFAULT_DEADZONE) {
-        m_revolver.set(2 * Constants.Revolver.FORWARDS_SPEED);
-      } else {
-        m_revolver.stop();
-      }
-    }, m_revolver));
+    // m_revolver.setDefaultCommand(new RunCommand(() -> {
+    //   if (m_intake.isExtended() && Math.abs(m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.INTAKE)
+    //       - m_driveJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.OUTTAKE)) > Constants.DEFAULT_DEADZONE) {
+    //     m_revolver.set(2 * Constants.Revolver.FORWARDS_SPEED);
+    //   } else {
+    //     m_revolver.stop();
+    //   }
+    // }, m_revolver));
 
     m_shooter.setDefaultCommand(new RunCommand(() -> {
       if (m_shooter.isEnabled()) {
@@ -271,18 +273,18 @@ public class RobotContainer {
       m_hood.setSetpoint(Constants.Hood.MIN_ANGLE);
     }, m_hood));
 
-    m_turret.setDefaultCommand(new RunCommand(() -> {
-      //m_turret.holdPosition();
-      m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
-    }, m_turret));
+    // m_turret.setDefaultCommand(new RunCommand(() -> {
+    //   //m_turret.holdPosition();
+    //   m_turret.setSetpoint(Constants.Turret.HOME_ANGLE);
+    // }, m_turret));
 
-    m_controlPanel.setDefaultCommand(new RunCommand(() -> {
-      m_controlPanel.stop();
-    }, m_controlPanel));
+    // m_controlPanel.setDefaultCommand(new RunCommand(() -> {
+    //   m_controlPanel.stop();
+    // }, m_controlPanel));
 
-    m_feedWheel.setDefaultCommand(new RunCommand(() -> {
-      m_feedWheel.stop();
-    }, m_feedWheel));
+    // m_feedWheel.setDefaultCommand(new RunCommand(() -> {
+    //   m_feedWheel.stop();
+    // }, m_feedWheel));
 
     // #endregion
   }

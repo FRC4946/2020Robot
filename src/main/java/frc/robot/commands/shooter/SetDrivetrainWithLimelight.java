@@ -21,7 +21,7 @@ import frc.robot.subsystems.Turret;
 /**
  * Command to shoot
  */
-public class SetShooterWithLimelight extends CommandBase {
+public class SetDrivetrainWithLimelight extends CommandBase {
 
   private final Shooter m_shooter;
   private final DriveTrain m_driveTrain;
@@ -41,11 +41,11 @@ public class SetShooterWithLimelight extends CommandBase {
    * @param hood        the hood to use for this command
    * @param limelight   the limelight to use for this command
    */
-  public SetShooterWithLimelight(Shooter shooter, DriveTrain driveTrain, Hood hood, Limelight limelight) {
+  public SetDrivetrainWithLimelight(Shooter shooter, DriveTrain driveTrain, Hood hood, Limelight limelight) {
     this(shooter, driveTrain, hood, limelight, null, null);
   }
 
-  public SetShooterWithLimelight(Shooter shooter, DriveTrain driveTrain, Hood hood, Limelight limelight, Joystick joystick, DoubleSupplier manualTurretSupplier) {
+  public SetDrivetrainWithLimelight(Shooter shooter, DriveTrain driveTrain, Hood hood, Limelight limelight, Joystick joystick, DoubleSupplier manualTurretSupplier) {
     m_shooter = shooter;
     m_driveTrain = driveTrain;
     m_hood = hood;
