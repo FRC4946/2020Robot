@@ -27,7 +27,7 @@ import frc.robot.commands.climber.Climb;
 import frc.robot.commands.hood.ManualHood;
 import frc.robot.commands.revolver.Shoot;
 import frc.robot.commands.shooter.ManualShooter;
-import frc.robot.commands.shooter.SetShooterWithLimelight;
+import frc.robot.commands.shooter.SetDrivetrainWithLimelight;
 import frc.robot.commands.turret.ManualTurret;
 import frc.robot.subsystems.Climber;
 import frc.robot.subsystems.ControlPanel;
@@ -181,7 +181,7 @@ public class RobotContainer {
     // STANDARD OPERATION
 
     setLimelightButton.and(manualMode.negate())
-        .whileActiveOnce(new SetShooterWithLimelight(m_shooter, m_turret, m_hood, m_limelight, m_driveJoystick, () -> {
+        .whileActiveOnce(new SetDrivetrainWithLimelight(m_shooter, m_driveTrain, m_hood, m_limelight, m_driveJoystick, () -> {
           return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.HOOD));
         }), false);
 
