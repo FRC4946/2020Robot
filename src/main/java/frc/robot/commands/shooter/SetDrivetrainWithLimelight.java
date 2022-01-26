@@ -73,7 +73,7 @@ public class SetDrivetrainWithLimelight extends CommandBase {
     if (!m_limelight.getHasTarget() && m_manualTurretSupplier != null) {
       m_driveTrain.arcadeDrive(0, m_manualTurretSupplier.getAsDouble());
     } else {
-      m_driveTrain.arcadeDrive(0, m_driveTrain.getGyroAngle() - m_limelight.getAngleOffset());
+      m_driveTrain.arcadeDrive(0, m_limelight.getAngleOffset());
       // m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
     }
 
