@@ -54,11 +54,11 @@ public final class Constants {
     public static final double VELOCITY_D = 0.0;
     public static final double VELOCITY_FF = 0.0;
 
-    public static final double TURN_P = 0.0;
+    public static final double TURN_P = 0.045;
     public static final double TURN_I = 0.0;
     public static final double TURN_D = 0.0;
 
-    public static final double TURN_TOLERANCE = 0.5;
+    public static final double TURN_TOLERANCE = 05;
 
     public static final double DRIVE_P = 1.2;
     public static final double DRIVE_I = 0.15;

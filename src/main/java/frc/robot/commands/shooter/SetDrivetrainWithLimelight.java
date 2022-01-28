@@ -12,6 +12,8 @@ import java.util.function.DoubleSupplier;
 import edu.wpi.first.wpilibj.GenericHID.RumbleType;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import edu.wpi.first.wpilibj.controller.PIDController;
+import frc.robot.Constants;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Hood;
 import frc.robot.subsystems.Limelight;
@@ -30,6 +32,8 @@ public class SetDrivetrainWithLimelight extends CommandBase {
 
   private final Joystick m_joystick;
   private final DoubleSupplier m_manualTurretSupplier;
+
+  private final PIDController m_pid;
 
   /**
    * Uses the limelight to calculate shooter speed, hood angle, and turret angle,
@@ -53,6 +57,8 @@ public class SetDrivetrainWithLimelight extends CommandBase {
     m_joystick = joystick;
     m_manualTurretSupplier = manualTurretSupplier;
 
+    m_pid = new PIDController(Constants.DriveTrain.TURN_P, Constants.DriveTrain.TURN_I, Constants.DriveTrain.TURN_D);
+
     addRequirements(m_shooter, m_driveTrain, m_hood);
   }
 
@@ -73,7 +79,8 @@ public class SetDrivetrainWithLimelight extends CommandBase {
     if (!m_limelight.getHasTarget() && m_manualTurretSupplier != null) {
       m_driveTrain.arcadeDrive(0, m_manualTurretSupplier.getAsDouble());
     } else {
-      m_driveTrain.arcadeDrive(0, m_limelight.getAngleOffset());
+      // m_driveTrain.arcadeDrive(0, m_limelight.getAngleOffset());
+      m_driveTrain.arcadeDrive(0, -m_pid.calculate(m_limelight.getOffsetX(), 0));
       // m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
     }
 
