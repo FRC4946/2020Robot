@@ -148,25 +148,25 @@ public class RobotContainer {
       return Utilities.deadzone(m_operatorJoystick.getRawAxis(RobotMap.JOYSTICK_AXIS.TURRET));
     }, m_turret));
     */
-    manualMode.whileHeld(new ManualShooter(() -> {
-      if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
-        return (m_shooter.getSetpoint() + 50);
-      } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135
-          || m_operatorJoystick.getPOV() == 225) {
-        return (m_shooter.getSetpoint() - 50);
-      }
-      return m_shooter.getSetpoint();
-    }, m_shooter));
+    // manualMode.whileHeld(new ManualShooter(() -> {
+    //   if (m_operatorJoystick.getPOV() == 0 || m_operatorJoystick.getPOV() == 45 || m_operatorJoystick.getPOV() == 315) {
+    //     return (m_shooter.getSetpoint() + 50);
+    //   } else if (m_operatorJoystick.getPOV() == 180 || m_operatorJoystick.getPOV() == 135
+    //       || m_operatorJoystick.getPOV() == 225) {
+    //     return (m_shooter.getSetpoint() - 50);
+    //   }
+    //   return m_shooter.getSetpoint();
+    // }, m_shooter));
 
     resetPotButton.and(manualMode).whenActive(new InstantCommand(() -> {
       m_hood.resetPot();
     }));
 
-    spinUpButton.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
-      if (!m_shooter.isEnabled())
-        m_shooter.enable();
-      m_shooter.setKey(m_shooter.atSetpoint());
-    }, m_shooter), false);
+    // spinUpButton.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
+    //   if (!m_shooter.isEnabled())
+    //     m_shooter.enable();
+    //   m_shooter.setKey(m_shooter.atSetpoint());
+    // }, m_shooter), false);
 
     /*
     preset1.and(manualMode).whileActiveContinuous(new RunCommand(() -> {
@@ -259,12 +259,12 @@ public class RobotContainer {
     //   }
     // }, m_revolver));
 
-    m_shooter.setDefaultCommand(new RunCommand(() -> {
-      if (m_shooter.isEnabled()) {
-        m_shooter.disable();
-      }
-      m_shooter.set(Constants.Shooter.IDLE_SPEED * Constants.Shooter.VELOCITY_FF); // Run at resting speed
-    }, m_shooter));
+    // m_shooter.setDefaultCommand(new RunCommand(() -> {
+    //   if (m_shooter.isEnabled()) {
+    //     m_shooter.disable();
+    //   }
+    //   m_shooter.set(Constants.Shooter.IDLE_SPEED * Constants.Shooter.VELOCITY_FF); // Run at resting speed
+    // }, m_shooter));
 
     m_hood.setDefaultCommand(new RunCommand(() -> {
       if (!m_hood.isEnabled()) {

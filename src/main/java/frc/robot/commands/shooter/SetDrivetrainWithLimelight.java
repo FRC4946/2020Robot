@@ -65,7 +65,7 @@ public class SetDrivetrainWithLimelight extends CommandBase {
   @Override
   public void initialize() {
     m_hood.enable();
-    m_shooter.enable();
+    // m_shooter.enable();
   }
 
   @Override
@@ -73,8 +73,8 @@ public class SetDrivetrainWithLimelight extends CommandBase {
     if (!m_hood.isEnabled())
       m_hood.enable();
 
-    if (!m_shooter.isEnabled())
-      m_shooter.enable();
+    // if (!m_shooter.isEnabled())
+    //   m_shooter.enable();
 
     if (!m_limelight.getHasTarget() && m_manualTurretSupplier != null) {
       m_driveTrain.arcadeDrive(0, m_manualTurretSupplier.getAsDouble());
@@ -84,7 +84,7 @@ public class SetDrivetrainWithLimelight extends CommandBase {
       // m_turret.setSetpoint(m_turret.getAngle() - m_limelight.getAngleOffset());
     }
 
-    m_shooter.setSetpoint(m_limelight.getShooterSpeed());
+    // m_shooter.setSetpoint(m_limelight.getShooterSpeed());
     m_hood.setSetpoint(m_limelight.getHoodAngle());
 
     boolean isOnTarget = -5 < m_limelight.getOffsetX() && m_limelight.getOffsetX() < 5;
